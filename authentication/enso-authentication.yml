@@ -1,0 +1,23 @@
+generated: '2026-07-19'
+method: searched
+source: openapi/enso-openapi-original.json
+docs: https://docs.enso.build/pages/build/get-started/authentication
+summary:
+  types:
+  - http
+  api_key_in:
+  - header
+  - query
+  scheme: bearer
+  get_key: https://developers.enso.build/
+  rate_limit: 10 rps (600 requests/minute), increasable on request; 429 on exceed
+  demo_key: 1e02632d-6feb-4a75-a157-documentation (1 rps, documentation only)
+schemes:
+- name: bearer
+  type: http
+  scheme: bearer
+  bearerFormat: apiKey
+  location: Authorization header, "Bearer <API_KEY>"
+  alt_location: query parameter apikey=<API_KEY>
+  sources:
+  - openapi/enso-openapi-original.json
