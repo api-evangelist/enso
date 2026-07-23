@@ -1,0 +1,388 @@
+openapi: 3.0.0
+info:
+  title: Enso ccip standards API
+  description: '#### Enso API
+
+    - Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).
+
+    - To use the API, **you must include your API Key in the Authorization header** (Bearer format).
+
+    - For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).
+
+    - Get your own API Key at [enso.finance/developers](https://developers.enso.build/).'
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.enso.finance
+security:
+- bearer: []
+tags:
+- name: standards
+paths:
+  /api/v1/actions:
+    get:
+      operationId: ActionsController_findAll
+      summary: Returns actions available to use in bundle shortcuts
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Action'
+      tags:
+      - standards
+  /api/v1/actions/{slug}:
+    get:
+      operationId: ActionsController_getActionsBySlug
+      summary: Returns actions available to use in bundle shortcuts for a given protocol
+      parameters:
+      - name: slug
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Action'
+      tags:
+      - standards
+  /api/v1/standards:
+    get:
+      operationId: StandardsController_standards
+      summary: Returns standards and methods available to use in bundle shortcuts
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Standard'
+      tags:
+      - standards
+  /api/v1/standards/{slug}:
+    get:
+      operationId: StandardsController_getProtocolBySlug
+      summary: Returns a standard by slug
+      parameters:
+      - name: slug
+        required: true
+        in: path
+        description: The protocol slug
+        schema:
+          example: aave-v2
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProtocolModel'
+      tags:
+      - standards
+components:
+  schemas:
+    Network:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+      required:
+      - id
+      - name
+    Standard:
+      type: object
+      properties:
+        protocol:
+          $ref: '#/components/schemas/Protocol'
+        forks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Protocol'
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StandardAction'
+      required:
+      - protocol
+      - forks
+      - actions
+    StandardAction:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - approve
+          - borrow
+          - borrowwithpositionid
+          - bridge
+          - deposit
+          - singledeposit
+          - singledepositwithpositionid
+          - multideposit
+          - multidepositwithpositionid
+          - tokenizedsingledeposit
+          - tokenizedmultideposit
+          - multioutsingledeposit
+          - depositclmm
+          - depositwithestimate
+          - encodedswap
+          - flashloan
+          - singletokenflashloan
+          - multitokenflashloan
+          - harvest
+          - nftborrow
+          - nftdeposit
+          - nftmultideposit
+          - nftmultiredeem
+          - nftredeem
+          - nftrepay
+          - permittransferfrom
+          - redeem
+          - singleredeem
+          - singleredeemwithpositionid
+          - multiredeem
+          - tokenizedsingleredeem
+          - tokenizedmultiredeem
+          - redeemclmm
+          - redeemwithestimate
+          - repay
+          - repaywithpositionid
+          - swap
+          - transfer
+          - transferfrom
+          - withdraw
+          - singlewithdraw
+          - singlewithdrawwithpositionid
+          - multiwithdraw
+          - route
+          - call
+          - split
+          - ondosplit
+          - merge
+          - balance
+          - minamountout
+          - slippage
+          - fee
+          - ensofee
+          - paymasterfee
+          - depositposition
+          - add
+          - sub
+          - mul
+          - div
+          - min
+          - max
+          - isequal
+          - islessthan
+          - isequalorlessthan
+          - isgreaterthan
+          - isequalorgreaterthan
+          - not
+          - check
+          - toggle
+        name:
+          type: string
+        functionNames:
+          type: array
+          items:
+            type: string
+        supportedChains:
+          type: array
+          items:
+            $ref: '#/components/schemas/Network'
+        inputs:
+          type: array
+          items:
+            type: string
+      required:
+      - action
+      - name
+      - functionNames
+      - supportedChains
+      - inputs
+    Action:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - approve
+          - borrow
+          - borrowwithpositionid
+          - bridge
+          - deposit
+          - singledeposit
+          - singledepositwithpositionid
+          - multideposit
+          - multidepositwithpositionid
+          - tokenizedsingledeposit
+          - tokenizedmultideposit
+          - multioutsingledeposit
+          - depositclmm
+          - depositwithestimate
+          - encodedswap
+          - flashloan
+          - singletokenflashloan
+          - multitokenflashloan
+          - harvest
+          - nftborrow
+          - nftdeposit
+          - nftmultideposit
+          - nftmultiredeem
+          - nftredeem
+          - nftrepay
+          - permittransferfrom
+          - redeem
+          - singleredeem
+          - singleredeemwithpositionid
+          - multiredeem
+          - tokenizedsingleredeem
+          - tokenizedmultiredeem
+          - redeemclmm
+          - redeemwithestimate
+          - repay
+          - repaywithpositionid
+          - swap
+          - transfer
+          - transferfrom
+          - withdraw
+          - singlewithdraw
+          - singlewithdrawwithpositionid
+          - multiwithdraw
+          - route
+          - call
+          - split
+          - ondosplit
+          - merge
+          - balance
+          - minamountout
+          - slippage
+          - fee
+          - ensofee
+          - paymasterfee
+          - depositposition
+          - add
+          - sub
+          - mul
+          - div
+          - min
+          - max
+          - isequal
+          - islessthan
+          - isequalorlessthan
+          - isgreaterthan
+          - isequalorgreaterthan
+          - not
+          - check
+          - toggle
+        inputs:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ActionInputMetadata'
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionVariant'
+      required:
+      - action
+      - inputs
+    ProtocolModel:
+      type: object
+      properties:
+        project:
+          type: string
+          example: uniswap
+        slug:
+          type: string
+          example: uniswap-v2
+        name:
+          type: string
+          example: Uniswap V2
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        url:
+          type: string
+          example: https://app.uniswap.org/swap
+          nullable: true
+        logosUri:
+          example: https://icons.llama.fi/uniswap-v2.png
+          nullable: true
+          type: array
+          items:
+            type: string
+        chains:
+          nullable: true
+          example:
+          - id: 1
+            name: mainnet
+          type: array
+          items:
+            $ref: '#/components/schemas/Network'
+      required:
+      - project
+      - slug
+      - name
+      - description
+      - url
+      - logosUri
+      - chains
+    ActionInputMetadata:
+      type: object
+      properties:
+        type:
+          type: string
+        description:
+          type: string
+        optional:
+          type: boolean
+      required:
+      - type
+      - description
+    ActionVariant:
+      type: object
+      properties:
+        action:
+          type: string
+        inputs:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ActionInputMetadata'
+        bundleName:
+          type: string
+      required:
+      - action
+      - inputs
+    Protocol:
+      type: object
+      properties:
+        slug:
+          type: string
+        url:
+          type: string
+      required:
+      - slug
+      - url
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: apiKey
+      type: http

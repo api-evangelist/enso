@@ -1,0 +1,4204 @@
+openapi: 3.0.0
+info:
+  title: Enso ccip shortcuts API
+  description: '#### Enso API
+
+    - Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).
+
+    - To use the API, **you must include your API Key in the Authorization header** (Bearer format).
+
+    - For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).
+
+    - Get your own API Key at [enso.finance/developers](https://developers.enso.build/).'
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.enso.finance
+security:
+- bearer: []
+tags:
+- name: shortcuts
+  description: ''
+paths:
+  /api/v1/shortcuts/route:
+    get:
+      operationId: RouterController_routeShortcutTransaction
+      summary: Find optimal route between tokens (direct routes, zaps)
+      parameters:
+      - name: chainId
+        required: true
+        in: query
+        description: Chain ID of the network to execute the transaction on
+        schema:
+          default: 1
+          type: number
+      - name: fromAddress
+        required: true
+        in: query
+        description: Ethereum address of the wallet to send the transaction from
+        schema:
+          default: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+          type: string
+      - name: routingStrategy
+        required: false
+        in: query
+        description: Routing strategy to use
+        schema:
+          nullable: true
+          enum:
+          - ensowallet-v2
+          - router
+          - delegate
+          - router-legacy
+          - delegate-legacy
+          type: string
+      - name: executionMode
+        required: false
+        in: query
+        description: Controls how quote is built based on execution mode
+        schema:
+          default: user
+          enum:
+          - user
+          - backend
+          type: string
+      - name: toEoa
+        required: false
+        in: query
+        description: Flag that indicates if gained tokenOut should be sent to EOA
+        deprecated: true
+        schema:
+          nullable: true
+          type: boolean
+      - name: receiver
+        required: false
+        in: query
+        description: Ethereum address of the receiver of the tokenOut
+        schema:
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+          type: string
+      - name: spender
+        required: false
+        in: query
+        description: Ethereum address of the spender of the tokenIn
+        schema:
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+          type: string
+      - name: refundReceiver
+        required: false
+        in: query
+        description: Ethereum address of the receiver of any dust tokens that might be produced during the execution of actions
+        schema:
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+          type: string
+      - name: amountIn
+        required: true
+        in: query
+        description: Amount of tokenIn to swap in wei
+        schema:
+          example:
+          - '1000000000000000000'
+          type: array
+          items:
+            type: string
+      - name: minAmountOut
+        required: false
+        in: query
+        description: Minimum amount out in wei. If specified, slippage should not be specified
+        schema:
+          default: null
+          type: array
+          items:
+            type: string
+      - name: slippage
+        required: false
+        in: query
+        description: Slippage in basis points (1/10000). e.g. 50 = 0.50%. If specified, minAmountOut should not be specified
+        schema:
+          default: '50'
+          example: '300'
+          type: string
+      - name: fee
+        required: false
+        in: query
+        description: Fee in basis points (1/10000) for each amountIn value. Must be in range 0-100. If specified, this percentage of each amountIn value will be sent to feeReceiver
+        schema:
+          example:
+          - '100'
+          type: array
+          items:
+            type: string
+      - name: feeReceiver
+        required: false
+        in: query
+        description: The Ethereum address that will receive the collected fee. Required if fee is provided
+        schema:
+          example: '0x220866B1A2219f40e72f5c628B65D54268cA3A9D'
+          type: string
+      - name: ignoreAggregators
+        required: false
+        in: query
+        description: A list of swap aggregators to be ignored from consideration
+        schema:
+          nullable: true
+          type: array
+          items:
+            type: string
+      - name: ignoreStandards
+        required: false
+        in: query
+        description: A list of standards to be ignored from consideration
+        schema:
+          nullable: true
+          type: array
+          items:
+            type: string
+      - name: ignoreBridges
+        required: false
+        in: query
+        description: A list of bridges to be ignored from consideration (e.g. stargate, ccip, relay)
+        schema:
+          default: []
+          type: array
+          items:
+            type: string
+      - name: referralCode
+        required: false
+        in: query
+        description: Referral code that will be included in an on-chain event.
+        schema:
+          maxLength: 16
+          example: 0123456789ABCDEF
+          type: string
+      - name: tokenIn
+        required: true
+        in: query
+        description: Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        schema:
+          example:
+          - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+          type: array
+          items:
+            type: string
+      - name: tokenOut
+        required: true
+        in: query
+        description: Ethereum address of the token to swap to. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        schema:
+          example:
+          - '0x6b175474e89094c44da98b954eedeac495271d0f'
+          type: array
+          items:
+            type: string
+      - name: destinationChainId
+        required: false
+        in: query
+        description: Chain ID of the network to bridge to and receive tokenOut
+        schema:
+          type: number
+      - name: variableEstimates
+        required: false
+        in: query
+        schema:
+          additionalProperties:
+            type: string
+          default: null
+          type: object
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteShortcutTransaction'
+        '400':
+          description: ''
+      tags:
+      - shortcuts
+    post:
+      operationId: RouterController_postRouteShortcutTransaction
+      summary: Find optimal route between tokens (direct routes, zaps)
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RouteShortcutVariableInputs'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteShortcutTransaction'
+        '400':
+          description: ''
+      tags:
+      - shortcuts
+  /api/v1/shortcuts/route/nontokenized:
+    get:
+      operationId: NontokenizedController_routeNontokenizedShorcutTransaction
+      summary: Find optimal route between token and nontokenized position
+      parameters:
+      - name: chainId
+        required: false
+        in: query
+        description: Chain ID of the network to execute the transaction on
+        schema:
+          default: 1
+          example: 80094
+          type: number
+      - name: fromAddress
+        required: true
+        in: query
+        description: Ethereum address of the wallet to send the transaction from
+        schema:
+          default: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+          type: string
+      - name: routingStrategy
+        required: false
+        in: query
+        description: Routing strategy to use
+        schema:
+          nullable: true
+          default: router
+          enum:
+          - router
+          - delegate
+          - delegate-legacy
+          - checkout
+          type: string
+      - name: referralCode
+        required: false
+        in: query
+        description: Referral code that will be included in an on-chain event.
+        schema:
+          maxLength: 16
+          example: 0123456789ABCDEF
+          type: string
+      - name: destinationChainId
+        required: false
+        in: query
+        description: Chain ID of the network to bridge to and receive nontokenized position
+        schema:
+          type: number
+      - name: tokenIn
+        required: true
+        in: query
+        description: Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        schema:
+          example:
+          - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+          type: array
+          items:
+            type: string
+      - name: positionOut
+        required: true
+        in: query
+        description: ID of a non-tokenized position
+        schema:
+          type: string
+      - name: slippage
+        required: false
+        in: query
+        description: Slippage in basis points (1/10000). If specified, minAmountOut should not be specified
+        schema:
+          default: '50'
+          example: '300'
+          type: string
+      - name: fee
+        required: false
+        in: query
+        description: Fee in basis points (1/10000) for each amountIn value. Must be in range 0-100. If specified, this percentage of each amountIn value will be sent to feeReceiver
+        schema:
+          example:
+          - '100'
+          type: array
+          items:
+            type: string
+      - name: feeReceiver
+        required: false
+        in: query
+        description: The Ethereum address that will receive the collected fee. Required if fee is provided
+        schema:
+          example: '0x220866B1A2219f40e72f5c628B65D54268cA3A9D'
+          type: string
+      - name: ignoreAggregators
+        required: false
+        in: query
+        description: A list of swap aggregators to be ignored from consideration
+        schema:
+          nullable: true
+          type: array
+          items:
+            type: string
+      - name: ignoreBridges
+        required: false
+        in: query
+        description: A list of bridge protocols to be ignored from consideration
+        schema:
+          nullable: true
+          type: array
+          items:
+            type: string
+      - name: ignoreStandards
+        required: false
+        in: query
+        description: A list of standards to be ignored from consideration
+        schema:
+          nullable: true
+          type: array
+          items:
+            type: string
+      - name: amountIn
+        required: true
+        in: query
+        description: Amount of tokenIn to swap in wei
+        schema:
+          example:
+          - '1000000000000000000'
+          type: array
+          items:
+            type: string
+      - name: receiver
+        required: true
+        in: query
+        description: Ethereum address of the receiver of the positionOut
+        schema:
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+          type: string
+      - name: spender
+        required: false
+        in: query
+        description: Ethereum address of the spender of the tokenIn
+        schema:
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+          type: string
+      - name: refundReceiver
+        required: false
+        in: query
+        description: Ethereum address of the receiver of any dust tokens that might be produced during the execution of actions
+        schema:
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NontokenizedRouteShortcutTransaction'
+        '400':
+          description: ''
+      tags:
+      - shortcuts
+  /api/v1/shortcuts/bundle:
+    post:
+      operationId: BundleController_bundleShortcutTransaction
+      summary: Bundle a list of actions into a single transaction
+      externalDocs:
+        url: https://docs.enso.build/pages/build/get-started/bundling-actions
+        description: More end-to-end bundle examples
+      parameters:
+      - name: chainId
+        required: true
+        in: query
+        description: Chain ID of the network to execute the transaction on
+        schema:
+          default: 1
+          type: number
+      - name: fromAddress
+        required: true
+        in: query
+        description: Ethereum address of the wallet to send the transaction from
+        schema:
+          default: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+          type: string
+      - name: referralCode
+        required: false
+        in: query
+        description: Referral code that will be included in an on-chain event.
+        schema:
+          maxLength: 16
+          example: 0123456789ABCDEF
+          type: string
+      - name: routingStrategy
+        required: false
+        in: query
+        description: Routing strategy to use
+        schema:
+          nullable: true
+          enum:
+          - ensowallet-v2
+          - router
+          - delegate
+          - router-legacy
+          - delegate-legacy
+          type: string
+      - name: executionMode
+        required: false
+        in: query
+        description: Controls how quote is built based on execution mode
+        schema:
+          default: user
+          enum:
+          - user
+          - backend
+          type: string
+      - name: receiver
+        required: false
+        in: query
+        description: Ethereum address of the receiver of the tokenOut
+        schema:
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+          type: string
+      - name: spender
+        required: false
+        in: query
+        description: Ethereum address of the spender of the tokenIn
+        schema:
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+          type: string
+      - name: refundReceiver
+        required: false
+        in: query
+        description: Ethereum address of the receiver of any dust tokens that might be produced during the execution of actions
+        schema:
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+          type: string
+      - name: ignoreAggregators
+        required: false
+        in: query
+        description: A list of swap aggregators to be ignored from consideration
+        schema:
+          nullable: true
+          type: array
+          items:
+            type: string
+      - name: skipQuote
+        required: false
+        in: query
+        description: Flag to skip quoting (if true, amountOut and gas will not be returned)
+        schema:
+          type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                oneOf:
+                - $ref: '#/components/schemas/RouteActionDto'
+                - $ref: '#/components/schemas/SwapActionDto'
+                - $ref: '#/components/schemas/BridgeActionDto'
+                - $ref: '#/components/schemas/BalanceActionDto'
+                - $ref: '#/components/schemas/ApproveActionDto'
+                - $ref: '#/components/schemas/TransferActionDto'
+                - $ref: '#/components/schemas/TransferFromActionDto'
+                - $ref: '#/components/schemas/PermitTransferFromActionDto'
+                - $ref: '#/components/schemas/DepositActionDto'
+                - $ref: '#/components/schemas/RedeemActionDto'
+                - $ref: '#/components/schemas/DepositCLMMActionDto'
+                - $ref: '#/components/schemas/RedeemCLMMActionDto'
+                - $ref: '#/components/schemas/TokenizedSingleDepositActionDto'
+                - $ref: '#/components/schemas/TokenizedMultiDepositActionDto'
+                - $ref: '#/components/schemas/TokenizedSingleRedeemActionDto'
+                - $ref: '#/components/schemas/TokenizedMultiRedeemActionDto'
+                - $ref: '#/components/schemas/MultiOutSingleDepositActionDto'
+                - $ref: '#/components/schemas/CallActionDto'
+                - $ref: '#/components/schemas/FlashloanActionDto'
+                - $ref: '#/components/schemas/WithdrawActionDto'
+                - $ref: '#/components/schemas/SplitActionDto'
+                - $ref: '#/components/schemas/MergeActionDto'
+                - $ref: '#/components/schemas/MinAmountOutActionDto'
+                - $ref: '#/components/schemas/SlippageActionDto'
+                - $ref: '#/components/schemas/FeeActionDto'
+                - $ref: '#/components/schemas/EnsoFeeActionDto'
+                - $ref: '#/components/schemas/PaymasterFeeActionDto'
+                - $ref: '#/components/schemas/RepayActionDto'
+                - $ref: '#/components/schemas/BorrowActionDto'
+                - $ref: '#/components/schemas/HarvestActionDto'
+                - $ref: '#/components/schemas/SingleDepositActionDto'
+                - $ref: '#/components/schemas/MultiDepositActionDto'
+                - $ref: '#/components/schemas/SingleRedeemActionDto'
+                - $ref: '#/components/schemas/MultiRedeemActionDto'
+                - $ref: '#/components/schemas/MathActionDto'
+                - $ref: '#/components/schemas/ComparisonActionDto'
+                - $ref: '#/components/schemas/ConditionActionDto'
+                - $ref: '#/components/schemas/ToggleActionDto'
+                discriminator:
+                  propertyName: action
+                  mapping:
+                    route: '#/components/schemas/RouteActionDto'
+                    swap: '#/components/schemas/SwapActionDto'
+                    bridge: '#/components/schemas/BridgeActionDto'
+                    balance: '#/components/schemas/BalanceActionDto'
+                    approve: '#/components/schemas/ApproveActionDto'
+                    transfer: '#/components/schemas/TransferActionDto'
+                    transferfrom: '#/components/schemas/TransferFromActionDto'
+                    permittransferfrom: '#/components/schemas/PermitTransferFromActionDto'
+                    deposit: '#/components/schemas/DepositActionDto'
+                    redeem: '#/components/schemas/RedeemActionDto'
+                    depositclmm: '#/components/schemas/DepositCLMMActionDto'
+                    redeemclmm: '#/components/schemas/RedeemCLMMActionDto'
+                    tokenizedsingledeposit: '#/components/schemas/TokenizedSingleDepositActionDto'
+                    tokenizedmultideposit: '#/components/schemas/TokenizedMultiDepositActionDto'
+                    tokenizedsingleredeem: '#/components/schemas/TokenizedSingleRedeemActionDto'
+                    tokenizedmultiredeem: '#/components/schemas/TokenizedMultiRedeemActionDto'
+                    multioutsingledeposit: '#/components/schemas/MultiOutSingleDepositActionDto'
+                    call: '#/components/schemas/CallActionDto'
+                    flashloan: '#/components/schemas/FlashloanActionDto'
+                    withdraw: '#/components/schemas/WithdrawActionDto'
+                    singlewithdraw: '#/components/schemas/WithdrawActionDto'
+                    singlewithdrawwithpositionid: '#/components/schemas/WithdrawActionDto'
+                    multiwithdraw: '#/components/schemas/WithdrawActionDto'
+                    split: '#/components/schemas/SplitActionDto'
+                    merge: '#/components/schemas/MergeActionDto'
+                    minamountout: '#/components/schemas/MinAmountOutActionDto'
+                    slippage: '#/components/schemas/SlippageActionDto'
+                    fee: '#/components/schemas/FeeActionDto'
+                    ensofee: '#/components/schemas/EnsoFeeActionDto'
+                    paymasterfee: '#/components/schemas/PaymasterFeeActionDto'
+                    repay: '#/components/schemas/RepayActionDto'
+                    borrow: '#/components/schemas/BorrowActionDto'
+                    harvest: '#/components/schemas/HarvestActionDto'
+                    singledeposit: '#/components/schemas/SingleDepositActionDto'
+                    multideposit: '#/components/schemas/MultiDepositActionDto'
+                    singleredeem: '#/components/schemas/SingleRedeemActionDto'
+                    multiredeem: '#/components/schemas/MultiRedeemActionDto'
+                    add: '#/components/schemas/MathActionDto'
+                    sub: '#/components/schemas/MathActionDto'
+                    mul: '#/components/schemas/MathActionDto'
+                    div: '#/components/schemas/MathActionDto'
+                    min: '#/components/schemas/MathActionDto'
+                    max: '#/components/schemas/MathActionDto'
+                    isequal: '#/components/schemas/ComparisonActionDto'
+                    islessthan: '#/components/schemas/ComparisonActionDto'
+                    isequalorlessthan: '#/components/schemas/ComparisonActionDto'
+                    isgreaterthan: '#/components/schemas/ComparisonActionDto'
+                    isequalorgreaterthan: '#/components/schemas/ComparisonActionDto'
+                    not: '#/components/schemas/ConditionActionDto'
+                    check: '#/components/schemas/ConditionActionDto'
+                    toggle: '#/components/schemas/ToggleActionDto'
+                description: Each item is a protocol action; items are executed sequentially
+              description: List of actions to bundle
+            examples:
+              route:
+                summary: Route 0.0000001 ETH -> stETH with 3% slippage (Mainnet)
+                value:
+                - protocol: enso
+                  action: route
+                  args:
+                    tokenIn: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+                    tokenOut: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84'
+                    amountIn: '100000000000'
+                    slippage: '300'
+              bridge:
+                summary: Bridge native (Optimism -> Unichain) with callback route
+                value:
+                - protocol: stargate
+                  action: bridge
+                  args:
+                    primaryAddress: '0xe8cdf27acd73a434d661c84887215f7598e7d0d3'
+                    destinationChainId: 130
+                    tokenIn: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+                    amountIn: '5000000000000000000'
+                    receiver: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+                    callback:
+                    - protocol: enso
+                      action: balance
+                      args:
+                        token: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+                    - protocol: enso
+                      action: route
+                      args:
+                        slippage: '100'
+                        tokenIn: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+                        tokenOut: '0x078d782b760474a361dda0af3839290b0ef57ad6'
+                        amountIn:
+                          useOutputOfCallAt: 0
+              approve:
+                summary: Approve token spending
+                value:
+                - protocol: erc20
+                  action: approve
+                  args:
+                    token: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
+                    spender: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
+                    amount: '115792089237316195423570985008687907853269984665640564039457'
+                    routingStrategy: router
+              deposit:
+                summary: Deposit into a vault
+                value:
+                - protocol: yearn-v2
+                  action: deposit
+                  args:
+                    tokenIn: '0x6B175474E89094C44Da98b954EedeAC495271d0F'
+                    tokenOut: '0xdA816459F1AB5631232FE5e97a05BBBb94970c95'
+                    amountIn: '10000000000000000000'
+                    primaryAddress: '0xdA816459F1AB5631232FE5e97a05BBBb94970c95'
+                    receiver: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e'
+              redeem:
+                summary: Redeem from a vault
+                value:
+                - protocol: yearn-v2
+                  action: redeem
+                  args:
+                    tokenIn: '0xdA816459F1AB5631232FE5e97a05BBBb94970c95'
+                    tokenOut: '0x6B175474E89094C44Da98b954EedeAC495271d0F'
+                    amountIn: '10000000000000000000'
+                    primaryAddress: '0xdA816459F1AB5631232FE5e97a05BBBb94970c95'
+                    receiver: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e'
+              call:
+                summary: Reference previous output as msg.value and call deposit on WETH
+                value:
+                - protocol: enso
+                  action: route
+                  args:
+                    tokenIn: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+                    tokenOut: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+                    amountIn: '1000000000'
+                - protocol: enso
+                  action: call
+                  args:
+                    address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+                    method: deposit
+                    abi: function deposit() external payable
+                    args: []
+                    value:
+                      useOutputOfCallAt: 0
+              split_merge:
+                summary: Split USDT then deposit CLMM on Sushiswap V3 (Arbitrum One)
+                value:
+                - protocol: enso
+                  action: split
+                  args:
+                    tokenIn: '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9'
+                    tokenOut:
+                    - '0xaf88d065e77c8cc2239327c5edb3a432268e5831'
+                    - '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9'
+                    amountIn: '100000000'
+                - protocol: sushiswap-v3
+                  action: depositclmm
+                  args:
+                    tokenOut: '0xf0cbce1942a68beb3d1b73f0dd86c8dcc363ef49'
+                    ticks:
+                    - -887271
+                    - 887271
+                    tokenIn:
+                    - '0xaf88d065e77c8cc2239327c5edb3a432268e5831'
+                    - '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9'
+                    poolFee: '100'
+                    amountIn:
+                    - useOutputOfCallAt: 0
+                      index: 0
+                    - useOutputOfCallAt: 0
+                      index: 1
+              fees:
+                summary: Apply fee and ensofee
+                value:
+                - protocol: enso
+                  action: fee
+                  args:
+                    receiver: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+                    token: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                    amount: '1000000'
+                    bps: '50'
+                - protocol: enso
+                  action: ensofee
+                  args:
+                    token: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                    amount:
+                      useOutputOfCallAt: 0
+                    bps: '25'
+              zap_multiple_lps:
+                summary: Multiple dependent routes (Mainnet)
+                value:
+                - protocol: enso
+                  action: route
+                  args:
+                    tokenIn: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+                    tokenOut: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84'
+                    amountIn: '1000000000000000000'
+                    slippage: '300'
+                - protocol: enso
+                  action: route
+                  args:
+                    tokenIn: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84'
+                    tokenOut: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                    amountIn:
+                      useOutputOfCallAt: 0
+                    slippage: '1000'
+                    ignoreAggregators:
+                    - openocean
+                - protocol: enso
+                  action: route
+                  args:
+                    tokenIn: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                    tokenOut: '0x6b175474e89094c44da98b954eedeac495271d0f'
+                    amountIn:
+                      useOutputOfCallAt: 1
+                    slippage: '300'
+              yield_compounding:
+                summary: 'Complex bundle: route -> aave deposit -> token transfer'
+                value:
+                - protocol: enso
+                  action: route
+                  args:
+                    tokenIn: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+                    tokenOut: '0xae78736Cd615f374D3085123A210448E74Fc6393'
+                    amountIn: '10000000000000000'
+                    slippage: '300'
+                - protocol: aave-v3
+                  action: deposit
+                  args:
+                    primaryAddress: '0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2'
+                    tokenIn: '0xae78736Cd615f374D3085123A210448E74Fc6393'
+                    tokenOut: '0xCc9EE9483f662091a1de4795249E24aC0aC2630f'
+                    amountIn:
+                      useOutputOfCallAt: 0
+                - protocol: enso
+                  action: call
+                  args:
+                    address: '0xCc9EE9483f662091a1de4795249E24aC0aC2630f'
+                    method: transfer
+                    abi: function transfer(address,uint256) external
+                    args:
+                    - '0x93621DCA56fE26Cdee86e4F6B18E116e9758Ff11'
+                    - useOutputOfCallAt: 1
+              math_split_transfer:
+                summary: Route ETH -> USDC, divide by 2, transfer halves to two addresses
+                value:
+                - protocol: enso
+                  action: route
+                  args:
+                    tokenIn: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+                    tokenOut: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                    amountIn: '1000000000000000000'
+                    slippage: '300'
+                - protocol: math
+                  action: div
+                  args:
+                    amountA:
+                      useOutputOfCallAt: 0
+                    amountB: '2'
+                - protocol: erc20
+                  action: transfer
+                  args:
+                    token: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                    amount:
+                      useOutputOfCallAt: 1
+                    receiver: '0xE02F274E67871a4eb8e1463651173b13338f89c2'
+                - protocol: erc20
+                  action: transfer
+                  args:
+                    token: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                    amount:
+                      useOutputOfCallAt: 1
+                    receiver: '0x70f87ac4d8441626a53DF0E65361190E190C1b4e'
+              lsd_looping:
+                summary: Multiple dependent routes with onchain fee (Mainnet)
+                value:
+                - protocol: enso
+                  action: route
+                  args:
+                    tokenIn: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+                    tokenOut: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84'
+                    amountIn: '1000000000000000000'
+                    slippage: '300'
+                - protocol: enso
+                  action: route
+                  args:
+                    tokenIn: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84'
+                    tokenOut: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                    amountIn:
+                      useOutputOfCallAt: 0
+                    fee:
+                    - '100'
+                    feeReceiver: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+                    ignoreAggregators:
+                    - openocean
+                    slippage: '1000'
+                - protocol: enso
+                  action: route
+                  args:
+                    tokenIn: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                    tokenOut: '0x6b175474e89094c44da98b954eedeac495271d0f'
+                    amountIn:
+                      useOutputOfCallAt: 1
+                    slippage: '300'
+              alchemix_loop_1:
+                summary: 'Alchemix self-repaying loop with extra borrow (regression: per-action receiver routing)'
+                value:
+                - protocol: alchemix-vaults-v3
+                  action: deposit
+                  args:
+                    primaryAddress: '0xeB83112d925268BeDe86654C13D423a987587e3E'
+                    tokenIn: '0x9B44efCa3e2a707B63Dc00CE79d646E5E5D24bA5'
+                    tokenOut: '0xeB83112d925268BeDe86654C13D423a987587e3E'
+                    amountIn: '10000000000000000000'
+                    receiver: '0x0000000000000000000000000000000000000000'
+                    tokenId: '0'
+                - protocol: alchemix-vaults-v3
+                  action: borrow
+                  args:
+                    primaryAddress: '0xeB83112d925268BeDe86654C13D423a987587e3E'
+                    collateral: '0xbc6da0fe9ad5f3b0d58160288917aa56653660e9'
+                    tokenOut: '0xbc6da0fe9ad5f3b0d58160288917aa56653660e9'
+                    amountOut: '7500000000000000000'
+                    tokenId:
+                      useOutputOfCallAt: 0
+                      index: 0
+                - protocol: enso
+                  action: route
+                  args:
+                    tokenIn:
+                    - '0xbc6da0fe9ad5f3b0d58160288917aa56653660e9'
+                    amountIn:
+                      useOutputOfCallAt: 1
+                    tokenOut:
+                    - '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                    slippage: '100'
+                - protocol: alchemix-myts
+                  action: deposit
+                  args:
+                    primaryAddress: '0x9B44efCa3e2a707B63Dc00CE79d646E5E5D24bA5'
+                    tokenIn: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                    tokenOut: '0x9B44efCa3e2a707B63Dc00CE79d646E5E5D24bA5'
+                    amountIn:
+                      useOutputOfCallAt: 2
+                - protocol: alchemix-vaults-v3
+                  action: deposit
+                  args:
+                    primaryAddress: '0xeB83112d925268BeDe86654C13D423a987587e3E'
+                    tokenIn: '0x9B44efCa3e2a707B63Dc00CE79d646E5E5D24bA5'
+                    tokenOut: '0xeB83112d925268BeDe86654C13D423a987587e3E'
+                    amountIn:
+                      useOutputOfCallAt: 3
+                    receiver: '0x0000000000000000000000000000000000000000'
+                    tokenId:
+                      useOutputOfCallAt: 0
+                      index: 0
+                - protocol: alchemix-vaults-v3
+                  action: borrow
+                  args:
+                    primaryAddress: '0xeB83112d925268BeDe86654C13D423a987587e3E'
+                    collateral: '0xbc6da0fe9ad5f3b0d58160288917aa56653660e9'
+                    tokenOut: '0xbc6da0fe9ad5f3b0d58160288917aa56653660e9'
+                    amountOut: '7000000000000000000'
+                    receiver: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+                    tokenId:
+                      useOutputOfCallAt: 0
+                      index: 0
+              alchemix_loop_1_erc721:
+                summary: Alchemix self-repaying loop + erc721:transferfrom of position NFT
+                value:
+                - protocol: alchemix-vaults-v3
+                  action: deposit
+                  args:
+                    primaryAddress: '0xeB83112d925268BeDe86654C13D423a987587e3E'
+                    tokenIn: '0x9B44efCa3e2a707B63Dc00CE79d646E5E5D24bA5'
+                    tokenOut: '0xeB83112d925268BeDe86654C13D423a987587e3E'
+                    amountIn: '10000000000000000000'
+                    receiver: '0x0000000000000000000000000000000000000000'
+                    tokenId: '0'
+                - protocol: alchemix-vaults-v3
+                  action: borrow
+                  args:
+                    primaryAddress: '0xeB83112d925268BeDe86654C13D423a987587e3E'
+                    collateral: '0xbc6da0fe9ad5f3b0d58160288917aa56653660e9'
+                    tokenOut: '0xbc6da0fe9ad5f3b0d58160288917aa56653660e9'
+                    amountOut: '7500000000000000000'
+                    tokenId:
+                      useOutputOfCallAt: 0
+                      index: 0
+                - protocol: enso
+                  action: route
+                  args:
+                    tokenIn:
+                    - '0xbc6da0fe9ad5f3b0d58160288917aa56653660e9'
+                    amountIn:
+                      useOutputOfCallAt: 1
+                    tokenOut:
+                    - '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                    slippage: '100'
+                - protocol: alchemix-myts
+                  action: deposit
+                  args:
+                    primaryAddress: '0x9B44efCa3e2a707B63Dc00CE79d646E5E5D24bA5'
+                    tokenIn: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                    tokenOut: '0x9B44efCa3e2a707B63Dc00CE79d646E5E5D24bA5'
+                    amountIn:
+                      useOutputOfCallAt: 2
+                - protocol: alchemix-vaults-v3
+                  action: deposit
+                  args:
+                    primaryAddress: '0xeB83112d925268BeDe86654C13D423a987587e3E'
+                    tokenIn: '0x9B44efCa3e2a707B63Dc00CE79d646E5E5D24bA5'
+                    tokenOut: '0xeB83112d925268BeDe86654C13D423a987587e3E'
+                    amountIn:
+                      useOutputOfCallAt: 3
+                    receiver: '0x0000000000000000000000000000000000000000'
+                    tokenId:
+                      useOutputOfCallAt: 0
+                      index: 0
+                - protocol: erc721
+                  action: transferfrom
+                  args:
+                    token: '0xeB83112d925268BeDe86654C13D423a987587e3E'
+                    receiver: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+                    tokenId:
+                      useOutputOfCallAt: 0
+                      index: 0
+              alchemix_loop_1_erc721_transfer:
+                summary: Alchemix self-repaying loop + erc721:transfer of position NFT
+                value:
+                - protocol: alchemix-vaults-v3
+                  action: deposit
+                  args:
+                    primaryAddress: '0xeB83112d925268BeDe86654C13D423a987587e3E'
+                    tokenIn: '0x9B44efCa3e2a707B63Dc00CE79d646E5E5D24bA5'
+                    tokenOut: '0xeB83112d925268BeDe86654C13D423a987587e3E'
+                    amountIn: '10000000000000000000'
+                    receiver: '0x0000000000000000000000000000000000000000'
+                    tokenId: '0'
+                - protocol: alchemix-vaults-v3
+                  action: borrow
+                  args:
+                    primaryAddress: '0xeB83112d925268BeDe86654C13D423a987587e3E'
+                    collateral: '0xbc6da0fe9ad5f3b0d58160288917aa56653660e9'
+                    tokenOut: '0xbc6da0fe9ad5f3b0d58160288917aa56653660e9'
+                    amountOut: '7500000000000000000'
+                    tokenId:
+                      useOutputOfCallAt: 0
+                      index: 0
+                - protocol: enso
+                  action: route
+                  args:
+                    tokenIn:
+                    - '0xbc6da0fe9ad5f3b0d58160288917aa56653660e9'
+                    amountIn:
+                      useOutputOfCallAt: 1
+                    tokenOut:
+                    - '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                    slippage: '100'
+                - protocol: alchemix-myts
+                  action: deposit
+                  args:
+                    primaryAddress: '0x9B44efCa3e2a707B63Dc00CE79d646E5E5D24bA5'
+                    tokenIn: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                    tokenOut: '0x9B44efCa3e2a707B63Dc00CE79d646E5E5D24bA5'
+                    amountIn:
+                      useOutputOfCallAt: 2
+                - protocol: alchemix-vaults-v3
+                  action: deposit
+                  args:
+                    primaryAddress: '0xeB83112d925268BeDe86654C13D423a987587e3E'
+                    tokenIn: '0x9B44efCa3e2a707B63Dc00CE79d646E5E5D24bA5'
+                    tokenOut: '0xeB83112d925268BeDe86654C13D423a987587e3E'
+                    amountIn:
+                      useOutputOfCallAt: 3
+                    receiver: '0x0000000000000000000000000000000000000000'
+                    tokenId:
+                      useOutputOfCallAt: 0
+                      index: 0
+                - protocol: erc721
+                  action: transfer
+                  args:
+                    token: '0xeB83112d925268BeDe86654C13D423a987587e3E'
+                    receiver: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+                    tokenId:
+                      useOutputOfCallAt: 0
+                      index: 0
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BundleShortcutTransaction'
+              examples:
+                success:
+                  summary: Successful bundle build
+                  value:
+                    createdAt: 20483231
+                    tx:
+                      to: '0x0000000000000000000000000000000000000000'
+                      from: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+                      data: 0x
+                      value: '0'
+                    gas: '450000'
+                    amountsOut:
+                      '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48': '999000'
+                    route: []
+                    bundle:
+                    - protocol: uniswap-v2
+                      action: swap
+                      args:
+                        tokenIn: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
+                        tokenOut: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                        amountIn: '1000000000000000000'
+                        receiver: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+                    - protocol: enso
+                      action: slippage
+                      args:
+                        bps: '100'
+                        amountOut:
+                          useOutputOfCallAt: 0
+          description: ''
+      tags:
+      - shortcuts
+  /api/v1/shortcuts/quote:
+    get:
+      operationId: QuoteController_quote
+      summary: Quote from a token to another
+      parameters:
+      - name: chainId
+        required: true
+        in: query
+        description: Chain ID of the network to execute the transaction on
+        schema:
+          default: 1
+          type: number
+      - name: fromAddress
+        required: false
+        in: query
+        description: Ethereum address of the wallet to send the transaction from
+        schema:
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+          type: string
+      - name: routingStrategy
+        required: false
+        in: query
+        description: Routing strategy to use
+        schema:
+          nullable: true
+          enum:
+          - ensowallet-v2
+          - router
+          - delegate
+          - router-legacy
+          - delegate-legacy
+          type: string
+      - name: tokenIn
+        required: true
+        in: query
+        description: Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        schema:
+          example:
+          - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+          type: array
+          items:
+            type: string
+      - name: tokenOut
+        required: true
+        in: query
+        description: Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        schema:
+          example:
+          - '0x6b175474e89094c44da98b954eedeac495271d0f'
+          type: array
+          items:
+            type: string
+      - name: amountIn
+        required: true
+        in: query
+        description: Amount of tokenIn to swap in wei
+        schema:
+          example:
+          - '1000000000000000000'
+          type: array
+          items:
+            type: string
+      - name: fee
+        required: false
+        in: query
+        description: Fee in basis points (1/10000) for each amountIn value. Must be in range 0-100. If specified, this percentage of each amountIn value will be sent to feeReceiver
+        schema:
+          type: array
+          items:
+            type: string
+      - name: feeReceiver
+        required: false
+        in: query
+        description: The Ethereum address that will receive the collected fee. Required if fee is provided
+        schema:
+          example: '0x220866B1A2219f40e72f5c628B65D54268cA3A9D'
+          type: string
+      - name: ignoreAggregators
+        required: false
+        in: query
+        description: A list of swap aggregators to be ignored from consideration
+        schema:
+          nullable: true
+          type: array
+          items:
+            type: string
+      - name: ignoreStandards
+        required: false
+        in: query
+        description: A list of standards to be ignored from consideration
+        schema:
+          nullable: true
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteEndpointResponse'
+        '400':
+          description: ''
+      tags:
+      - shortcuts
+  /api/v1/shortcuts/static/ipor:
+    post:
+      operationId: IporController_iporShortcutTransaction
+      summary: Get transaction for IPOR shortcut
+      parameters:
+      - name: chainId
+        required: true
+        in: query
+        description: Chain ID of the network to execute the transaction on
+        schema:
+          default: 1
+          type: number
+      - name: fromAddress
+        required: true
+        in: query
+        description: Ethereum address of the wallet to send the transaction from
+        schema:
+          default: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IporShortcutInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IporShortcutTransaction'
+      tags:
+      - shortcuts
+components:
+  schemas:
+    SingleDepositActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: yearn
+        action:
+          type: string
+          example: singledeposit
+        args:
+          $ref: '#/components/schemas/SingleDepositArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    DepositCLMMActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: uniswap-v4
+        action:
+          type: string
+          example: depositclmm
+        args:
+          $ref: '#/components/schemas/DepositCLMMArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    IporShortcutTransaction:
+      type: object
+      properties:
+        createdAt:
+          type: number
+          description: Block number the transaction was created on
+        tx:
+          description: The tx object to use in `ethers`
+          allOf:
+          - $ref: '#/components/schemas/Transaction'
+        logs:
+          description: Logs from the simulated transaction
+          type: array
+          items:
+            $ref: '#/components/schemas/IporLog'
+        simulationURL:
+          type: string
+          description: Tenderly simulation URL
+      required:
+      - createdAt
+      - tx
+      - logs
+      - simulationURL
+    WithdrawActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: morpho-markets-v1
+        action:
+          type: string
+          enum:
+          - withdraw
+          - singlewithdraw
+          - singlewithdrawwithpositionid
+          - multiwithdraw
+          example: withdraw
+        args:
+          $ref: '#/components/schemas/WithdrawArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    SplitArgsDto:
+      type: object
+      properties:
+        tokenIn:
+          type: string
+          description: Token to split
+          example: 0xC02a...
+        tokenOut:
+          description: Output token addresses
+          example:
+          - 0x...
+          - 0x...
+          type: array
+          items:
+            type: string
+        amountIn:
+          description: Amount to split (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000000000000000'
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+      required:
+      - tokenIn
+      - tokenOut
+      - amountIn
+    CctpBridgeProtocolArgsDto:
+      type: object
+      properties:
+        transferType:
+          type: string
+          description: CCTP only. Preferred finality threshold. "fast" requires Circle-designated fast-source support; falls back to "standard" silently when unavailable.
+          enum:
+          - fast
+          - standard
+          example: fast
+        forwardFee:
+          type: string
+          description: 'CCTP only. Forwarding Service fee bracket (destination-chain gas buffer). Applies to all CCTP transfers — Forwarding is always used to guarantee destination execution. Defaults to `high`: headroom against fee drift between quote and forward execution (an under-budgeted maxFee strands the transfer until Circle re-attempts). Pass `med`/`low` to trade delivery headroom for a better quote.'
+          enum:
+          - low
+          - med
+          - high
+          default: high
+          example: high
+        isHyperCoreTransfer:
+          type: boolean
+          description: 'CCTP HyperCore only. When true, the CCTP burn delivers USDC into HyperCore via Circle''s CctpForwarder instead of minting at `receiver` on HyperEVM. Requires `destinationChainId = 999` (HyperEVM) and a source chain other than HyperEVM. Most consumers should NOT set this directly — use the `callback: [enso:balance, hypercore-spot:deposit]` shape, or rely on `/route/nontokenized` with `positionOut = 0x2000…0000` to set it automatically.'
+          example: true
+    CallOutput:
+      type: object
+      properties:
+        useOutputOfCallAt:
+          type: number
+        index:
+          type: number
+      required:
+      - useOutputOfCallAt
+    WithdrawArgsDto:
+      type: object
+      properties:
+        tokenOut:
+          description: Output token address or addresses
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          example: 0x...
+        amountOut:
+          description: Amount or amounts to withdraw in wei
+          oneOf:
+          - type: string
+          - $ref: '#/components/schemas/CallOutput'
+          - type: array
+            items:
+              oneOf:
+              - type: string
+              - $ref: '#/components/schemas/CallOutput'
+          example: '1000000'
+        primaryAddress:
+          type: string
+          description: Protocol contract address
+          example: 0x...
+        receiver:
+          type: string
+          description: Receiver address
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+        onBehalfOf:
+          type: string
+          description: Address on whose behalf the withdrawal is made
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+        positionId:
+          type: string
+          description: Position identifier for singlewithdrawwithpositionid
+          example: '0x01'
+        args:
+          type: object
+          description: Protocol-specific additional withdrawal arguments
+          additionalProperties:
+            type: string
+      required:
+      - tokenOut
+      - amountOut
+      - primaryAddress
+    MultiDepositArgsDto:
+      type: object
+      properties:
+        onBehalfOf:
+          type: string
+          description: Address that will own the resulting protocol position
+          example: 0x...
+        args:
+          type: object
+          description: Protocol-specific additional action arguments
+          additionalProperties:
+            type: string
+        tokenIn:
+          description: Input tokens
+          example:
+          - 0x...
+          - 0x...
+          type: array
+          items:
+            type: string
+        tokenOut:
+          type: string
+          description: Output token
+          example: 0x...
+        amountIn:
+          type: array
+          description: Amounts (or previous output references)
+          items:
+            oneOf:
+            - type: string
+            - $ref: '#/components/schemas/CallOutput'
+          example:
+          - '100'
+          - useOutputOfCallAt: 0
+        primaryAddress:
+          type: string
+          description: Primary contract
+          example: 0x...
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+      required:
+      - tokenIn
+      - amountIn
+      - primaryAddress
+    PaymasterFeeActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          example: enso
+        action:
+          type: string
+          example: paymasterfee
+        args:
+          $ref: '#/components/schemas/PaymasterFeeArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    TransferActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: erc20
+        action:
+          type: string
+          example: transfer
+        args:
+          $ref: '#/components/schemas/TransferArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    TokenizedSingleDepositArgsDto:
+      type: object
+      properties:
+        onBehalfOf:
+          type: string
+          description: Address that will own the resulting protocol position
+          example: 0x...
+        args:
+          type: object
+          description: Protocol-specific additional action arguments
+          additionalProperties:
+            type: string
+        tokenIn:
+          type: string
+          description: Input token address
+          example: 0x...
+        tokenOut:
+          type: string
+          description: Output token address
+          example: 0x...
+        amountIn:
+          description: Amount to deposit (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000'
+        primaryAddress:
+          type: string
+          description: Primary contract address
+          example: 0x...
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+      required:
+      - tokenIn
+      - tokenOut
+      - amountIn
+      - primaryAddress
+    MultiOutSingleDepositArgsDto:
+      type: object
+      properties:
+        onBehalfOf:
+          type: string
+          description: Address that will own the resulting protocol position
+          example: 0x...
+        args:
+          type: object
+          description: Protocol-specific additional action arguments
+          additionalProperties:
+            type: string
+        tokenIn:
+          type: string
+          description: Input token address
+          example: 0x...
+        tokenOut:
+          description: Output token addresses
+          example:
+          - 0x...
+          - 0x...
+          type: array
+          items:
+            type: string
+        amountIn:
+          description: Amount to deposit (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000'
+        primaryAddress:
+          type: string
+          description: Primary contract address
+          example: 0x...
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+      required:
+      - tokenIn
+      - tokenOut
+      - amountIn
+      - primaryAddress
+    ToggleArgsDto:
+      type: object
+      properties:
+        condition:
+          description: Boolean condition (or previous output reference)
+          oneOf:
+          - type: boolean
+          - $ref: '#/components/schemas/CallOutput'
+          example:
+            useOutputOfCallAt: 0
+        amountA:
+          description: Value when condition is true (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000'
+        amountB:
+          description: Value when condition is false (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '0'
+      required:
+      - condition
+      - amountA
+      - amountB
+    BorrowActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol to borrow from
+          example: aave-v3
+        action:
+          type: string
+          example: borrow
+        args:
+          $ref: '#/components/schemas/BorrowArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    TokenizedSingleRedeemActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: yearn
+        action:
+          type: string
+          example: tokenizedsingleredeem
+        args:
+          $ref: '#/components/schemas/TokenizedSingleRedeemArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    ApproveArgsDto:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token to approve
+          example: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
+        spender:
+          type: string
+          description: Spender address
+          example: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
+        amount:
+          description: Amount to approve in wei (or previous output reference). Required for erc20.
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '115792089237316195423570985008687907853269984665640564039457'
+        tokenId:
+          type: string
+          description: ERC721 token id to approve. Required for erc721.
+          example: '123'
+      required:
+      - token
+      - spender
+    DepositActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: yearn
+        action:
+          type: string
+          example: deposit
+        args:
+          $ref: '#/components/schemas/DepositArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    FlashloanActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: bend
+        action:
+          type: string
+          enum:
+          - flashloan
+          example: flashloan
+        args:
+          $ref: '#/components/schemas/FlashloanArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    PermitTransferFromArgsDto:
+      type: object
+      properties:
+        token:
+          description: Token(s) to transfer
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          example:
+          - 0x...
+        amount:
+          description: Amount(s) (or previous output references)
+          oneOf:
+          - type: string
+          - $ref: '#/components/schemas/CallOutput'
+          - type: array
+            items:
+              oneOf:
+              - type: string
+              - $ref: '#/components/schemas/CallOutput'
+          example:
+          - '1000000'
+        sender:
+          type: string
+          description: Sender address
+          example: 0x...
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+        nonce:
+          type: string
+          description: Nonce for signature replay protection
+          example: '1'
+        deadline:
+          type: string
+          description: Deadline timestamp
+          example: '1699999999'
+        signature:
+          type: string
+          description: EIP-2612 permit signature
+          example: 0x...
+      required:
+      - token
+      - amount
+      - sender
+      - receiver
+      - nonce
+      - deadline
+      - signature
+    BundleApprovalTransaction:
+      type: object
+      properties:
+        to:
+          type: string
+        from:
+          type: string
+        data:
+          type: string
+        description:
+          type: string
+      required:
+      - to
+      - from
+      - data
+    TokenizedMultiRedeemArgsDto:
+      type: object
+      properties:
+        onBehalfOf:
+          type: string
+          description: Address that will own the resulting protocol position
+          example: 0x...
+        args:
+          type: object
+          description: Protocol-specific additional action arguments
+          additionalProperties:
+            type: string
+        tokenIn:
+          type: string
+          description: Input token address
+          example: 0x...
+        tokenOut:
+          description: Output token addresses
+          example:
+          - 0x...
+          - 0x...
+          type: array
+          items:
+            type: string
+        amountIn:
+          description: Amount to redeem (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000'
+        primaryAddress:
+          type: string
+          description: Primary contract address
+          example: 0x...
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+      required:
+      - tokenIn
+      - tokenOut
+      - amountIn
+      - primaryAddress
+    ComparisonActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          enum:
+          - helpers
+          example: helpers
+        action:
+          type: string
+          enum:
+          - isequal
+          - islessthan
+          - isequalorlessthan
+          - isgreaterthan
+          - isequalorgreaterthan
+          example: isequal
+        args:
+          $ref: '#/components/schemas/BinaryOperationArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    Transaction:
+      type: object
+      properties:
+        data:
+          type: string
+        to:
+          type: string
+        from:
+          type: string
+        value:
+          type: string
+      required:
+      - data
+      - to
+      - from
+      - value
+    MultiOutSingleDepositActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: balancer
+        action:
+          type: string
+          example: multioutsingledeposit
+        args:
+          $ref: '#/components/schemas/MultiOutSingleDepositArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    BridgeArgsDto:
+      type: object
+      properties:
+        tokenIn:
+          type: string
+          description: Input token address
+          example: 0xC02a...
+        amountIn:
+          description: Amount to bridge (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000000000000000'
+        primaryAddress:
+          type: string
+          description: Bridging protocol contract address
+          example: 0x...
+        destinationChainId:
+          type: number
+          description: Destination chain id
+          example: 10
+        receiver:
+          type: string
+          description: Receiver address on destination chain
+          example: 0x...
+        callback:
+          type: array
+          description: Optional callback bundle on destination chain (MUST start with balance action)
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/RouteActionDto'
+            - $ref: '#/components/schemas/SwapActionDto'
+            - $ref: '#/components/schemas/BridgeActionDto'
+            - $ref: '#/components/schemas/BalanceActionDto'
+            - $ref: '#/components/schemas/ApproveActionDto'
+            - $ref: '#/components/schemas/TransferActionDto'
+            - $ref: '#/components/schemas/TransferFromActionDto'
+            - $ref: '#/components/schemas/PermitTransferFromActionDto'
+            - $ref: '#/components/schemas/DepositActionDto'
+            - $ref: '#/components/schemas/RedeemActionDto'
+            - $ref: '#/components/schemas/DepositCLMMActionDto'
+            - $ref: '#/components/schemas/RedeemCLMMActionDto'
+            - $ref: '#/components/schemas/TokenizedSingleDepositActionDto'
+            - $ref: '#/components/schemas/TokenizedMultiDepositActionDto'
+            - $ref: '#/components/schemas/TokenizedSingleRedeemActionDto'
+            - $ref: '#/components/schemas/TokenizedMultiRedeemActionDto'
+            - $ref: '#/components/schemas/MultiOutSingleDepositActionDto'
+            - $ref: '#/components/schemas/CallActionDto'
+            - $ref: '#/components/schemas/FlashloanActionDto'
+            - $ref: '#/components/schemas/WithdrawActionDto'
+            - $ref: '#/components/schemas/SplitActionDto'
+            - $ref: '#/components/schemas/MergeActionDto'
+            - $ref: '#/components/schemas/MinAmountOutActionDto'
+            - $ref: '#/components/schemas/SlippageActionDto'
+            - $ref: '#/components/schemas/FeeActionDto'
+            - $ref: '#/components/schemas/EnsoFeeActionDto'
+            - $ref: '#/components/schemas/PaymasterFeeActionDto'
+            - $ref: '#/components/schemas/RepayActionDto'
+            - $ref: '#/components/schemas/BorrowActionDto'
+            - $ref: '#/components/schemas/HarvestActionDto'
+            - $ref: '#/components/schemas/SingleDepositActionDto'
+            - $ref: '#/components/schemas/MultiDepositActionDto'
+            - $ref: '#/components/schemas/SingleRedeemActionDto'
+            - $ref: '#/components/schemas/MultiRedeemActionDto'
+            - $ref: '#/components/schemas/MathActionDto'
+            - $ref: '#/components/schemas/ComparisonActionDto'
+            - $ref: '#/components/schemas/ConditionActionDto'
+            - $ref: '#/components/schemas/ToggleActionDto'
+            discriminator:
+              propertyName: action
+              mapping:
+                route: '#/components/schemas/RouteActionDto'
+                swap: '#/components/schemas/SwapActionDto'
+                bridge: '#/components/schemas/BridgeActionDto'
+                balance: '#/components/schemas/BalanceActionDto'
+                approve: '#/components/schemas/ApproveActionDto'
+                transfer: '#/components/schemas/TransferActionDto'
+                transferfrom: '#/components/schemas/TransferFromActionDto'
+                permittransferfrom: '#/components/schemas/PermitTransferFromActionDto'
+                deposit: '#/components/schemas/DepositActionDto'
+                redeem: '#/components/schemas/RedeemActionDto'
+                depositclmm: '#/components/schemas/DepositCLMMActionDto'
+                redeemclmm: '#/components/schemas/RedeemCLMMActionDto'
+                tokenizedsingledeposit: '#/components/schemas/TokenizedSingleDepositActionDto'
+                tokenizedmultideposit: '#/components/schemas/TokenizedMultiDepositActionDto'
+                tokenizedsingleredeem: '#/components/schemas/TokenizedSingleRedeemActionDto'
+                tokenizedmultiredeem: '#/components/schemas/TokenizedMultiRedeemActionDto'
+                multioutsingledeposit: '#/components/schemas/MultiOutSingleDepositActionDto'
+                call: '#/components/schemas/CallActionDto'
+                flashloan: '#/components/schemas/FlashloanActionDto'
+                withdraw: '#/components/schemas/WithdrawActionDto'
+                singlewithdraw: '#/components/schemas/WithdrawActionDto'
+                singlewithdrawwithpositionid: '#/components/schemas/WithdrawActionDto'
+                multiwithdraw: '#/components/schemas/WithdrawActionDto'
+                split: '#/components/schemas/SplitActionDto'
+                merge: '#/components/schemas/MergeActionDto'
+                minamountout: '#/components/schemas/MinAmountOutActionDto'
+                slippage: '#/components/schemas/SlippageActionDto'
+                fee: '#/components/schemas/FeeActionDto'
+                ensofee: '#/components/schemas/EnsoFeeActionDto'
+                paymasterfee: '#/components/schemas/PaymasterFeeActionDto'
+                repay: '#/components/schemas/RepayActionDto'
+                borrow: '#/components/schemas/BorrowActionDto'
+                harvest: '#/components/schemas/HarvestActionDto'
+                singledeposit: '#/components/schemas/SingleDepositActionDto'
+                multideposit: '#/components/schemas/MultiDepositActionDto'
+                singleredeem: '#/components/schemas/SingleRedeemActionDto'
+                multiredeem: '#/components/schemas/MultiRedeemActionDto'
+                add: '#/components/schemas/MathActionDto'
+                sub: '#/components/schemas/MathActionDto'
+                mul: '#/components/schemas/MathActionDto'
+                div: '#/components/schemas/MathActionDto'
+                min: '#/components/schemas/MathActionDto'
+                max: '#/components/schemas/MathActionDto'
+                isequal: '#/components/schemas/ComparisonActionDto'
+                islessthan: '#/components/schemas/ComparisonActionDto'
+                isequalorlessthan: '#/components/schemas/ComparisonActionDto'
+                isgreaterthan: '#/components/schemas/ComparisonActionDto'
+                isequalorgreaterthan: '#/components/schemas/ComparisonActionDto'
+                not: '#/components/schemas/ConditionActionDto'
+                check: '#/components/schemas/ConditionActionDto'
+                toggle: '#/components/schemas/ToggleActionDto'
+        callbackValue:
+          type: string
+          description: Additional native value for callback
+          example: '0'
+        protocolArgs:
+          description: Protocol-specific bridge args nested under a single field.
+          allOf:
+          - $ref: '#/components/schemas/CctpBridgeProtocolArgsDto'
+      required:
+      - tokenIn
+      - amountIn
+      - primaryAddress
+      - destinationChainId
+      - receiver
+    ApproveActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: erc20
+          enum:
+          - erc20
+          - erc721
+        action:
+          type: string
+          example: approve
+        args:
+          $ref: '#/components/schemas/ApproveArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    ActionToBundle:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol to interact with
+          example: enso
+        action:
+          type: string
+          enum:
+          - approve
+          - borrow
+          - borrowwithpositionid
+          - bridge
+          - deposit
+          - singledeposit
+          - singledepositwithpositionid
+          - multideposit
+          - multidepositwithpositionid
+          - tokenizedsingledeposit
+          - tokenizedmultideposit
+          - multioutsingledeposit
+          - depositclmm
+          - depositwithestimate
+          - encodedswap
+          - flashloan
+          - singletokenflashloan
+          - multitokenflashloan
+          - harvest
+          - nftborrow
+          - nftdeposit
+          - nftmultideposit
+          - nftmultiredeem
+          - nftredeem
+          - nftrepay
+          - permittransferfrom
+          - redeem
+          - singleredeem
+          - singleredeemwithpositionid
+          - multiredeem
+          - tokenizedsingleredeem
+          - tokenizedmultiredeem
+          - redeemclmm
+          - redeemwithestimate
+          - repay
+          - repaywithpositionid
+          - swap
+          - transfer
+          - transferfrom
+          - withdraw
+          - singlewithdraw
+          - singlewithdrawwithpositionid
+          - multiwithdraw
+          - route
+          - call
+          - split
+          - ondosplit
+          - merge
+          - balance
+          - minamountout
+          - slippage
+          - fee
+          - ensofee
+          - paymasterfee
+          - depositposition
+          - add
+          - sub
+          - mul
+          - div
+          - min
+          - max
+          - isequal
+          - islessthan
+          - isequalorlessthan
+          - isgreaterthan
+          - isequalorgreaterthan
+          - not
+          - check
+          - toggle
+          example: route
+        args:
+          type: object
+          additionalProperties: true
+          example:
+            tokenIn: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+            tokenOut: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84'
+            amountIn: '100000000000'
+            slippage: '300'
+            fee:
+            - '100'
+            feeReceiver: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+      required:
+      - protocol
+      - action
+      - args
+    MinAmountOutArgsDto:
+      type: object
+      properties:
+        amountOut:
+          description: Expected output amount (previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example:
+            useOutputOfCallAt: 0
+        minAmountOut:
+          description: Minimum acceptable amount
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '995000000'
+      required:
+      - amountOut
+      - minAmountOut
+    SplitActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          example: enso
+        action:
+          type: string
+          example: split
+        args:
+          $ref: '#/components/schemas/SplitArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    RepayArgsDto:
+      type: object
+      properties:
+        tokenIn:
+          type: string
+          description: Token to repay with
+          example: 0xC02a...
+        amountIn:
+          description: Amount to repay (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000000000000000'
+        primaryAddress:
+          type: string
+          description: Lending pool contract address
+          example: 0x...
+        onBehalfOf:
+          type: string
+          description: Address on whose behalf the debt is repaid
+          example: 0x...
+        positionId:
+          type: string
+          description: Position identifier for position-based lending protocols
+          example: '0x01'
+        tokenId:
+          type: string
+          description: Token identifier for token-based lending positions
+          example: '123'
+        args:
+          type: object
+          description: Protocol-specific additional repay arguments
+          additionalProperties:
+            type: string
+      required:
+      - tokenIn
+      - amountIn
+      - primaryAddress
+    TransferArgsDto:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token address
+          example: 0xA0b8...eB48
+        amount:
+          description: Amount to transfer (or previous output reference). Required for erc20.
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000'
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+        tokenId:
+          type: string
+          description: ERC721 token id. Required for erc721; ignored otherwise.
+          example: '123'
+      required:
+      - token
+      - receiver
+    PermitTransferFromActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: erc20
+        action:
+          type: string
+          example: permittransferfrom
+        args:
+          $ref: '#/components/schemas/PermitTransferFromArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    IporShortcutInput:
+      type: object
+      properties:
+        isRouter:
+          type: boolean
+          description: Flag that indicates whether to use the shared router
+          nullable: true
+        amountIn:
+          type: string
+          description: Amount of tokenIn in wei
+          example: '1000000000000000'
+        tokenIn:
+          type: string
+          description: Address of the tokenIn. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+          example: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+        tokenBToBuy:
+          type: string
+          description: Address of the tokenBToBuy
+          example: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+        percentageForTokenB:
+          type: string
+          description: Percentage of tokenB to buy in basis points (1/10000)
+          example: '5000'
+        slippage:
+          type: string
+          description: Slippage in basis points (1/10000). Default is 300
+          example: '300'
+          default: '300'
+        simulate:
+          type: boolean
+          description: Flag that indicates whether to simulate the transaction, verify some assertions, return simulationURL and events
+          nullable: true
+          default: false
+      required:
+      - amountIn
+      - tokenIn
+      - tokenBToBuy
+      - percentageForTokenB
+    SlippageArgsDto:
+      type: object
+      properties:
+        bps:
+          type: string
+          description: Maximum slippage in basis points
+          example: '100'
+        amountOut:
+          description: Expected output amount reference
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example:
+            useOutputOfCallAt: 0
+      required:
+      - bps
+      - amountOut
+    FlashloanArgsDto:
+      type: object
+      properties:
+        flashloanToken:
+          description: Token address or addresses to flashloan
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          example: '0xfcbd14dc51f0a4d49d5e53c2e0950e0bc26d0dce'
+        flashloanAmount:
+          description: Flashloan amount or amounts in wei
+          oneOf:
+          - type: string
+          - $ref: '#/components/schemas/CallOutput'
+          - type: array
+            items:
+              oneOf:
+              - type: string
+              - $ref: '#/components/schemas/CallOutput'
+          example: '1000000000000000000'
+        tokenIn:
+          description: Additional user token address or addresses to combine with the flashloan
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        amountIn:
+          description: Amount or amounts for additional user tokens
+          oneOf:
+          - type: string
+          - $ref: '#/components/schemas/CallOutput'
+          - type: array
+            items:
+              oneOf:
+              - type: string
+              - $ref: '#/components/schemas/CallOutput'
+        tokenOut:
+          description: Token address or addresses expected after the callback
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        callback:
+          type: array
+          description: Actions to execute within the flashloan callback
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/RouteActionDto'
+            - $ref: '#/components/schemas/SwapActionDto'
+            - $ref: '#/components/schemas/BridgeActionDto'
+            - $ref: '#/components/schemas/BalanceActionDto'
+            - $ref: '#/components/schemas/ApproveActionDto'
+            - $ref: '#/components/schemas/TransferActionDto'
+            - $ref: '#/components/schemas/TransferFromActionDto'
+            - $ref: '#/components/schemas/PermitTransferFromActionDto'
+            - $ref: '#/components/schemas/DepositActionDto'
+            - $ref: '#/components/schemas/RedeemActionDto'
+            - $ref: '#/components/schemas/DepositCLMMActionDto'
+            - $ref: '#/components/schemas/RedeemCLMMActionDto'
+            - $ref: '#/components/schemas/TokenizedSingleDepositActionDto'
+            - $ref: '#/components/schemas/TokenizedMultiDepositActionDto'
+            - $ref: '#/components/schemas/TokenizedSingleRedeemActionDto'
+            - $ref: '#/components/schemas/TokenizedMultiRedeemActionDto'
+            - $ref: '#/components/schemas/MultiOutSingleDepositActionDto'
+            - $ref: '#/components/schemas/CallActionDto'
+            - $ref: '#/components/schemas/FlashloanActionDto'
+            - $ref: '#/components/schemas/WithdrawActionDto'
+            - $ref: '#/components/schemas/SplitActionDto'
+            - $ref: '#/components/schemas/MergeActionDto'
+            - $ref: '#/components/schemas/MinAmountOutActionDto'
+            - $ref: '#/components/schemas/SlippageActionDto'
+            - $ref: '#/components/schemas/FeeActionDto'
+            - $ref: '#/components/schemas/EnsoFeeActionDto'
+            - $ref: '#/components/schemas/PaymasterFeeActionDto'
+            - $ref: '#/components/schemas/RepayActionDto'
+            - $ref: '#/components/schemas/BorrowActionDto'
+            - $ref: '#/components/schemas/HarvestActionDto'
+            - $ref: '#/components/schemas/SingleDepositActionDto'
+            - $ref: '#/components/schemas/MultiDepositActionDto'
+            - $ref: '#/components/schemas/SingleRedeemActionDto'
+            - $ref: '#/components/schemas/MultiRedeemActionDto'
+            - $ref: '#/components/schemas/MathActionDto'
+            - $ref: '#/components/schemas/ComparisonActionDto'
+            - $ref: '#/components/schemas/ConditionActionDto'
+            - $ref: '#/components/schemas/ToggleActionDto'
+            discriminator:
+              propertyName: action
+              mapping:
+                route: '#/components/schemas/RouteActionDto'
+                swap: '#/components/schemas/SwapActionDto'
+                bridge: '#/components/schemas/BridgeActionDto'
+                balance: '#/components/schemas/BalanceActionDto'
+                approve: '#/components/schemas/ApproveActionDto'
+                transfer: '#/components/schemas/TransferActionDto'
+                transferfrom: '#/components/schemas/TransferFromActionDto'
+                permittransferfrom: '#/components/schemas/PermitTransferFromActionDto'
+                deposit: '#/components/schemas/DepositActionDto'
+                redeem: '#/components/schemas/RedeemActionDto'
+                depositclmm: '#/components/schemas/DepositCLMMActionDto'
+                redeemclmm: '#/components/schemas/RedeemCLMMActionDto'
+                tokenizedsingledeposit: '#/components/schemas/TokenizedSingleDepositActionDto'
+                tokenizedmultideposit: '#/components/schemas/TokenizedMultiDepositActionDto'
+                tokenizedsingleredeem: '#/components/schemas/TokenizedSingleRedeemActionDto'
+                tokenizedmultiredeem: '#/components/schemas/TokenizedMultiRedeemActionDto'
+                multioutsingledeposit: '#/components/schemas/MultiOutSingleDepositActionDto'
+                call: '#/components/schemas/CallActionDto'
+                flashloan: '#/components/schemas/FlashloanActionDto'
+                withdraw: '#/components/schemas/WithdrawActionDto'
+                singlewithdraw: '#/components/schemas/WithdrawActionDto'
+                singlewithdrawwithpositionid: '#/components/schemas/WithdrawActionDto'
+                multiwithdraw: '#/components/schemas/WithdrawActionDto'
+                split: '#/components/schemas/SplitActionDto'
+                merge: '#/components/schemas/MergeActionDto'
+                minamountout: '#/components/schemas/MinAmountOutActionDto'
+                slippage: '#/components/schemas/SlippageActionDto'
+                fee: '#/components/schemas/FeeActionDto'
+                ensofee: '#/components/schemas/EnsoFeeActionDto'
+                paymasterfee: '#/components/schemas/PaymasterFeeActionDto'
+                repay: '#/components/schemas/RepayActionDto'
+                borrow: '#/components/schemas/BorrowActionDto'
+                harvest: '#/components/schemas/HarvestActionDto'
+                singledeposit: '#/components/schemas/SingleDepositActionDto'
+                multideposit: '#/components/schemas/MultiDepositActionDto'
+                singleredeem: '#/components/schemas/SingleRedeemActionDto'
+                multiredeem: '#/components/schemas/MultiRedeemActionDto'
+                add: '#/components/schemas/MathActionDto'
+                sub: '#/components/schemas/MathActionDto'
+                mul: '#/components/schemas/MathActionDto'
+                div: '#/components/schemas/MathActionDto'
+                min: '#/components/schemas/MathActionDto'
+                max: '#/components/schemas/MathActionDto'
+                isequal: '#/components/schemas/ComparisonActionDto'
+                islessthan: '#/components/schemas/ComparisonActionDto'
+                isequalorlessthan: '#/components/schemas/ComparisonActionDto'
+                isgreaterthan: '#/components/schemas/ComparisonActionDto'
+                isequalorgreaterthan: '#/components/schemas/ComparisonActionDto'
+                not: '#/components/schemas/ConditionActionDto'
+                check: '#/components/schemas/ConditionActionDto'
+                toggle: '#/components/schemas/ToggleActionDto'
+        receiver:
+          type: string
+          description: Receiver address
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+        primaryAddress:
+          type: string
+          description: Flashloan pool or lender contract address
+          example: '0x24147243f9c08d835C218Cda1e135f8dFD0517D0'
+      required:
+      - flashloanToken
+      - flashloanAmount
+      - tokenOut
+      - callback
+    MultiRedeemActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: yearn
+        action:
+          type: string
+          example: multiredeem
+        args:
+          $ref: '#/components/schemas/MultiRedeemArgs2Dto'
+      required:
+      - protocol
+      - action
+      - args
+    FeeActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          example: enso
+        action:
+          type: string
+          example: fee
+        args:
+          $ref: '#/components/schemas/FeeArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    MultiDepositActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: yearn
+        action:
+          type: string
+          example: multideposit
+        args:
+          $ref: '#/components/schemas/MultiDepositArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    TransferFromArgsDto:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token address
+          example: 0xA0b8...eB48
+        sender:
+          type: string
+          description: Sender address. Required for erc20; optional for erc721 (defaults to the executing wallet).
+          example: 0x...
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+        amount:
+          description: Amount to transfer (or previous output reference). Required for erc20.
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000'
+        tokenId:
+          type: string
+          description: ERC721 token id. Required for erc721; ignored otherwise.
+          example: '123'
+      required:
+      - token
+      - receiver
+    BundleShortcutTransaction:
+      type: object
+      properties:
+        bundle:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionToBundle'
+        gas:
+          type: string
+          description: Gas estimate for the transaction
+        amountsOut:
+          type: object
+          description: Expected output amounts by token address
+          additionalProperties:
+            type: string
+        route:
+          description: The route the shortcut will use
+          type: array
+          items:
+            $ref: '#/components/schemas/Hop'
+        createdAt:
+          type: number
+          description: Block number the transaction was created on
+        tx:
+          description: The tx object to use in `ethers`
+          allOf:
+          - $ref: '#/components/schemas/Transaction'
+        minAmountsOut:
+          type: object
+          description: Expected minimal output amounts by token address
+          additionalProperties:
+            type: string
+        priceImpact:
+          type: number
+          description: Price impact in basis points, null if USD price not found
+          nullable: true
+        feeAmount:
+          type: object
+          description: Fees by token address
+          additionalProperties:
+            type: string
+        userOp:
+          description: The ERC-4337 user operation object
+          allOf:
+          - $ref: '#/components/schemas/UserOperation'
+        approvals:
+          description: External approvals required before bundle execution. Each approval should be sent as a transaction by the listed `from` account.
+          example:
+          - from: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+            to: '0x1111111111111111111111111111111111111111'
+            data: 0x
+          type: array
+          items:
+            $ref: '#/components/schemas/BundleApprovalTransaction'
+        bridgingEstimates:
+          description: Estimated bridging durations for any bridge hops
+          type: array
+          items:
+            $ref: '#/components/schemas/BridgeLatencyEstimate'
+        validUntil:
+          type: number
+          description: Unix timestamp (seconds) after which this quote expires. Transactions submitted after this time may revert.
+      required:
+      - bundle
+      - createdAt
+      - tx
+    BalanceArgsDto:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token address to check balance
+          example: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+        estimate:
+          type: string
+          description: Estimated balance amount (wei). Used for route building when the account may not have a balance yet.
+          example: '1000000000000000000'
+        account:
+          type: string
+          description: Account address to check balance of. Defaults to the shortcut wallet address.
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+      required:
+      - token
+    HarvestArgsDto:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token to harvest
+          example: 0x...
+        primaryAddress:
+          type: string
+          description: Primary contract address
+          example: 0x...
+      required:
+      - token
+      - primaryAddress
+    BorrowArgsDto:
+      type: object
+      properties:
+        collateral:
+          description: Collateral token address or addresses
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          example: 0x...
+        tokenOut:
+          type: string
+          description: Token to borrow
+          example: 0xA0b8...eB48
+        amountOut:
+          description: Amount to borrow in wei (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000'
+        primaryAddress:
+          type: string
+          description: Lending pool contract address
+          example: 0x...
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+        onBehalfOf:
+          type: string
+          description: Address that will own the debt position
+          example: 0x...
+        positionId:
+          type: string
+          description: Position identifier for position-based lending protocols
+          example: '0x01'
+        tokenId:
+          type: string
+          description: Token identifier for token-based lending positions
+          example: '123'
+        args:
+          type: object
+          description: Protocol-specific additional borrow arguments
+          additionalProperties:
+            type: string
+      required:
+      - tokenOut
+      - amountOut
+      - primaryAddress
+    BinaryOperationArgsDto:
+      type: object
+      properties:
+        amountA:
+          description: First operand (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000'
+        amountB:
+          description: Second operand (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '500000'
+      required:
+      - amountA
+      - amountB
+    SwapArgsDto:
+      type: object
+      properties:
+        tokenIn:
+          type: string
+          description: Input token address
+          example: 0xC02a...
+        tokenOut:
+          type: string
+          description: Output token address
+          example: 0xA0b8...eB48
+        amountIn:
+          description: Amount to swap (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000000000000000'
+        primaryAddress:
+          type: string
+          description: Router or pool contract address
+          example: 0x7a25...
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0xd8da6bf...
+        slippage:
+          type: string
+          description: Slippage in basis points
+          example: '100'
+        poolFee:
+          type: string
+          description: Pool fee in basis points
+          example: '3000'
+        tickSpacing:
+          type: string
+          description: Tick spacing for concentrated liquidity pools
+          example: '60'
+        hooks:
+          type: string
+          description: Hook contract address
+          example: 0x...
+        poolId:
+          type: string
+          description: Pool identifier (if protocol-specific)
+          example: 0x...
+        salt:
+          type: string
+          description: Protocol-specific pool salt
+          example: 0x...
+        path:
+          description: Token path for multi-hop protocol swaps
+          example:
+          - 0x...
+          - 0x...
+          type: array
+          items:
+            type: string
+        args:
+          type: object
+          description: Protocol-specific additional swap arguments
+          additionalProperties:
+            type: string
+      required:
+      - tokenIn
+      - tokenOut
+      - amountIn
+      - primaryAddress
+    RedeemCLMMActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: uniswap-v4
+        action:
+          type: string
+          example: redeemclmm
+        args:
+          $ref: '#/components/schemas/RedeemCLMMArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    UserOperation:
+      type: object
+      properties:
+        callData:
+          type: string
+        callGasLimit:
+          type: string
+        factory:
+          type: string
+        factoryData:
+          type: string
+        maxFeePerGas:
+          type: string
+        maxPriorityFeePerGas:
+          type: string
+        nonce:
+          type: string
+        paymaster:
+          type: string
+        paymasterData:
+          type: string
+        paymasterPostOpGasLimit:
+          type: string
+        paymasterVerificationGasLimit:
+          type: string
+        preVerificationGas:
+          type: string
+        sender:
+          type: string
+        signature:
+          type: string
+        verificationGasLimit:
+          type: string
+      required:
+      - callData
+      - callGasLimit
+      - maxFeePerGas
+      - maxPriorityFeePerGas
+      - nonce
+      - preVerificationGas
+      - sender
+      - signature
+      - verificationGasLimit
+    DepositCLMMArgsDto:
+      type: object
+      properties:
+        tokenIn:
+          description: Input token addresses
+          example:
+          - 0x...
+          - 0x...
+          type: array
+          items:
+            type: string
+        tokenOut:
+          type: string
+          description: Output token address
+          example: 0x...
+        amountIn:
+          type: array
+          description: Amounts (or previous output references)
+          items:
+            oneOf:
+            - type: string
+            - $ref: '#/components/schemas/CallOutput'
+          example:
+          - '100'
+          - useOutputOfCallAt: 0
+        ticks:
+          description: Ticks for the position
+          example:
+          - '-276300'
+          - '276300'
+          type: array
+          items:
+            type: string
+        poolFee:
+          type: string
+          description: Pool fee in basis points
+          example: '3000'
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+        tickSpacing:
+          type: string
+          description: Tick spacing
+          example: '60'
+        hook:
+          type: string
+          description: Hook address
+          example: 0x...
+      required:
+      - tokenIn
+      - tokenOut
+      - amountIn
+      - ticks
+    CallActionDto:
+      type: object
+      properties:
+        action:
+          type: string
+          example: call
+        protocol:
+          type: string
+          description: Protocol to interact with
+          example: uniswap-v3
+        args:
+          $ref: '#/components/schemas/CallArgsDto'
+      required:
+      - action
+      - protocol
+      - args
+    MinAmountOutActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          example: enso
+        action:
+          type: string
+          example: minamountout
+        args:
+          $ref: '#/components/schemas/MinAmountOutArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    RouteShortcutVariableInputs:
+      type: object
+      properties:
+        chainId:
+          type: number
+          description: Chain ID of the network to execute the transaction on
+          default: 1
+        fromAddress:
+          type: string
+          description: Ethereum address of the wallet to send the transaction from
+          default: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+        routingStrategy:
+          type: string
+          description: Routing strategy to use
+          nullable: true
+          enum:
+          - ensowallet-v2
+          - router
+          - delegate
+          - router-legacy
+          - delegate-legacy
+        executionMode:
+          type: string
+          description: Controls how quote is built based on execution mode
+          enum:
+          - user
+          - backend
+          default: user
+        toEoa:
+          type: boolean
+          description: Flag that indicates if gained tokenOut should be sent to EOA
+          nullable: true
+          deprecated: true
+        receiver:
+          type: string
+          description: Ethereum address of the receiver of the tokenOut
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+        spender:
+          type: string
+          description: Ethereum address of the spender of the tokenIn
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+        refundReceiver:
+          type: string
+          description: Ethereum address of the receiver of any dust tokens that might be produced during the execution of actions
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+        amountIn:
+          description: Amount of tokenIn to swap in wei
+          example:
+          - '1000000000000000000'
+          type: array
+          items:
+            type: string
+        minAmountOut:
+          description: Minimum amount out in wei. If specified, slippage should not be specified
+          default: null
+          type: array
+          items:
+            type: string
+        slippage:
+          type: string
+          description: Slippage in basis points (1/10000). e.g. 50 = 0.50%. If specified, minAmountOut should not be specified
+          example: '300'
+          default: '50'
+        fee:
+          description: Fee in basis points (1/10000) for each amountIn value. Must be in range 0-100. If specified, this percentage of each amountIn value will be sent to feeReceiver
+          example:
+          - '100'
+          type: array
+          items:
+            type: string
+        feeReceiver:
+          type: string
+          description: The Ethereum address that will receive the collected fee. Required if fee is provided
+          example: '0x220866B1A2219f40e72f5c628B65D54268cA3A9D'
+        ignoreAggregators:
+          description: A list of swap aggregators to be ignored from consideration
+          nullable: true
+          type: array
+          items:
+            type: string
+        ignoreStandards:
+          description: A list of standards to be ignored from consideration
+          nullable: true
+          type: array
+          items:
+            type: string
+        ignoreBridges:
+          description: A list of bridges to be ignored from consideration (e.g. stargate, ccip, relay)
+          default: []
+          type: array
+          items:
+            type: string
+        referralCode:
+          type: string
+          description: Referral code that will be included in an on-chain event.
+          example: 0123456789ABCDEF
+          maxLength: 16
+        tokenIn:
+          description: Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+          example:
+          - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+          type: array
+          items:
+            type: string
+        tokenOut:
+          description: Ethereum address of the token to swap to. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+          example:
+          - '0x6b175474e89094c44da98b954eedeac495271d0f'
+          type: array
+          items:
+            type: string
+        destinationChainId:
+          type: number
+          description: Chain ID of the network to bridge to and receive tokenOut
+        variableEstimates:
+          type: object
+          default: null
+          additionalProperties:
+            type: string
+      required:
+      - chainId
+      - fromAddress
+      - amountIn
+      - tokenIn
+      - tokenOut
+    RouteActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: enso
+        action:
+          type: string
+          description: Action
+          example: route
+        args:
+          description: Route action arguments
+          allOf:
+          - $ref: '#/components/schemas/RouteArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    TokenizedMultiDepositArgsDto:
+      type: object
+      properties:
+        onBehalfOf:
+          type: string
+          description: Address that will own the resulting protocol position
+          example: 0x...
+        args:
+          type: object
+          description: Protocol-specific additional action arguments
+          additionalProperties:
+            type: string
+        tokenIn:
+          description: Input token addresses
+          example:
+          - 0x...
+          - 0x...
+          type: array
+          items:
+            type: string
+        tokenOut:
+          type: string
+          description: Output token address
+          example: 0x...
+        amountIn:
+          type: array
+          description: Amounts to deposit (or previous output references)
+          items:
+            oneOf:
+            - type: string
+            - $ref: '#/components/schemas/CallOutput'
+          example:
+          - '100'
+          - useOutputOfCallAt: 0
+        primaryAddress:
+          type: string
+          description: Primary contract address
+          example: 0x...
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+      required:
+      - tokenIn
+      - tokenOut
+      - amountIn
+      - primaryAddress
+    ConditionArgsDto:
+      type: object
+      properties:
+        condition:
+          description: Boolean condition (or previous output reference)
+          oneOf:
+          - type: boolean
+          - $ref: '#/components/schemas/CallOutput'
+          example:
+            useOutputOfCallAt: 0
+      required:
+      - condition
+    BridgeActionDto:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Action
+          example: bridge
+        protocol:
+          type: string
+          description: Protocol to use for bridging
+          example: stargate
+        args:
+          $ref: '#/components/schemas/BridgeArgsDto'
+      required:
+      - action
+      - protocol
+      - args
+    MergeArgsDto:
+      type: object
+      properties:
+        tokenIn:
+          description: Input token addresses
+          example:
+          - 0x...
+          - 0x...
+          type: array
+          items:
+            type: string
+        tokenOut:
+          type: string
+          description: Output token address
+          example: 0x...
+        amountIn:
+          description: Amounts to merge (or previous output reference)
+          example:
+          - '1000'
+          - useOutputOfCallAt: 0
+          type: array
+          items:
+            oneOf:
+            - type: string
+              description: Literal string value (e.g. wei amount)
+            - $ref: '#/components/schemas/CallOutput'
+              description: Reference output from a previous action
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+      required:
+      - tokenIn
+      - tokenOut
+      - amountIn
+    ConditionActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          enum:
+          - helpers
+          example: helpers
+        action:
+          type: string
+          enum:
+          - not
+          - check
+          example: check
+        args:
+          $ref: '#/components/schemas/ConditionArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    RouteShortcutTransaction:
+      type: object
+      properties:
+        gas:
+          type: string
+        amountOut:
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        blockNumber:
+          type: number
+          description: Block number the quote was simulated against
+        priceImpact:
+          type: number
+          description: Price impact in basis points, null if USD price not found
+          nullable: true
+        feeAmount:
+          description: An array of the fee amount collected for each tokenIn
+          type: array
+          items:
+            type: string
+        ensoFeeAmount:
+          description: An array of the enso fee amount collected for each tokenIn, when applicable
+          type: array
+          items:
+            type: string
+        minAmountOut:
+          description: The minimum allowable amount out after slippage
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        createdAt:
+          type: number
+          description: Block number the transaction was created on
+        tx:
+          description: The tx object to use in `ethers`
+          allOf:
+          - $ref: '#/components/schemas/Transaction'
+        route:
+          description: The route the shortcut will use
+          type: array
+          items:
+            $ref: '#/components/schemas/Hop'
+        userOp:
+          description: The ERC-4337 user operation object
+          allOf:
+          - $ref: '#/components/schemas/UserOperation'
+        bridgingEstimates:
+          description: Estimated bridging durations when applicable
+          type: array
+          items:
+            $ref: '#/components/schemas/BridgeLatencyEstimate'
+        validUntil:
+          type: number
+          description: Unix timestamp (seconds) after which this quote expires. Transactions submitted after this time may revert.
+      required:
+      - gas
+      - amountOut
+      - createdAt
+      - tx
+      - route
+    HarvestActionDto:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Action
+          example: harvest
+        protocol:
+          type: string
+          description: Protocol
+          example: convex
+        args:
+          $ref: '#/components/schemas/HarvestArgsDto'
+      required:
+      - action
+      - protocol
+      - args
+    FeeArgsDto:
+      type: object
+      properties:
+        receiver:
+          type: string
+          description: Receiver of the fee
+          example: '0x5fe5C43f1c4B2A1BA49cC6fE4A6a62f2f1619B82'
+        token:
+          type: string
+          description: Token to apply fee to
+          example: 0xA0b8...eB48
+        amount:
+          description: Amount (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000'
+        bps:
+          type: string
+          description: Fee in basis points
+          example: '50'
+      required:
+      - receiver
+      - token
+      - amount
+      - bps
+    TokenizedMultiRedeemActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: yearn
+        action:
+          type: string
+          example: tokenizedmultiredeem
+        args:
+          $ref: '#/components/schemas/TokenizedMultiRedeemArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    EnsoFeeActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          example: enso
+        action:
+          type: string
+          example: ensofee
+        args:
+          $ref: '#/components/schemas/EnsoFeeArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    SlippageActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          example: enso
+        action:
+          type: string
+          example: slippage
+        args:
+          $ref: '#/components/schemas/SlippageArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    ToggleActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          enum:
+          - helpers
+          example: helpers
+        action:
+          type: string
+          enum:
+          - toggle
+          example: toggle
+        args:
+          $ref: '#/components/schemas/ToggleArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    SingleDepositArgsDto:
+      type: object
+      properties:
+        onBehalfOf:
+          type: string
+          description: Address that will own the resulting protocol position
+          example: 0x...
+        args:
+          type: object
+          description: Protocol-specific additional action arguments
+          additionalProperties:
+            type: string
+        tokenIn:
+          type: string
+          description: Input token
+          example: 0x...
+        tokenOut:
+          type: string
+          description: Output token
+          example: 0x...
+        amountIn:
+          description: Amount (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000'
+        primaryAddress:
+          type: string
+          description: Primary contract
+          example: 0x...
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+      required:
+      - tokenIn
+      - amountIn
+      - primaryAddress
+    SingleRedeemActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: yearn
+        action:
+          type: string
+          example: singleredeem
+        args:
+          $ref: '#/components/schemas/SingleRedeemArgs2Dto'
+      required:
+      - protocol
+      - action
+      - args
+    TokenizedSingleDepositActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: yearn
+        action:
+          type: string
+          example: tokenizedsingledeposit
+        args:
+          $ref: '#/components/schemas/TokenizedSingleDepositArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    SingleRedeemArgs2Dto:
+      type: object
+      properties:
+        onBehalfOf:
+          type: string
+          description: Address that will own the resulting protocol position
+          example: 0x...
+        args:
+          type: object
+          description: Protocol-specific additional action arguments
+          additionalProperties:
+            type: string
+        tokenIn:
+          type: string
+          description: Input token
+          example: 0x...
+        tokenOut:
+          type: string
+          description: Output token
+          example: 0x...
+        amountIn:
+          description: Amount (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000'
+        primaryAddress:
+          type: string
+          description: Primary contract
+          example: 0x...
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+      required:
+      - tokenOut
+      - amountIn
+      - primaryAddress
+    TokenizedMultiDepositActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: yearn
+        action:
+          type: string
+          example: tokenizedmultideposit
+        args:
+          $ref: '#/components/schemas/TokenizedMultiDepositArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    MergeActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          example: enso
+        action:
+          type: string
+          example: merge
+        args:
+          $ref: '#/components/schemas/MergeArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    SwapActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: uniswap-v2
+        action:
+          type: string
+          example: swap
+        args:
+          $ref: '#/components/schemas/SwapArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    IporLog:
+      type: object
+      properties:
+        topics:
+          type: array
+          items:
+            type: string
+        data:
+          type: string
+        address:
+          type: string
+      required:
+      - topics
+      - data
+      - address
+    MultiRedeemArgs2Dto:
+      type: object
+      properties:
+        onBehalfOf:
+          type: string
+          description: Address that will own the resulting protocol position
+          example: 0x...
+        args:
+          type: object
+          description: Protocol-specific additional action arguments
+          additionalProperties:
+            type: string
+        tokenIn:
+          type: string
+          description: Input token
+          example: 0x...
+        tokenOut:
+          description: Output tokens
+          example:
+          - 0x...
+          - 0x...
+          type: array
+          items:
+            type: string
+        amountIn:
+          description: Amount (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000'
+        primaryAddress:
+          type: string
+          description: Primary contract
+          example: 0x...
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+      required:
+      - tokenOut
+      - amountIn
+      - primaryAddress
+    QuoteEndpointResponse:
+      type: object
+      properties:
+        amountOut:
+          type: string
+        priceImpact:
+          type: number
+          description: Price impact in basis points, null if USD price not found
+          nullable: true
+        route:
+          description: The route selected for the quote
+          type: array
+          items:
+            $ref: '#/components/schemas/Hop'
+        feeAmount:
+          description: An array of the fee amount collected for each tokenIn
+          type: array
+          items:
+            type: string
+        ensoFeeAmount:
+          type: array
+          items:
+            type: string
+      required:
+      - amountOut
+      - route
+    RedeemActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: yearn
+        action:
+          type: string
+          example: redeem
+        args:
+          $ref: '#/components/schemas/RedeemArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    CallArgsDto:
+      type: object
+      properties:
+        tokenIn:
+          type: string
+          description: Optional input token address
+          example: 0x...
+        tokenOut:
+          type: string
+          description: Optional output token address
+          example: 0x...
+        address:
+          type: string
+          description: Contract address to call
+          example: 0x...
+        method:
+          type: string
+          description: Method name to call
+          example: collect
+        abi:
+          type: string
+          description: Flattened function signature
+          example: function collect((uint256 tokenId, address recipient, uint128 amount0Max, uint128 amount1Max) params) external returns (uint256 amount0, uint256 amount1)
+        args:
+          type: array
+          description: Arguments for the method
+          items:
+            oneOf:
+            - type: string
+            - type: number
+            - type: boolean
+            - $ref: '#/components/schemas/CallOutput'
+            - type: array
+              items:
+                oneOf:
+                - type: string
+                - type: number
+                - type: boolean
+                - $ref: '#/components/schemas/CallOutput'
+          example:
+          - 123
+          - true
+          - useOutputOfCallAt: 0
+          - - '1'
+            - '2'
+        value:
+          description: Native value to send (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '0'
+      required:
+      - address
+      - method
+      - abi
+      - args
+    RouteArgsDto:
+      type: object
+      properties:
+        tokenIn:
+          type: string
+          description: Input token address
+          example: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+        tokenOut:
+          type: string
+          description: Output token address
+          example: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+        amountIn:
+          description: Amount to route in wei (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000000000000000'
+        slippage:
+          type: string
+          description: Slippage tolerance in basis points (100 = 1%)
+          example: '100'
+        receiver:
+          type: string
+          description: Receiver address if not the caller
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+        destinationChainId:
+          type: integer
+          description: Destination chain ID for a cross-chain route
+          example: 42161
+        refundReceiver:
+          type: string
+          description: Address to receive refunded dust for a cross-chain route
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+        minAmountOut:
+          description: Minimum acceptable amount or amounts out
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          - type: array
+            items:
+              oneOf:
+              - type: string
+              - $ref: '#/components/schemas/CallOutput'
+          example:
+          - '995000000'
+        fee:
+          description: Fee or fees in basis points applied to output
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          - type: array
+            items:
+              oneOf:
+              - type: string
+              - $ref: '#/components/schemas/CallOutput'
+          example:
+          - '50'
+        feeReceiver:
+          type: string
+          description: Fee receiver address
+          example: '0x5fe5C43f1c4B2A1BA49cC6fE4A6a62f2f1619B82'
+        ignoreAggregators:
+          description: Aggregators to ignore
+          example:
+          - oneInch
+          - paraswap
+          type: array
+          items:
+            type: string
+        ignoreStandards:
+          description: Standards to ignore
+          example:
+          - uniswap-v2
+          type: array
+          items:
+            type: string
+        ignoreBridges:
+          description: Bridges to ignore (e.g. stargate, ccip, relay). Only used for cross-chain route actions.
+          example:
+          - ccip
+          default: []
+          type: array
+          items:
+            type: string
+      required:
+      - tokenIn
+      - tokenOut
+      - amountIn
+    RedeemCLMMArgsDto:
+      type: object
+      properties:
+        tokenIn:
+          type: string
+          description: Input token address to redeem
+          example: 0x...
+        tokenOut:
+          description: Output token addresses
+          example:
+          - 0x...
+          - 0x...
+          type: array
+          items:
+            type: string
+        liquidity:
+          description: Liquidity to redeem (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '100000'
+        tokenId:
+          type: string
+          description: Token ID of the NFT position
+          example: '12345'
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+      required:
+      - tokenIn
+      - tokenOut
+      - liquidity
+      - tokenId
+    BridgeLatencyEstimate:
+      type: object
+      properties:
+        fromChainId:
+          type: number
+        toChainId:
+          type: number
+        token:
+          type: string
+          description: Token bridged to the destination chain
+        estimatedSeconds:
+          type: number
+          description: Estimated bridge latency in seconds
+        sendConfirmations:
+          type: number
+          description: Send confirmations used for the estimation
+        receiveConfirmations:
+          type: number
+          description: Receive confirmations
+        sendBlockTimeSeconds:
+          type: number
+          description: Average block time assumed for the source chain (seconds)
+        receiveBlockTimeSeconds:
+          type: number
+          description: Average block time assumed for the destination chain (seconds)
+        bridge:
+          type: string
+          description: Bridge implementation or provider that produced the estimate
+        source:
+          type: string
+          description: Source of the data (defaults, override, fallback)
+        note:
+          type: string
+          description: Optional note describing overrides or fallbacks applied
+      required:
+      - fromChainId
+      - toChainId
+      - token
+      - estimatedSeconds
+    TransferFromActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: Protocol
+          example: erc20
+          enum:
+          - erc20
+          - erc721
+        action:
+          type: string
+          example: transferfrom
+        args:
+          $ref: '#/components/schemas/TransferFromArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    TokenizedSingleRedeemArgsDto:
+      type: object
+      properties:
+        onBehalfOf:
+          type: string
+          description: Address that will own the resulting protocol position
+          example: 0x...
+        args:
+          type: object
+          description: Protocol-specific additional action arguments
+          additionalProperties:
+            type: string
+        tokenIn:
+          type: string
+          description: Input token address
+          example: 0x...
+        tokenOut:
+          type: string
+          description: Output token address
+          example: 0x...
+        amountIn:
+          description: Amount to redeem (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000'
+        primaryAddress:
+          type: string
+          description: Primary contract address
+          example: 0x...
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+      required:
+      - tokenIn
+      - tokenOut
+      - amountIn
+      - primaryAddress
+    Hop:
+      type: object
+      properties:
+        tokenIn:
+          type: array
+          items:
+            type: string
+        tokenOut:
+          type: array
+          items:
+            type: string
+        protocol:
+          type: string
+        action:
+          type: string
+        primary:
+          type: string
+        internalRoutes:
+          type: array
+          items:
+            type: string
+        args:
+          type: object
+          additionalProperties:
+            oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        sources:
+          type: array
+          items:
+            type: string
+        poolAddresses:
+          type: array
+          items:
+            type: string
+        chainId:
+          type: number
+        sourceChainId:
+          type: number
+        destinationChainId:
+          type: number
+        positionOut:
+          description: Non-tokenized position ID for deposit actions
+          type: array
+          items:
+            type: string
+        via:
+          type: string
+          description: Off-chain settler for this hop. Set when the hop is descriptive metadata rather than a weiroll call in `tx.data` — execution happens asynchronously via the named external system (e.g. Circle's CctpForwarder credits HyperCore on CCTP message receipt). Absent on hops that are actual on-chain weiroll calls.
+          enum:
+          - cctp-forwarder
+          example: cctp-forwarder
+      required:
+      - tokenIn
+      - tokenOut
+      - protocol
+      - action
+    DepositArgsDto:
+      type: object
+      properties:
+        onBehalfOf:
+          type: string
+          description: Address that will own the resulting protocol position
+          example: 0x...
+        args:
+          type: object
+          description: Protocol-specific additional action arguments
+          additionalProperties:
+            type: string
+        tokenIn:
+          description: Input token(s)
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          example:
+          - 0x...
+          - 0x...
+        tokenOut:
+          description: Output token(s)
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          example: 0x...
+        amountIn:
+          description: Amount(s) (or previous output reference)
+          oneOf:
+          - type: string
+          - $ref: '#/components/schemas/CallOutput'
+          - type: array
+            items:
+              oneOf:
+              - type: string
+              - $ref: '#/components/schemas/CallOutput'
+          example:
+          - '1000000'
+          - useOutputOfCallAt: 0
+        primaryAddress:
+          type: string
+          description: Protocol contract address
+          example: 0x...
+        positionId:
+          type: string
+          description: Position identifier for position-based protocols
+          example: '0x01'
+        tokenId:
+          type: string
+          description: Token identifier for token-based protocol positions
+          example: '123'
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+      required:
+      - tokenIn
+      - amountIn
+      - primaryAddress
+    MathActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          enum:
+          - math
+          example: math
+        action:
+          type: string
+          enum:
+          - add
+          - sub
+          - mul
+          - div
+          - min
+          - max
+          example: add
+        args:
+          $ref: '#/components/schemas/BinaryOperationArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    EnsoFeeArgsDto:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token to apply fee to
+          example: 0xA0b8...eB48
+        amount:
+          description: Amount (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000'
+        bps:
+          type: string
+          description: Fee in basis points
+          example: '50'
+      required:
+      - token
+      - amount
+      - bps
+    RepayActionDto:
+      type: object
+      properties:
+        action:
+          type: string
+          example: repay
+        protocol:
+          type: string
+          description: Protocol
+          example: aave-v3
+        args:
+          $ref: '#/components/schemas/RepayArgsDto'
+      required:
+      - action
+      - protocol
+      - args
+    NontokenizedRouteShortcutTransaction:
+      type: object
+      properties:
+        createdAt:
+          type: number
+          description: Block number the transaction was created on
+        gas:
+          type: string
+        amountDeposited:
+          type: string
+          description: Amount of value allocated to the position after the transaction completes. For nontokenized positions, this represents the amount that goes into the position.
+        amountOut:
+          type: string
+          description: Amount out in the destination protocol precision. Only available for hypercore-spot deposits, where it represents the amount in 8-decimal HyperCore precision.
+        priceImpact:
+          type: number
+          description: Price impact in basis points (1/10000) between the initial route value and the positionAmount. For example, 50 = 0.50%. Returns null if price impact calculation is not available.
+          nullable: true
+        tx:
+          description: The tx object to use in `ethers`
+          allOf:
+          - $ref: '#/components/schemas/Transaction'
+        route:
+          description: The route the shortcut will use
+          type: array
+          items:
+            $ref: '#/components/schemas/Hop'
+        feeAmount:
+          type: array
+          items:
+            type: string
+        ensoFeeAmount:
+          type: array
+          items:
+            type: string
+        userOp:
+          description: The ERC-4337 user operation object
+          allOf:
+          - $ref: '#/components/schemas/UserOperation'
+        bridgingEstimates:
+          description: Estimated bridge durations when the flow contains bridges
+          type: array
+          items:
+            $ref: '#/components/schemas/BridgeLatencyEstimate'
+        validUntil:
+          type: number
+          description: Unix timestamp (seconds) after which this quote expires. Transactions submitted after this time may revert.
+      required:
+      - createdAt
+      - gas
+      - amountDeposited
+      - tx
+      - route
+    BalanceActionDto:
+      type: object
+      properties:
+        protocol:
+          type: string
+          example: enso
+        action:
+          type: string
+          example: balance
+        args:
+          $ref: '#/components/schemas/BalanceArgsDto'
+      required:
+      - protocol
+      - action
+      - args
+    PaymasterFeeArgsDto:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token to apply fee to
+          example: 0xA0b8...eB48
+        amount:
+          description: Amount (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000'
+      required:
+      - token
+      - amount
+    RedeemArgsDto:
+      type: object
+      properties:
+        onBehalfOf:
+          type: string
+          description: Address that will own the resulting protocol position
+          example: 0x...
+        args:
+          type: object
+          description: Protocol-specific additional action arguments
+          additionalProperties:
+            type: string
+        tokenIn:
+          type: string
+          description: Input token (shares) address
+          example: 0x...
+        tokenOut:
+          description: Output token(s)
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          example:
+          - 0x...
+          - 0x...
+        amountIn:
+          description: Amount to redeem (or previous output reference)
+          oneOf:
+          - type: string
+            description: Literal string value (e.g. wei amount)
+          - $ref: '#/components/schemas/CallOutput'
+            description: Reference output from a previous action
+          example: '1000000'
+        primaryAddress:
+          type: string
+          description: Protocol contract address
+          example: 0x...
+        receiver:
+          type: string
+          description: Receiver address
+          example: 0x...
+        positionId:
+          type: string
+          description: Position identifier for position-based protocols
+          example: '0x01'
+        tokenId:
+          type: string
+          description: Token identifier for token-based protocol positions
+          example: '123'
+      required:
+      - tokenOut
+      - amountIn
+      - primaryAddress
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: apiKey
+      type: http

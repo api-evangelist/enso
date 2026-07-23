@@ -1,0 +1,210 @@
+openapi: 3.0.0
+info:
+  title: Enso ccip wallet API
+  description: '#### Enso API
+
+    - Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).
+
+    - To use the API, **you must include your API Key in the Authorization header** (Bearer format).
+
+    - For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).
+
+    - Get your own API Key at [enso.finance/developers](https://developers.enso.build/).'
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.enso.finance
+security:
+- bearer: []
+tags:
+- name: wallet
+paths:
+  /api/v1/wallet/approve:
+    get:
+      operationId: WalletController_createApproveTransaction
+      summary: Returns transaction that approves your EnsoWallet-v2 to spend tokens
+      parameters:
+      - name: chainId
+        required: true
+        in: query
+        description: Chain ID of the network to execute the transaction on
+        schema:
+          default: 1
+          type: number
+      - name: fromAddress
+        required: true
+        in: query
+        description: Ethereum address of the wallet to send the transaction from
+        schema:
+          default: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+          type: string
+      - name: routingStrategy
+        required: false
+        in: query
+        description: Routing strategy to use
+        schema:
+          nullable: true
+          enum:
+          - ensowallet-v2
+          - router
+          - delegate
+          - router-legacy
+          - delegate-legacy
+          type: string
+      - name: tokenAddress
+        required: true
+        in: query
+        description: ERC20 token address of the token to approve
+        schema:
+          default: '0x6b175474e89094c44da98b954eedeac495271d0f'
+          type: string
+      - name: amount
+        required: true
+        in: query
+        description: Amount of tokens to approve in wei
+        schema:
+          default: '1000000000000000000000000000'
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApproveTransaction'
+      tags:
+      - wallet
+  /api/v1/wallet/balances:
+    get:
+      operationId: WalletController_walletBalances
+      summary: Returns all balances for a given wallet
+      parameters:
+      - name: eoaAddress
+        required: true
+        in: query
+        description: Address of the eoa with which to associate the ensoWallet-v2 for balances
+        schema:
+          default: '0x93621DCA56fE26Cdee86e4F6B18E116e9758Ff11'
+          type: string
+      - name: useEoa
+        required: true
+        in: query
+        description: If true returns balances for the provided address, instead of the associated ensoWallet-v2
+        schema:
+          type: boolean
+      - name: chainId
+        required: true
+        in: query
+        schema:
+          oneOf:
+          - type: integer
+          - type: string
+            enum:
+            - all
+          example: all
+        description: Chain ID (or 'all') to fetch balances for specified network
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WalletBalance'
+      tags:
+      - wallet
+components:
+  schemas:
+    WalletApproveTransaction:
+      type: object
+      properties:
+        tx:
+          description: The transaction object to use in `ethers`
+          allOf:
+          - $ref: '#/components/schemas/WalletTransaction'
+        gas:
+          type: string
+          description: The gas estimate for the transaction
+        token:
+          type: string
+          description: The token address to approve
+        amount:
+          type: string
+          description: The amount of tokens to approve
+        spender:
+          type: string
+          description: The spender address to approve
+      required:
+      - tx
+      - gas
+      - token
+      - amount
+      - spender
+    WalletBalance:
+      type: object
+      properties:
+        token:
+          type: string
+          description: The address of the token
+        amount:
+          type: string
+          description: The unformatted balance of the token
+          example: '0x0000000'
+        chainId:
+          type: integer
+          description: Chain ID of the network
+        decimals:
+          type: number
+          description: The unformatted balance of the token
+          example: 18
+        price:
+          type: string
+          description: Price of the token in usd
+          example: '0.0'
+          nullable: true
+        name:
+          type: string
+          description: Name of the token
+          nullable: true
+        symbol:
+          type: string
+          description: Symbol of the token
+          nullable: true
+        logoUri:
+          type: string
+          description: Logo of the token
+          nullable: true
+      required:
+      - token
+      - amount
+      - chainId
+      - decimals
+      - price
+      - name
+      - symbol
+      - logoUri
+    WalletTransaction:
+      type: object
+      properties:
+        data:
+          type: string
+          example: 0x
+        to:
+          type: string
+          example: '0x1111111111111111111111111111111111111111'
+        from:
+          type: string
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+        value:
+          type: string
+          example: '0'
+      required:
+      - data
+      - to
+      - from
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: apiKey
+      type: http

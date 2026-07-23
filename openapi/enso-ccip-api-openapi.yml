@@ -1,0 +1,363 @@
+openapi: 3.0.0
+info:
+  title: Enso ccip API
+  description: '#### Enso API
+
+    - Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).
+
+    - To use the API, **you must include your API Key in the Authorization header** (Bearer format).
+
+    - For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).
+
+    - Get your own API Key at [enso.finance/developers](https://developers.enso.build/).'
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.enso.finance
+security:
+- bearer: []
+tags:
+- name: ccip
+paths:
+  /api/v1/ccip/router:
+    get:
+      operationId: CcipController_getRouter
+      summary: Get CCIP router address for a chain
+      description: Returns the CCIP router contract address for the specified chain.
+      parameters:
+      - name: chainId
+        required: true
+        in: query
+        description: Chain ID to get the CCIP router address for
+        schema:
+          example: 42161
+          type: number
+      responses:
+        '200':
+          description: CCIP router address
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CcipRouterResponse'
+        '400':
+          description: Chain not supported by CCIP
+      tags:
+      - ccip
+  /api/v1/ccip/bridge/check:
+    get:
+      operationId: CcipController_checkBridgeTransaction
+      summary: Check CCIP bridge transaction status
+      description: Returns comprehensive information about a cross-chain CCIP bridge transaction, including CCIP message parameters, on-chain events, and transaction data from Enso.
+      parameters:
+      - name: chainId
+        required: true
+        in: query
+        description: Chain ID of the source transaction
+        schema:
+          example: 56
+          type: number
+      - name: txHash
+        required: true
+        in: query
+        description: Transaction hash of the CCIP bridge transaction on source chain
+        schema:
+          example: '0x80f1faf0652a5618ea1de0fc5142418e380676b3c6c74d482cfac1237638d6d4'
+          type: string
+      responses:
+        '200':
+          description: Bridge transaction status and details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CcipBridgeTransactionResponse'
+        '429':
+          description: Rate limit exceeded
+      tags:
+      - ccip
+components:
+  schemas:
+    CcipSendParams:
+      type: object
+      properties:
+        destinationChainSelector:
+          type: string
+          description: Destination chain selector (CCIP format, not Enso ChainId). See https://docs.chain.link/ccip/supported-networks
+          example: '15971525489660198786'
+        message:
+          description: CCIP message parameters (Client.EVM2AnyMessage structure with receiver, data, tokenAmounts, feeToken, extraArgs)
+          allOf:
+          - $ref: '#/components/schemas/CcipEvm2AnyMessage'
+      required:
+      - destinationChainSelector
+      - message
+    TokenInfo:
+      type: object
+      properties:
+        address:
+          type: string
+          description: Token contract address
+          example: '0x55d398326f99059fF775485246999027B3197955'
+        symbol:
+          type: string
+          description: Token symbol (e.g., USDT, USDC)
+          example: USDT
+        name:
+          type: string
+          description: Token full name
+          example: Tether USD
+        decimals:
+          type: number
+          description: Token decimals
+          example: 18
+      required:
+      - address
+    CcipRouterResponse:
+      type: object
+      properties:
+        router:
+          type: string
+          description: CCIP router contract address for the specified chain
+          example: '0x141fa059441E0ca23ce184B6A78bafD2A517DdE8'
+      required:
+      - router
+    DecodedMessageData:
+      type: object
+      properties:
+        receiver:
+          type: string
+          description: Receiver address extracted from CCIP message data
+          example: '0x1234567890123456789012345678901234567890'
+        shortcutData:
+          type: string
+          description: Encoded shortcut execution data (commands and state for Enso router)
+          example: 0x3d3d3d3d...
+        error:
+          type: string
+          description: Error message if message.data could not be decoded as (address,bytes)
+          example: Could not decode message.data as (address,bytes)
+      required:
+      - receiver
+      - shortcutData
+    ExtraArgs:
+      type: object
+      properties:
+        gasLimit:
+          type: string
+          description: Gas limit allocated for shortcut execution on destination chain
+          example: '2000000'
+        allowOutOfOrderExecution:
+          type: boolean
+          description: Whether CCIP can execute this message out of order (true = allow)
+          example: false
+      required:
+      - gasLimit
+      - allowOutOfOrderExecution
+    FeeDetails:
+      type: object
+      properties:
+        token:
+          description: Fee token information
+          allOf:
+          - $ref: '#/components/schemas/TokenInfo'
+        amount:
+          type: string
+          description: Fee amount paid for CCIP message (in wei/smallest unit)
+          example: '5000000000000000'
+      required:
+      - token
+      - amount
+    CcipBridgeTransactionResponse:
+      type: object
+      properties:
+        sourceChainId:
+          type: number
+          description: Source chain ID where the CCIP message was sent from
+          example: 56
+        sourceTxHash:
+          type: string
+          description: Source chain transaction hash
+          example: '0x80f1faf0652a5618ea1de0fc5142418e380676b3c6c74d482cfac1237638d6d4'
+        sourceChainIdFinality:
+          type: number
+          description: CCIP finality time in seconds for the source chain (time required for CCIP to achieve finality)
+          example: 5
+        sourceChainEstimatedTimeForFinalitySeconds:
+          type: number
+          description: Estimated seconds remaining until source chain finality is achieved
+          example: 0
+        ccipSendParams:
+          description: Raw CCIP send parameters extracted from Chainlink API (destinationChainSelector and message)
+          allOf:
+          - $ref: '#/components/schemas/CcipSendParams'
+        ccipSendParamsDecoded:
+          description: Decoded and enriched CCIP send parameters with full token metadata and human-readable data
+          allOf:
+          - $ref: '#/components/schemas/CcipSendParamsDecoded'
+        destinationChainId:
+          type: number
+          description: Destination chain ID where the CCIP message was delivered
+          example: 8453
+        destinationTxHash:
+          type: string
+          description: Destination chain transaction hash (if message was delivered)
+          example: '0x9a3e6a8a52b82a1f4b523b0d50be133df0ad9407814b32e42d67119e1ae1947d'
+        status:
+          type: string
+          description: Overall bridge status. `ready_for_manual_execution` means destination execution failed/stalled but is recoverable — anyone can (re)trigger manual execution once the underlying cause is resolved.
+          enum:
+          - pending
+          - inflight
+          - delivered
+          - failed
+          - ready_for_manual_execution
+          - unknown
+        readyForManualExecution:
+          type: boolean
+          description: True if the CCIP message is awaiting (or can be retried via) manual execution on the destination chain. A failed message that is ready for manual execution can be re-triggered by anyone once the underlying cause (e.g. token pool liquidity) is resolved.
+          example: true
+        ensoSourceEvent:
+          description: Enso shortcut event from source chain (ShortcutExecuted + execution result). Null if not found.
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/EnsoEvent'
+        ensoDestinationEvent:
+          description: Enso shortcut event from destination chain (ShortcutExecuted + execution result). Null if not found.
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/EnsoEvent'
+        error:
+          type: string
+          description: Error message if the API request failed (e.g., transaction not found, invalid chain selector, API errors)
+          example: Transaction receipt not found for 0x...
+      required:
+      - sourceChainId
+      - sourceTxHash
+      - sourceChainIdFinality
+      - status
+    CcipSendParamsDecoded:
+      type: object
+      properties:
+        destinationChainId:
+          type: number
+          description: Destination chain ID
+          example: 8453
+        data:
+          description: Decoded message data containing receiver address and shortcut execution data
+          allOf:
+          - $ref: '#/components/schemas/DecodedMessageData'
+        tokenAmounts:
+          description: Token amounts being transferred cross-chain with full token metadata
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenAmount'
+        fee:
+          description: CCIP fee details with token information
+          allOf:
+          - $ref: '#/components/schemas/FeeDetails'
+        extraArgs:
+          description: CCIP extra arguments (gas limit and execution order preferences)
+          allOf:
+          - $ref: '#/components/schemas/ExtraArgs'
+    EnsoEvent:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: Account ID from ShortcutExecuted event
+        requestId:
+          type: string
+          description: Request ID from ShortcutExecuted event
+        blockNumber:
+          type: number
+          description: Block number where the event was emitted
+        transactionHash:
+          type: string
+          description: Transaction hash
+        chainId:
+          type: number
+          description: Chain ID where the event was emitted
+        success:
+          type: boolean
+          description: Whether the shortcut execution was successful
+        error:
+          type: string
+          description: Error data if execution failed
+        refundDetails:
+          description: Refund details if execution failed and funds were returned
+          allOf:
+          - $ref: '#/components/schemas/RefundDetails'
+      required:
+      - blockNumber
+      - transactionHash
+      - chainId
+      - success
+    CcipEvm2AnyMessage:
+      type: object
+      properties:
+        receiver:
+          type: string
+        data:
+          type: string
+        tokenAmounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CcipEvmTokenAmount'
+        feeToken:
+          type: string
+        extraArgs:
+          type: string
+      required:
+      - receiver
+      - data
+      - tokenAmounts
+      - feeToken
+      - extraArgs
+    TokenAmount:
+      type: object
+      properties:
+        token:
+          description: Token information
+          allOf:
+          - $ref: '#/components/schemas/TokenInfo'
+        amount:
+          type: string
+          description: Token amount (in wei/smallest unit)
+          example: '1000000000000000000'
+      required:
+      - token
+      - amount
+    CcipEvmTokenAmount:
+      type: object
+      properties:
+        token:
+          type: string
+        amount:
+          type: string
+      required:
+      - token
+      - amount
+    RefundDetails:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token address (0xeee... for native token)
+        amount:
+          type: string
+          description: Amount refunded
+        recipient:
+          type: string
+          description: Recipient address
+        isNative:
+          type: boolean
+          description: Whether the refund is in native token
+      required:
+      - token
+      - amount
+      - recipient
+      - isNative
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: apiKey
+      type: http

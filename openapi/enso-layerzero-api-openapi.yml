@@ -1,0 +1,439 @@
+openapi: 3.0.0
+info:
+  title: Enso ccip layerzero API
+  description: '#### Enso API
+
+    - Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).
+
+    - To use the API, **you must include your API Key in the Authorization header** (Bearer format).
+
+    - For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).
+
+    - Get your own API Key at [enso.finance/developers](https://developers.enso.build/).'
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.enso.finance
+security:
+- bearer: []
+tags:
+- name: layerzero
+paths:
+  /api/v1/layerzero/pool:
+    get:
+      operationId: LayerZeroController_getPoolAddress
+      summary: Get LayerZero pool address for a token on a specific chain
+      description: Returns the LayerZero Stargate pool address for a given token address and chain ID. Returns null if no pool exists for the token on that chain.
+      parameters:
+      - name: chainId
+        required: true
+        in: query
+        description: Chain ID
+        schema:
+          type: number
+      - name: token
+        required: true
+        in: query
+        description: Token address on source chain
+        schema:
+          type: string
+      - name: destinationChainId
+        required: false
+        in: query
+        description: Chain ID of destination chain
+        schema:
+          type: number
+      - name: destinationToken
+        required: false
+        in: query
+        description: Token address on destination chain
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Pool address lookup result
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LZPoolLookupResponse'
+      tags:
+      - layerzero
+  /api/v1/stargate/pool:
+    get:
+      operationId: LayerZeroController_getPoolAddress
+      summary: Get LayerZero pool address for a token on a specific chain
+      description: Returns the LayerZero Stargate pool address for a given token address and chain ID. Returns null if no pool exists for the token on that chain.
+      parameters:
+      - name: chainId
+        required: true
+        in: query
+        description: Chain ID
+        schema:
+          type: number
+      - name: token
+        required: true
+        in: query
+        description: Token address on source chain
+        schema:
+          type: string
+      - name: destinationChainId
+        required: false
+        in: query
+        description: Chain ID of destination chain
+        schema:
+          type: number
+      - name: destinationToken
+        required: false
+        in: query
+        description: Token address on destination chain
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Pool address lookup result
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LZPoolLookupResponse'
+      tags:
+      - layerzero
+  /api/v1/layerzero/bridge/check:
+    get:
+      operationId: LayerZeroController_checkBridgeTransaction
+      summary: Check bridge transaction status
+      description: Returns comprehensive information about a cross-chain bridge transaction, including LayerZero message status, on-chain events, and transaction data from Enso.
+      parameters:
+      - name: chainId
+        required: true
+        in: query
+        description: Chain ID of the source transaction
+        schema:
+          type: number
+      - name: txHash
+        required: true
+        in: query
+        description: Transaction hash
+        schema:
+          example: 0x1234567890abcdef...
+          type: string
+      responses:
+        '200':
+          description: Bridge transaction status and details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BridgeTransactionResponse'
+        '429':
+          description: Rate limit exceeded
+      tags:
+      - layerzero
+  /api/v1/stargate/bridge/check:
+    get:
+      operationId: LayerZeroController_checkBridgeTransaction
+      summary: Check bridge transaction status
+      description: Returns comprehensive information about a cross-chain bridge transaction, including LayerZero message status, on-chain events, and transaction data from Enso.
+      parameters:
+      - name: chainId
+        required: true
+        in: query
+        description: Chain ID of the source transaction
+        schema:
+          type: number
+      - name: txHash
+        required: true
+        in: query
+        description: Transaction hash
+        schema:
+          example: 0x1234567890abcdef...
+          type: string
+      responses:
+        '200':
+          description: Bridge transaction status and details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BridgeTransactionResponse'
+        '429':
+          description: Rate limit exceeded
+      tags:
+      - layerzero
+components:
+  schemas:
+    LZPoolLookupResponse:
+      type: object
+      properties:
+        pool:
+          type: string
+          description: LayerZero pool address for the source token
+          example: '0x6c96de32cea08842dcc4058c14d3aaad7fa41dee'
+        chainId:
+          type: number
+          description: Source chain ID
+          example: 1
+        destinationChainId:
+          type: number
+          description: Destination chain ID
+          example: 10
+        token:
+          type: string
+          description: Source token address
+          example: '0xdac17f958d2ee523a2206206994597c13d831ec7'
+        decimals:
+          type: number
+          description: Decimals of the source token
+          example: 6
+        destinationData:
+          description: Details about the destination pool and token
+          allOf:
+          - $ref: '#/components/schemas/LZDestinationTokenData'
+      required:
+      - pool
+      - chainId
+      - destinationChainId
+      - token
+      - decimals
+      - destinationData
+    LayerZeroMessageStatus:
+      type: object
+      properties:
+        srcEid:
+          type: number
+          description: Source chain endpoint ID
+        dstEid:
+          type: number
+          description: Destination chain endpoint ID
+        srcChainId:
+          type: number
+          description: Source chain ID (EVM)
+        dstChainId:
+          type: number
+          description: Destination chain ID (EVM)
+        status:
+          type: string
+          description: Message status from LayerZero
+        srcTxHash:
+          type: string
+          description: Source transaction hash
+        dstTxHash:
+          type: string
+          description: Destination transaction hash (if delivered)
+        srcBlockNumber:
+          type: number
+          description: Source block number
+        dstBlockNumber:
+          type: number
+          description: Destination block number (if delivered)
+        srcTimestamp:
+          type: string
+          description: Source timestamp
+        dstTimestamp:
+          type: string
+          description: Destination timestamp (if delivered)
+        sender:
+          type: string
+          description: Sender address
+        receiver:
+          type: string
+          description: Receiver address
+      required:
+      - srcEid
+      - dstEid
+      - status
+    BridgeTransactionResponse:
+      type: object
+      properties:
+        sourceChainId:
+          type: number
+          description: Source chain ID
+        sourceTxHash:
+          type: string
+          description: Source transaction hash
+        destinationChainId:
+          type: number
+          description: Destination chain ID (if known)
+        destinationTxHash:
+          type: string
+          description: Destination transaction hash (if completed)
+        status:
+          type: string
+          description: Overall bridge status
+          enum:
+          - pending
+          - inflight
+          - delivered
+          - failed
+          - unknown
+        isMultiBridge:
+          type: boolean
+          description: Whether this transaction involves multiple sequential bridges. Only present when true.
+        hops:
+          description: Array of individual bridge hops. Only present for multi-bridge transactions.
+          type: array
+          items:
+            $ref: '#/components/schemas/BridgeHop'
+        layerZeroMessage:
+          description: LayerZero message information
+          allOf:
+          - $ref: '#/components/schemas/LayerZeroMessageStatus'
+        ensoSourceEvent:
+          description: Enso shortcut event from source chain (ShortcutExecuted + execution result). Null if not found.
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/EnsoEvent'
+        ensoDestinationEvent:
+          description: Enso shortcut event from destination chain (ShortcutExecuted + execution result). Null if not found.
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/EnsoEvent'
+        ensoMetadata:
+          description: Enso transaction metadata
+          allOf:
+          - $ref: '#/components/schemas/EnsoMetadata'
+        error:
+          type: string
+          description: Error message if something went wrong
+      required:
+      - sourceChainId
+      - sourceTxHash
+      - status
+    EnsoEvent:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: Account ID from ShortcutExecuted event
+        requestId:
+          type: string
+          description: Request ID from ShortcutExecuted event
+        blockNumber:
+          type: number
+          description: Block number where the event was emitted
+        transactionHash:
+          type: string
+          description: Transaction hash
+        chainId:
+          type: number
+          description: Chain ID where the event was emitted
+        success:
+          type: boolean
+          description: Whether the shortcut execution was successful
+        error:
+          type: string
+          description: Error data if execution failed
+        refundDetails:
+          description: Refund details if execution failed and funds were returned
+          allOf:
+          - $ref: '#/components/schemas/RefundDetails'
+      required:
+      - blockNumber
+      - transactionHash
+      - chainId
+      - success
+    EnsoMetadata:
+      type: object
+      properties:
+        tokenIn:
+          type: string
+          description: Token in address
+        tokenOut:
+          type: string
+          description: Token out address
+        amountIn:
+          type: string
+          description: Amount in
+        chainId:
+          type: number
+          description: Chain ID from the request
+        timestamp:
+          type: number
+          description: Timestamp of the request
+    LZDestinationTokenData:
+      type: object
+      properties:
+        pool:
+          type: string
+          description: LayerZero pool address on the destination chain
+          example: '0xf03b4d9ac1d5d1e7c4cef54c2a313b9fe051a0ad'
+        token:
+          type: string
+          description: Token address on the destination chain
+          example: '0x01bff41798a0bcf287b996046ca68b395dbc1071'
+        decimals:
+          type: number
+          description: Decimals of the token on the destination chain
+          example: 6
+      required:
+      - pool
+      - token
+      - decimals
+    BridgeHop:
+      type: object
+      properties:
+        sourceChainId:
+          type: number
+          description: Source chain ID for this hop
+        sourceTxHash:
+          type: string
+          description: Source transaction hash for this hop
+        destinationChainId:
+          type: number
+          description: Destination chain ID (if known)
+        destinationTxHash:
+          type: string
+          description: Destination transaction hash (if completed)
+        status:
+          type: string
+          description: Status of this hop
+          enum:
+          - pending
+          - inflight
+          - delivered
+          - failed
+          - unknown
+        layerZeroMessage:
+          description: LayerZero message information
+          allOf:
+          - $ref: '#/components/schemas/LayerZeroMessageStatus'
+        ensoSourceEvent:
+          description: Enso shortcut event from source chain (ShortcutExecuted + execution result). Null if not found.
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/EnsoEvent'
+        ensoDestinationEvent:
+          description: Enso shortcut event from destination chain (ShortcutExecuted + execution result). Null if not found.
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/EnsoEvent'
+      required:
+      - sourceChainId
+      - sourceTxHash
+      - status
+    RefundDetails:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token address (0xeee... for native token)
+        amount:
+          type: string
+          description: Amount refunded
+        recipient:
+          type: string
+          description: Recipient address
+        isNative:
+          type: boolean
+          description: Whether the refund is in native token
+      required:
+      - token
+      - amount
+      - recipient
+      - isNative
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: apiKey
+      type: http

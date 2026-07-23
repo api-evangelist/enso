@@ -1,0 +1,770 @@
+openapi: 3.0.0
+info:
+  title: Enso ccip metadata API
+  description: '#### Enso API
+
+    - Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).
+
+    - To use the API, **you must include your API Key in the Authorization header** (Bearer format).
+
+    - For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).
+
+    - Get your own API Key at [enso.finance/developers](https://developers.enso.build/).'
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.enso.finance
+security:
+- bearer: []
+tags:
+- name: metadata
+paths:
+  /api/v1/networks:
+    get:
+      operationId: NetworksController_networks
+      summary: Returns networks supported by the API
+      parameters:
+      - name: name
+        required: false
+        in: query
+        description: Title of the network to search for
+        schema:
+          example: mainnet
+      - name: chainId
+        required: false
+        in: query
+        description: Chain ID of the network to search for
+        schema:
+          example: '1'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConnectedNetwork'
+      tags:
+      - metadata
+  /api/v1/prices/{chainId}/{address}:
+    get:
+      operationId: PricesController_getPrice
+      summary: Returns price for a token
+      parameters:
+      - name: address
+        required: true
+        in: path
+        description: Address of the token to search for
+        schema:
+          example: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+      - name: chainId
+        required: true
+        in: path
+        description: Chain ID of the network to search for
+        schema:
+          example: '1'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Price'
+      tags:
+      - metadata
+  /api/v1/prices/{chainId}:
+    get:
+      operationId: PricesController_getPrices
+      summary: Returns price for multiple tokens
+      parameters:
+      - name: chainId
+        required: true
+        in: path
+        description: Chain ID of the network to search for
+        schema:
+          example: '1'
+          type: number
+      - name: addresses
+        required: true
+        in: query
+        description: Ethereum address of the token to check price for (max 100 addresses).
+        schema:
+          example:
+          - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                  - $ref: '#/components/schemas/Price'
+                  nullable: true
+      tags:
+      - metadata
+  /api/v1/account/accountId:
+    get:
+      operationId: AccountController_accountId
+      summary: Returns accountId connected to your api key used in the on-chain event.
+      parameters: []
+      responses:
+        '200':
+          description: Your accountId
+          content:
+            application/json:
+              schema:
+                type: string
+      tags:
+      - metadata
+  /api/v1/tokens:
+    get:
+      operationId: TokensController_tokens
+      summary: Returns tokens and their details
+      parameters:
+      - name: project
+        required: false
+        in: query
+        description: The overarching project or platform associated with the DeFi token
+        schema:
+          example: aave
+          type: string
+      - name: protocolSlug
+        required: false
+        in: query
+        description: The specific standard integration or version of the DeFi project
+        schema:
+          example: aave-v2
+          type: string
+      - name: underlyingTokens
+        required: false
+        in: query
+        description: Underlying tokens of defi token
+        schema:
+          example:
+          - '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
+          type: array
+          items:
+            type: string
+      - name: underlyingTokensExact
+        required: false
+        in: query
+        description: Exact composition of underlying tokens of defi token
+        schema:
+          example:
+          - '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
+          type: array
+          items:
+            type: string
+      - name: primaryAddress
+        required: false
+        in: query
+        description: Ethereum addresses for contract interaction of defi tokens
+        schema:
+          example:
+          - '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9'
+          type: array
+          items:
+            type: string
+      - name: address
+        required: false
+        in: query
+        description: Ethereum addresses of the tokens
+        schema:
+          example:
+          - '0x030bA81f1c18d280636F32af80b9AAd02Cf0854e'
+          type: array
+          items:
+            type: string
+      - name: name
+        required: false
+        in: query
+        description: Names of the tokens
+        schema:
+          example:
+          - Bridged USDT
+          type: array
+          items:
+            type: string
+      - name: symbol
+        required: false
+        in: query
+        description: Symbols of the tokens
+        schema:
+          example:
+          - USDC
+          type: array
+          items:
+            type: string
+      - name: chainId
+        required: false
+        in: query
+        description: Chain ID of the network of the token
+        schema:
+          example: 1
+          type: number
+      - name: type
+        required: false
+        in: query
+        description: "Type of token.\n      If not provided, both types will be taken into account"
+        schema:
+          example: defi
+          enum:
+          - defi
+          - base
+          type: string
+      - name: liquidityType
+        required: false
+        in: query
+        description: "Type of liquidity.\n      If not provided, both types will be taken into account"
+        schema:
+          example: SingleToken
+          enum:
+          - SingleToken
+          - MultiToken
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: Pagination page number. Pages are of length 1000
+        schema:
+          example: '1'
+          type: number
+      - name: pageSize
+        required: false
+        in: query
+        description: Number of items per page (max 1000)
+        schema:
+          default: 1000
+          example: 100
+          type: number
+      - name: cursor
+        required: false
+        in: query
+        description: Cursor for pagination. Pages are of length 1000
+        schema:
+          example: '1233456'
+          type: number
+      - name: includeMetadata
+        required: false
+        in: query
+        description: Whether to include token metadata (symbol, name and logos)
+        schema:
+          default: false
+          example: false
+          type: boolean
+      - name: includeUnderlying
+        required: false
+        in: query
+        description: Whether to include underlying tokes
+        schema:
+          default: true
+          example: false
+          type: boolean
+      - name: apyFrom
+        required: false
+        in: query
+        description: Only include tokens with APY over this value
+        schema:
+          example: 1
+          type: number
+      - name: apyTo
+        required: false
+        in: query
+        description: Only include tokens with APY below this value
+        schema:
+          example: 10
+          type: number
+      - name: tvlFrom
+        required: false
+        in: query
+        description: Only include tokens with TVL over this value
+        schema:
+          example: 0
+          type: number
+      - name: tvlTo
+        required: false
+        in: query
+        description: Only include tokens with TVL below this value
+        schema:
+          example: 10000000
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/PaginatedResult'
+                - properties:
+                    data:
+                      type: array
+                      description: Returned data for current page
+                      items:
+                        $ref: '#/components/schemas/PositionModel'
+      tags:
+      - metadata
+  /api/v1/aggregators:
+    get:
+      operationId: AggregatorsController_aggregators
+      summary: Returns aggregators supported by the API (can be controled via disableAggregators param)
+      parameters: []
+      responses:
+        '200':
+          description: Returns a list of aggregators
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      tags:
+      - metadata
+  /api/v1/nontokenized:
+    get:
+      operationId: NonTokenizedController_nontokenizedPositions
+      summary: Returns nontokenized positions and their details
+      parameters:
+      - name: project
+        required: false
+        in: query
+        description: The overarching project or platform associated with the DeFi token
+        schema:
+          example: orderly
+          type: string
+      - name: protocolSlug
+        required: false
+        in: query
+        description: The specific standard integration or version of the DeFi project
+        schema:
+          example: orderly-one-kodiak
+          type: string
+      - name: chainId
+        required: false
+        in: query
+        description: Chain ID of the network of the nontokenized position
+        schema:
+          example: 80094
+          type: number
+      - name: positionId
+        required: false
+        in: query
+        description: Position ID of the nontokenized position.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: address
+        required: false
+        in: query
+        description: Address representing nontokenized position.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: primaryAddress
+        required: false
+        in: query
+        description: Ethereum addresses for contract interaction of nontokenized position
+        schema:
+          type: array
+          items:
+            type: string
+      - name: underlyingTokens
+        required: false
+        in: query
+        description: Underlying tokens of nontokenized position
+        schema:
+          example:
+          - '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
+          type: array
+          items:
+            type: string
+      - name: underlyingTokensExact
+        required: false
+        in: query
+        description: Exact composition of underlying tokens of nontokenized position
+        schema:
+          example:
+          - '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
+          type: array
+          items:
+            type: string
+      - name: page
+        required: false
+        in: query
+        description: Pagination page number
+        schema:
+          type: number
+      - name: pageSize
+        required: false
+        in: query
+        description: Number of items per page (max 1000)
+        schema:
+          default: 1000
+          example: 100
+          type: number
+      - name: cursor
+        required: false
+        in: query
+        description: Cursor for pagination
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/PaginatedResult'
+                - properties:
+                    data:
+                      type: array
+                      description: Returned data for current page
+                      items:
+                        $ref: '#/components/schemas/NonTokenizedModel'
+      tags:
+      - metadata
+  /api/v1/protocols:
+    get:
+      operationId: ProtocolsController_findAll
+      summary: Returns projects and relevant protocols available to use
+      parameters:
+      - name: chainId
+        required: false
+        in: query
+        description: Chain ID of the network to search for
+        schema:
+          example: '1'
+      - name: slug
+        required: false
+        in: query
+        description: slug of the project to search for
+        schema:
+          example: uniswap-v2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProtocolModel'
+      tags:
+      - metadata
+components:
+  schemas:
+    Network:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+      required:
+      - id
+      - name
+    PositionModel:
+      type: object
+      properties:
+        address:
+          type: string
+          description: Ethereum address of the token
+        chainId:
+          type: number
+          description: Chain ID of the network of the token
+        type:
+          type: string
+          description: Type of token
+        decimals:
+          type: number
+          description: Token decimals
+        symbol:
+          type: string
+          description: Token name
+          nullable: true
+        name:
+          type: string
+          description: Token symbol
+          nullable: true
+        logosUri:
+          description: A list of logos for the token
+          nullable: true
+          type: array
+          items:
+            type: string
+        underlyingTokens:
+          description: Underlying tokens of defi token
+          nullable: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenModel'
+        project:
+          type: string
+          description: The overarching project or platform associated with the DeFi token
+          example: aave
+          nullable: true
+        protocol:
+          type: string
+          description: The specific standard integration or version of the DeFi project
+          nullable: true
+        depositType:
+          type: number
+          description: Type of liquidity for deposits
+        redeemType:
+          type: number
+          description: Type of liquidity for redeems
+        apy:
+          type: number
+          description: The defi position APY
+          nullable: true
+          example: 3.8
+        apyBase:
+          type: number
+          description: The defi position base APY
+          nullable: true
+          example: 2.6
+        apyReward:
+          type: number
+          description: The defi position reward APY
+          nullable: true
+          example: 1.2
+        borrowApyBase:
+          type: number
+          description: The defi position base borrow APY
+          nullable: true
+          example: 2.6
+        borrowApyReward:
+          type: number
+          description: The defi position reward borrow APY
+          nullable: true
+          example: 1.2
+        tvl:
+          type: number
+          description: The defi position TVL
+          nullable: true
+          example: 3001020.8
+        primaryAddress:
+          type: string
+          description: Ethereum address for contract interaction of defi token
+          nullable: true
+      required:
+      - address
+      - chainId
+      - type
+      - decimals
+    PaginationMeta:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total amount of pages
+        lastPage:
+          type: number
+          description: Last page number
+          nullable: true
+        currentPage:
+          type: number
+          description: Current page number
+          nullable: true
+        perPage:
+          type: number
+          description: Amount of elements per page
+        prev:
+          type: number
+          description: Previous page
+          nullable: true
+        next:
+          type: number
+          description: Next page
+          nullable: true
+        cursor:
+          type: number
+          description: Cursor for pagination
+          nullable: true
+      required:
+      - total
+      - perPage
+    ConnectedNetwork:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: Ethereum
+        isConnected:
+          type: boolean
+          example: true
+      required:
+      - id
+      - name
+      - isConnected
+    TokenModel:
+      type: object
+      properties:
+        address:
+          type: string
+          description: Ethereum address of the token
+        chainId:
+          type: number
+          description: Chain ID of the network of the token
+        type:
+          type: string
+          description: Type of token
+        decimals:
+          type: number
+          description: Token decimals
+        symbol:
+          type: string
+          description: Token name
+          nullable: true
+        name:
+          type: string
+          description: Token symbol
+          nullable: true
+        logosUri:
+          description: A list of logos for the token
+          nullable: true
+          type: array
+          items:
+            type: string
+      required:
+      - address
+      - chainId
+      - type
+      - decimals
+    ProtocolModel:
+      type: object
+      properties:
+        project:
+          type: string
+          example: uniswap
+        slug:
+          type: string
+          example: uniswap-v2
+        name:
+          type: string
+          example: Uniswap V2
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        url:
+          type: string
+          example: https://app.uniswap.org/swap
+          nullable: true
+        logosUri:
+          example: https://icons.llama.fi/uniswap-v2.png
+          nullable: true
+          type: array
+          items:
+            type: string
+        chains:
+          nullable: true
+          example:
+          - id: 1
+            name: mainnet
+          type: array
+          items:
+            $ref: '#/components/schemas/Network'
+      required:
+      - project
+      - slug
+      - name
+      - description
+      - url
+      - logosUri
+      - chains
+    Price:
+      type: object
+      properties:
+        decimals:
+          type: number
+          example: 8
+        price:
+          type: number
+          example: 27052
+        address:
+          type: string
+          example: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+        symbol:
+          type: string
+          example: WBTC
+        name:
+          type: string
+          example: Wrapped Bitcoin
+        timestamp:
+          type: number
+          example: 1695197412
+        chainId:
+          type: number
+          example: 1
+      required:
+      - decimals
+      - price
+      - address
+      - chainId
+    NonTokenizedModel:
+      type: object
+      properties:
+        chainId:
+          type: number
+          description: Chain ID of the network of the nontokenized position
+        project:
+          type: string
+          description: The project associated with the nontokenized position
+        protocol:
+          type: string
+          description: The specific standard integration or version of the nontokenized position
+        address:
+          type: string
+          description: Ethereum address of the nontokenized position
+        positionId:
+          type: string
+          description: Opaque position identifier of the nontokenized position
+        primaryAddress:
+          type: string
+          description: Ethereum address of the nontokenized position
+        name:
+          type: string
+          description: Name of the nontokenized position
+        logosUri:
+          type: string
+          description: Logo of the nontokenized position
+        underlyingTokens:
+          description: Underlying tokens of nontokenized position
+          nullable: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenModel'
+      required:
+      - chainId
+      - project
+      - protocol
+      - address
+      - positionId
+      - primaryAddress
+    PaginatedResult:
+      type: object
+      properties:
+        meta:
+          description: Metadata for pagination
+          allOf:
+          - $ref: '#/components/schemas/PaginationMeta'
+      required:
+      - meta
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: apiKey
+      type: http
