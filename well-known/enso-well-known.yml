@@ -1,0 +1,31 @@
+generated: '2026-07-19'
+method: searched
+source: live probes of Enso hosts
+note: >-
+  All probed /.well-known/ discovery endpoints returned 404 across the API host
+  (api.enso.finance), the marketing host (enso.build), and the docs host
+  (docs.enso.build). No security.txt, OIDC/OAuth discovery, api-catalog, or
+  ai-plugin.json is published. This is honest negative data; no raw files saved
+  and no WellKnown/SecurityTxt pointer wired.
+hosts:
+  - host: https://api.enso.finance
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+  - host: https://enso.build
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+  - host: https://docs.enso.build
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}

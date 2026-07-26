@@ -1,0 +1,128 @@
+# Enso Developer Documentation
+
+> Build signer-ready DeFi transactions with Enso Route API, Bundle API, protocol data, balances, cross-chain execution, and transaction validation.
+
+## Docs
+
+- [Account ID](https://docs.enso.build/api-reference/account/account-id.md): Gives the Account ID associated with the current user
+- [Approve Enso contract](https://docs.enso.build/api-reference/defi-shortcuts/approve-enso-contract.md): Returns a transaction that approves your Enso contracts to spend the given amount of specified tokens. Approve before sending the route transaction on-chain.
+- [Bundle a list of actions](https://docs.enso.build/api-reference/defi-shortcuts/bundle-a-list-of-actions.md): Returns a single transaction bundling the submitted actions. For available actions, see `/actions` endpoint.
+- [Get transaction for IPOR shortcut](https://docs.enso.build/api-reference/defi-shortcuts/get-transaction-for-ipor-shortcut.md)
+- [Optimal route between two tokens](https://docs.enso.build/api-reference/defi-shortcuts/optimal-route-between-two-tokens.md): Calculates optimal transaction with the best route between two tokens, which may involve several actions that interact with various DeFi protocols. This single call already quotes internally and returns executable calldata along with `amountOut` and `gas`, so there is no separate quote step to call…
+- [Optimal route between two tokens](https://docs.enso.build/api-reference/defi-shortcuts/optimal-route-between-two-tokens-1.md): Calculates optimal transaction with the best route between two tokens, which may involve several actions that interact with various DeFi protocols. This single call already quotes internally and returns executable calldata along with `amountOut` and `gas`, so there is no separate quote step to call…
+- [Quote from a token to another](https://docs.enso.build/api-reference/defi-shortcuts/quote-from-a-token-to-another.md): Returns the expected output amount and selected route for a token swap without executable transaction calldata.
+- [Routing to a non-tokenized position](https://docs.enso.build/api-reference/defi-shortcuts/routing-to-a-non-tokenized-position.md): Calculates optimal transaction with the best route entering a non-tokenized position, which may involve several actions that interact with various DeFi protocols.
+- [Chain and transactions volume](https://docs.enso.build/api-reference/defi/chain-and-transactions-volume.md): Returns total USD and transactions volume for the given chainId.
+- [Wallet balances](https://docs.enso.build/api-reference/defi/wallet-balances.md): Returns tokens balances for Enso Wallet associated with the given address across all supported chains. <br/>With `useEoa` set to true, it returns balances for the given EOA address instead.
+- [Actions for protocol](https://docs.enso.build/api-reference/integration/actions-for-protocol.md)
+- [Aggregators](https://docs.enso.build/api-reference/integration/aggregators.md): Fetches aggregators supported by Enso
+- [All Protocols](https://docs.enso.build/api-reference/integration/all-protocols.md): Returns all available protocols with supported chains
+- [LayerZero pool](https://docs.enso.build/api-reference/integration/layerzero-pool.md): Returns the LayerZero Stargate pool address for a given token address and chain ID. Returns null if no pool exists for the token on that chain.
+- [Networks](https://docs.enso.build/api-reference/integration/networks.md): Returns networks supported by Enso
+- [Projects](https://docs.enso.build/api-reference/integration/projects.md): Returns supported projects (e.g. `aave`) or platforms associated with available projects
+- [Protocols in a project](https://docs.enso.build/api-reference/integration/protocols-in-a-project.md): Returns all protocols available within the given project. For supported projects, see the `/projects` endpoint.
+- [Standard per protocol](https://docs.enso.build/api-reference/integration/standard-per-protocol.md): Returns a standard matching the given `slug`, containing supported actions, exact `inputs`, and a list of chains the standard's supported on.
+- [Standards](https://docs.enso.build/api-reference/integration/standards.md): Returns standards available for bundling. Each element represents a protocol, with list of supported actions and chains the standard's supported on.
+- [Supported actions](https://docs.enso.build/api-reference/integration/supported-actions.md): Returns actions that can be bundled with `/shortcuts/bundle` endpoint. For specific protocol actions and exact action inputs, see [`/actions/{slug}`](/api-reference/integration/actions-for-a-given-protocol) endpoint.
+- [Simulate already-built transactions (standalone)](https://docs.enso.build/api-reference/quote/simulate-already-built-transactions-standalone.md): Standalone simulator that returns predicted output amounts and gas for transactions that are ALREADY built (from any source). This is NOT part of the routing flow and is NOT a prerequisite for `/shortcuts/route` — `route` already quotes internally and returns executable calldata in a single call. Do…
+- [Simulate multiple transactions in a single quoter call](https://docs.enso.build/api-reference/quote/simulate-multiple-transactions-in-a-single-quoter-call.md): Standalone batch simulator that returns predicted output amounts and gas for up to 5 transactions that are ALREADY built (from any source). This is NOT part of the routing flow and is NOT a prerequisite for `/shortcuts/route` — `route` already quotes internally and returns executable calldata in a s…
+- [Validate an unsigned transaction matches a prior simulation](https://docs.enso.build/api-reference/quote/validate-an-unsigned-transaction-matches-a-prior-simulation.md): Validate an unsigned transaction matches a prior simulation
+- [Nontokenized positions](https://docs.enso.build/api-reference/tokens/nontokenized-positions.md): Returns a list of all nontokenized positions with details.
+- [Token Price](https://docs.enso.build/api-reference/tokens/token-price.md): Returns token price for the given address and chainId.
+- [Tokens](https://docs.enso.build/api-reference/tokens/tokens.md): Returns tokens and their details. <Tip>This APi includes cursor-based pagination with default 1000 items per page.</Tip>
+- [Tokens Prices Batched](https://docs.enso.build/api-reference/tokens/tokens-prices-batched.md): Returns prices for a batch of tokens on a given chain.
+- [Enso Developer Documentation](https://docs.enso.build/home.md): Turn DeFi product intent into signer-ready transaction data.
+- [Overview](https://docs.enso.build/pages/api-reference/overview.md): Learn about Enso API and its capabilities.
+- [SDK](https://docs.enso.build/pages/api-reference/sdk.md): Enso SDK is a JavaScript library for interacting with Enso API.
+- [Swagger](https://docs.enso.build/pages/api-reference/swagger.md): Swagger
+- [Custom Contract Calls Bundle](https://docs.enso.build/pages/build/examples/custom-call-bundle.md): Bundle routing with non-standard ways to interact with protocols Enso supports
+- [Request Tracking](https://docs.enso.build/pages/build/examples/request-referral.md): Tag requests with a referral code to track usage and rewards.
+- [Non-tokenized Position Routing](https://docs.enso.build/pages/build/examples/route-nontokenized.md): Get route calldata into non-tokenized positions
+- [Shortcuts Library](https://docs.enso.build/pages/build/examples/shortcuts.md): Explore shortcuts for common DeFi workflows.
+- [Authentication](https://docs.enso.build/pages/build/get-started/authentication.md): Obtain Enso API key to access the Enso API.
+- [Get Balances](https://docs.enso.build/pages/build/get-started/balances.md): Get balances of tokens in a wallet address.
+- [Bridge Transaction Status](https://docs.enso.build/pages/build/get-started/bridge-status.md): Track the status of crosschain bridge transactions across Stargate, CCIP, Relay, and CCTP
+- [Bundle API](https://docs.enso.build/pages/build/get-started/bundling-actions.md): Compose ordered public actions into a signer-ready transaction with the Bundle API.
+- [Core Concepts](https://docs.enso.build/pages/build/get-started/core-concepts.md): The Enso primitives every integration uses: token data, balances, routes, bundles, approvals, bridge status, and Quoter.
+- [Crosschain Routing](https://docs.enso.build/pages/build/get-started/crosschain-routing.md): Execute complex DeFi operations across multiple blockchains using bridge callbacks and post-bridge execution
+- [Get Started](https://docs.enso.build/pages/build/get-started/overview.md): Choose the right Enso API path for swaps, zaps, Earn products, cross-chain execution, custom workflows, and third-party transaction validation.
+- [Get Protocol Data](https://docs.enso.build/pages/build/get-started/protocol-data.md): Access DeFi protocols and tokens data through Enso's API
+- [DeFi and Swap Routing](https://docs.enso.build/pages/build/get-started/route.md): Find optimal paths for crosschain entering/exiting DeFi positions or swapping ERC20 tokens.
+- [Bundle Actions Reference](https://docs.enso.build/pages/build/reference/actions.md): Public actions, inputs, outputs, and composition rules for Bundle API requests.
+- [Advanced Balance](https://docs.enso.build/pages/build/reference/balance.md): Check balances of external accounts and build routes against estimated amounts using the Bundle API.
+- [Concepts](https://docs.enso.build/pages/build/reference/concepts.md): Understand Enso's core concepts and how they work.
+- [Contracts and Deployments](https://docs.enso.build/pages/build/reference/deployments.md): Enso contracts deployment addresses
+- [FAQ](https://docs.enso.build/pages/build/reference/faq.md): Find answers to common questions.
+- [Flashloans](https://docs.enso.build/pages/build/reference/flashloans.md): Borrow tokens without upfront collateral using the Bundle API.
+- [Licence & Legal](https://docs.enso.build/pages/build/reference/legal.md): Understand the legal aspects of using Enso API.
+- [Routing Strategies](https://docs.enso.build/pages/build/reference/routing-strategies.md): Choose the execution account used by Route API and Bundle API transactions.
+- [Supported Networks](https://docs.enso.build/pages/build/reference/supported-networks.md): Chains supported by Enso API.
+- [Whitepaper](https://docs.enso.build/pages/build/reference/whitepaper.md): Whitepaper
+- [Changelog](https://docs.enso.build/pages/changelog.md): Latest updates on API changes, supported protocols, positions, and chains in Enso.
+- [Enso Earn](https://docs.enso.build/pages/earn/overview.md): Enso Earn is the Yield-as-a-Service layer for wallets, fintechs, custodians, and apps. Launch a curated Earn product with discovery, cross-chain execution, position tracking, and monetization controls.
+- [Validators](https://docs.enso.build/pages/network/network-participants/validators.md): Participants who secure the Enso Network by validating solutions and maintaining integrity
+- [Enso Network](https://docs.enso.build/pages/network/overview.md): Introduction to Enso network
+- [Tokenomics](https://docs.enso.build/pages/network/token.md): Token utility and usage
+- [Simulating Transactions](https://docs.enso.build/pages/quoter/guides/simulate.md): Simulate any EVM transaction to predict output amounts and gas consumption.
+- [Third-Party Transactions](https://docs.enso.build/pages/quoter/guides/third-party-transactions.md): Use Quoter with transactions from any source.
+- [Validating Transactions](https://docs.enso.build/pages/quoter/guides/validate.md): Validate unsigned transactions against prior simulations before signing.
+- [How It Works](https://docs.enso.build/pages/quoter/how-it-works.md): Understand Quoter's simulate-then-validate security model.
+- [Quoter](https://docs.enso.build/pages/quoter/overview.md): Simulate and validate any EVM transaction before signing to predict outcomes and prevent tampering.
+- [Quick Start](https://docs.enso.build/pages/quoter/quick-start.md): Get started with Enso Quoter in under 5 minutes.
+- [Error Handling](https://docs.enso.build/pages/quoter/reference/error-handling.md): Handle simulation errors and validation failures in Quoter API.
+- [FAQ](https://docs.enso.build/pages/quoter/reference/faq.md): Common questions about Quoter API.
+- [Checkout Widget](https://docs.enso.build/pages/templates/checkout-widget.md): A React component for seamless cryptocurrency deposits from connected wallets
+- [Cross-chain Route Widget](https://docs.enso.build/pages/templates/cross-chain-route-widget.md): A React component and web app for cross-chain routing of DeFi positions and tokens.
+- [Feeling Lucky](https://docs.enso.build/pages/templates/feeling-lucky.md): A dApp that helps users diversify into random tokens from selected sectors using the Enso SDK.
+- [Enso DeFi Navigator](https://docs.enso.build/pages/templates/navigator.md): A UI to navigate projects, protocols, and positions in the Enso ecosystem, always up-to-date with live integrations.
+- [Overview](https://docs.enso.build/pages/templates/overview.md): Ready-to-use components and applications that leverage Enso's APIs for immediate integration into your frontend.
+- [Uniswap Migrator](https://docs.enso.build/pages/templates/uniswap-migrator.md): A React component and web app that enables migration of base tokens and DeFi positions from Uniswap V3 to V4 across all supported chains.
+- [Yield Migrator](https://docs.enso.build/pages/templates/yield-migrator.md): A DeFi application that optimizes returns by migrating yield-bearing positions between protocols using the Enso SDK.
+- [Overview](https://docs.enso.build/pages/use-cases/deposits/index.md)
+- [Position Migration](https://docs.enso.build/pages/use-cases/deposits/position-migration.md): Simplify position migration between vaults to keep capital within ecosystem.
+- [Withdrawal](https://docs.enso.build/pages/use-cases/deposits/withdrawal.md): Simplify withdrawal from yield-generating vaults and liquidity pools
+- [Zap to Deposit](https://docs.enso.build/pages/use-cases/deposits/zap-to-deposit.md): Maximize user deposits by accepting any token and zapping it directly into a staking or vault position
+- [Curve Convex Yield Farming](https://docs.enso.build/pages/use-cases/dexes-aggregators/convex-yield-farming.md): Deposit into Curve pools and stake LP tokens in Convex for boosted CRV rewards
+- [Crosschain Liquidity Provision](https://docs.enso.build/pages/use-cases/dexes-aggregators/crosschain-lp.md): Provison liquidity across chains using Enso bridge action
+- [Overview](https://docs.enso.build/pages/use-cases/dexes-aggregators/index.md): Crosschain DeFi automation for LP provisioning, yield optimization, and multi-protocol position management
+- [Position Migration](https://docs.enso.build/pages/use-cases/dexes-aggregators/position-migration.md): Make it easy for users to migrate positions between different protocols and assets.
+- [Uniswap V3 Concentrated Liquidity](https://docs.enso.build/pages/use-cases/dexes-aggregators/provision-lp.md): Provide concentrated liquidity to Uniswap V3 pools with automated token splitting and position management
+- [Zap to Add Liquidity](https://docs.enso.build/pages/use-cases/dexes-aggregators/zap-to-liquidity.md): Simplify liquidity provision to DeFi pools with a single transaction.
+- [Overview](https://docs.enso.build/pages/use-cases/index.md): Find Enso routes and bundles for your use case and the strategies you need
+- [Borrow from Lending Protocols](https://docs.enso.build/pages/use-cases/lending-markets/borrowing.md): Borrow on lending protocols and combine with Enso's routing
+- [Collateral Swap](https://docs.enso.build/pages/use-cases/lending-markets/collateral-swap.md): Switch the collateral backing your debt without closing the debt position
+- [Deposit with Leverage](https://docs.enso.build/pages/use-cases/lending-markets/deposit-with-leverage.md)
+- [Overview](https://docs.enso.build/pages/use-cases/lending-markets/index.md): Shortcuts for Lending Markets Operations
+- [Migration](https://docs.enso.build/pages/use-cases/lending-markets/migration.md): Migrate positions between protocols
+- [Withdraw & Swap](https://docs.enso.build/pages/use-cases/lending-markets/withdraw-and-swap.md): Redeem asssets and swap them directly to an arbitrary token in a single transaction
+- [Zap Repay Debt](https://docs.enso.build/pages/use-cases/lending-markets/zap-repay-behalf-of.md): Zap to repay debt from any position
+- [Zap to Collateral](https://docs.enso.build/pages/use-cases/lending-markets/zap-to-collateral.md): Automatically zap any input token as collateral to arbitrary vault tokens
+- [DEX Market Making](https://docs.enso.build/pages/use-cases/market-makers/dex-market-making.md): Automate DEX market making, responding to market conditions programmatically to improve capital efficiency.
+- [Overview](https://docs.enso.build/pages/use-cases/market-makers/index.md)
+- [Liquidity Pool Rebalancing](https://docs.enso.build/pages/use-cases/market-makers/pool-rebalancing.md): Dynamically shift capital from one protocol to another to optimize yield
+- [Overview](https://docs.enso.build/pages/use-cases/nontokenized-deposits/index.md)
+- [Deposit into Orderly Vault](https://docs.enso.build/pages/use-cases/nontokenized-deposits/orderly-vault-deposit.md): Deposit into Orderly vaults with nontokenized position router
+- [Berachain: Mint rUSD to enter Dolomite](https://docs.enso.build/pages/use-cases/stablecoins/crosschain-deposit-rusd-bera-dolomite.md): Round-trip crosschain minting strategy with USDCe bridging, rUSD minting, and Dolomite vault deposits for yield generation
+- [Berachain: Mint rUSD to enter Euler](https://docs.enso.build/pages/use-cases/stablecoins/crosschain-deposit-rusd-bera-euler.md): Round-trip roundtrip minting strategy with USDCe bridging, rUSD creation, and Euler vault deposits for yield generation
+- [Katana: Mint rUSD and deposit to Morpho](https://docs.enso.build/pages/use-cases/stablecoins/crosschain-deposit-rusd-katana-morpho.md): Crosschain wsrUSD minting and automated routing to Morpho lending positions on Katana
+- [Katana: Crosschain Yield Generation](https://docs.enso.build/pages/use-cases/stablecoins/crosschain-deposit-rusd-katana-yearn.md): Mint wsrUSD on Ethereum and automatically bridge to Katana for Yearn vault deposits
+- [Crosschain Minting: Round-Trip to Berachain](https://docs.enso.build/pages/use-cases/stablecoins/crosschain-mint-rusd-bera.md): Crosschain stablecoin minting workflow: bridge USDCefrom Berachain to Ethereum, mint rUSD, and return minted tokens to origin chain
+- [Crosschain Minting: Round-Trip to Katana](https://docs.enso.build/pages/use-cases/stablecoins/crosschain-mint-rusd-katana.md): Mint rUSD stablecoin on Ethereum mainnet and bridge to Katana chain for DeFi yield and stablecoin diversification
+- [Overview](https://docs.enso.build/pages/use-cases/stablecoins/index.md): Streamlined crosschain stablecoin workflows for minting, yield farming, and liquidity provision from a single origin chain
+- [Auto-Compounding & Complete Yield Flows](https://docs.enso.build/pages/use-cases/strategies/auto-compounding.md): Build single-transaction multi-step yield strategies, including auto-compounding
+- [Overview](https://docs.enso.build/pages/use-cases/strategies/index.md): Offer seamless swaps, cross-chain bridging, and direct-to-DeFi earning opportunities to keep your users engaged and their assets active.
+- [Leverage Loops](https://docs.enso.build/pages/use-cases/strategies/leverage-loops.md): Execute complex leveraged yield strategies
+- [Position Rebalancing](https://docs.enso.build/pages/use-cases/strategies/position-rebalancing.md): Optimize DeFi portfolio by rebalancing positions efficiently
+- [Yield Farming Deposits](https://docs.enso.build/pages/use-cases/strategies/yield-farming-deposits.md): Single-click deposits into yield-generating vaults and liquidity pools.
+- [Bridging](https://docs.enso.build/pages/use-cases/wallets/bridging.md)
+- [Overview](https://docs.enso.build/pages/use-cases/wallets/index.md): Offer seamless swaps, cross-chain bridging, and direct-to-DeFi earning opportunities to keep your users engaged and their assets active.
+- [Minting](https://docs.enso.build/pages/use-cases/wallets/mint.md): Mint stablecoins and use it to mint native assets on another chain
+- [Swaps](https://docs.enso.build/pages/use-cases/wallets/swaps.md): Offer swaps into the latest, most popular tokens, as soon as they are available to trade.
+- [Zap & Earn](https://docs.enso.build/pages/use-cases/wallets/zap-earn.md): Deposit wallet assets in the latest DeFi protocols to earn yield
+
+## OpenAPI Specs
+
+- [openapi](https://docs.enso.build/public/openapi.json)
+- [quoter-openapi](https://docs.enso.build/public/quoter-openapi.json)
+- [.pre-commit-config](https://docs.enso.build/.pre-commit-config.yaml)
+- [layout](https://docs.enso.build/layout.yaml)

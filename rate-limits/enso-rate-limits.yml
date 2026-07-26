@@ -1,0 +1,20 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.enso.build/pages/build/get-started/authentication
+scope: per-api-key
+limit_count: 600
+window: 1 minute
+per_second: 10
+signal:
+  http_status: 429
+  documented: true
+tiers:
+  - name: documentation demo key
+    limit: 1 rps
+    key: 1e02632d-6feb-4a75-a157-documentation
+  - name: standard
+    limit: 10 rps (600 rpm)
+    note: default for a self-service key from developers.enso.build
+  - name: increased
+    limit: on request
+    note: higher limits available by contacting Enso

@@ -1,0 +1,35 @@
+generated: '2026-07-19'
+method: searched
+source: https://www.npmjs.com/org/ensofinance
+packages:
+  - language: typescript
+    registry: npm
+    name: "@ensofinance/sdk"
+    version: 2.5.0
+    url: https://www.npmjs.com/package/@ensofinance/sdk
+    repository: https://github.com/EnsoBuild/sdk-ts
+    install: npm install @ensofinance/sdk
+    description: SDK for interacting with the Enso API (routing, bundling, quoting, approvals, balances).
+    official: true
+  - language: typescript
+    registry: npm
+    name: "@ensofinance/shortcuts-widget"
+    version: 1.2.0
+    url: https://www.npmjs.com/package/@ensofinance/shortcuts-widget
+    repository: https://github.com/EnsoBuild/shortcuts-widget
+    install: npm install @ensofinance/shortcuts-widget
+    description: Multi-purpose React widget utilizing the Enso API.
+    official: true
+  - language: typescript
+    registry: npm
+    name: "@ensofinance/use-defi"
+    version: 0.3.1
+    url: https://www.npmjs.com/package/@ensofinance/use-defi
+    repository: https://github.com/EnsoBuild/use-defi
+    install: npm install @ensofinance/use-defi
+    description: React hooks library to use with Enso shortcuts infrastructure.
+    official: true
+notes: >-
+  npm scope @ensofinance is the official Enso publisher. No first-party
+  Python/Go/Java/Ruby SDKs were found on PyPI, pkg.go.dev, Maven, or RubyGems
+  as of this probe (PyPI "enso" is an unrelated automation library).

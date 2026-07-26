@@ -1,0 +1,33 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.enso.build/pages/changelog
+scheme: dated-rolling
+note: >-
+  Enso publishes a dated changelog covering API changes plus newly supported
+  protocols, positions, and chains. Recent window captured below; the live page
+  is the source of truth.
+entries:
+  - date: '2025-09-24'
+    highlights: Enso Checkout launched as a universal payment layer (deposits from any chain into any protocol, CEX funds, fiat onramps).
+    breaking: false
+  - date: '2025-09-22'
+    highlights: SDK update with LayerZero pool crosschain routing utilities and extended response fields; 4 new protocols (incl. Multipli.fi Vaults, Looping Collective on Ethereum).
+    breaking: false
+  - date: '2025-09-15'
+    highlights: New LayerZero pools endpoint for fetching exact pools used in crosschain routing.
+    breaking: false
+  - date: '2025-09-08'
+    highlights: 4 new protocols (Pendle YT, Bunni, Beefy CLM on Base, Hyperbloom) with deposit/redeem; OneStable crosschain stablecoin issuance layer.
+    breaking: false
+  - date: '2025-09-01'
+    highlights: 3 protocols added (Steer, Sushi V3 ICHI Vaults, Fluid Swap on Ethereum); enhanced swap routing engine.
+    breaking: false
+  - date: '2025-08-25'
+    highlights: Routing engine improvements (more accurate swap amounts, better multi-step route handling).
+    breaking: false
+  - date: '2025-08-18'
+    highlights: 5 new protocols (Beefy CLM on Base, Midas RWA, Concrete, Angstrom DEX, Turtle Club Vaults).
+    breaking: false
+  - date: '2025-08-11'
+    highlights: Curve Llamalend full support (deposit/redeem/repay); improved Curve gauge token pricing.
+    breaking: false

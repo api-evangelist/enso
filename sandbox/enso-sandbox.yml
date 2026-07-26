@@ -1,0 +1,31 @@
+generated: '2026-07-19'
+method: searched
+source: https://api.enso.finance/api (Swagger info) + https://docs.enso.build/pages/build/get-started/authentication
+summary: >-
+  Enso has no separate sandbox host or test network mode; all calls hit the
+  production API (https://api.enso.finance) and read live onchain data. For
+  documentation/testing, Enso publishes a shared, rate-limited demo API key so
+  Swagger and quick tests work without signing up. Real transactions are only
+  executed when the returned calldata is signed and broadcast by the caller, so
+  building/quoting routes is inherently non-destructive.
+test_mode:
+  separate_host: false
+  network_toggle: false
+  note: >-
+    Route/Bundle/Quote endpoints return unsigned, signer-ready transaction data;
+    nothing settles until the caller signs and broadcasts, so these are safe to
+    exercise as dry runs.
+published_test_credentials:
+  - kind: demo-api-key
+    value: 1e02632d-6feb-4a75-a157-documentation
+    rate_limit: 1 rps
+    usage: >-
+      Bearer token that pre-authorizes Swagger and documentation examples.
+      Published verbatim in the Enso API Swagger description. Rate-limited to
+      1 request/second; obtain your own key at developers.enso.build for
+      production limits (10 rps / 600 rpm).
+    source: https://api.enso.finance/api
+verify_endpoint:
+  operation: AccountController_accountId
+  path: /api/v1/account/accountId
+  purpose: Returns the accountId bound to your API key; use to confirm a key is valid without executing a transaction.

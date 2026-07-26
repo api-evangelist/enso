@@ -1,0 +1,26 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Enso API
+  version: 1.0.0
+extends: openapi/enso-openapi-original.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-07-19'
+      x-api-provider: Enso
+      x-developer-portal: https://developers.enso.build/
+      x-docs: https://docs.enso.build/
+      x-status-page: https://status.enso.finance
+      x-changelog: https://docs.enso.build/pages/changelog
+  - target: $.info
+    update:
+      x-authentication: >-
+        HTTP Bearer API key (Authorization: Bearer <key>) or query param
+        apikey=<key>. Get a key at developers.enso.build. Default 10 rps / 600 rpm.
+  - target: $.info
+    update:
+      x-rate-limit: 10 rps (600 rpm), 429 on exceed, increasable on request
+  - target: $.servers
+    update:
+      - url: https://api.enso.finance
+        description: Production

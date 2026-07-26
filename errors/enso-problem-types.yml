@@ -1,0 +1,35 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/enso-openapi-original.json + https://docs.enso.build/pages/quoter/reference/error-handling
+format: json
+note: >-
+  Enso returns standard HTTP status codes with JSON error bodies (not RFC 9457
+  problem+json). API-level errors are 400 (validation) and 429 (rate limit).
+  Cross-chain (bridge) flows carry richer structured error schemas returned in
+  bridge status responses.
+problems:
+  - status: 400
+    title: Bad Request / validation error
+    description: Invalid or missing parameters (e.g. bad chainId, token address, or route args).
+    source_operations:
+      - RouterController_routeShortcutTransaction
+      - BundleController_bundleShortcutTransaction
+      - QuoteController_quote
+  - status: 429
+    title: Too Many Requests
+    description: Rate limit exceeded (default 10 rps / 600 rpm; demo key 1 rps). Back off and retry.
+    remediation: Request a higher limit at developers.enso.build or throttle client requests.
+    source_operations:
+      - RouterController_routeShortcutTransaction
+      - QuoteController_quote
+structured_error_schemas:
+  - name: DecodedValidationError
+    context: CCIP receiver message validation
+    fields: [errorCodeName, errorDescription, refundKind]
+    example_code: MALFORMED_MESSAGE_DATA
+  - name: MessageValidationFailedError
+    context: cross-chain message validation failed at receiver
+    fields: [reason, messageId, errorCode]
+  - name: ShortcutExecutionFailedError
+    context: post-bridge shortcut execution failed
+    fields: [reason, messageId, error]

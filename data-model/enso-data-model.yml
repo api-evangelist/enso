@@ -1,0 +1,93 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/enso-openapi-original.json
+note: >-
+  Entity graph derived from OpenAPI schemas and the resource endpoints. Enso's
+  domain is a routing/bundling engine over onchain primitives: Networks and
+  Projects/Protocols/Standards describe the supported surface; Tokens/Positions
+  carry pricing and balances; Routes/Bundles/Quotes are the transaction-building
+  outputs; Actions/Standards are the composable building blocks of a Bundle.
+entities:
+  - name: Network
+    key: chainId
+    source_schema: Network
+    endpoint: /api/v1/networks
+  - name: Project
+    source_schema: Project
+    endpoint: /api/v1/projects
+  - name: Protocol
+    source_schema: Protocol
+    endpoint: /api/v1/protocols
+  - name: Standard
+    source_schema: Standard
+    endpoint: /api/v1/standards
+    description: Per-protocol standard listing supported Actions + inputs + chains.
+  - name: Action
+    source_schema: Action
+    endpoint: /api/v1/actions
+    description: Composable building block for Bundle shortcuts (deposit, swap, borrow, bridge, etc.).
+  - name: Token
+    source_schema: TokenModel
+    endpoint: /api/v1/tokens
+  - name: Position
+    source_schema: PositionModel
+    endpoint: /api/v1/nontokenized
+  - name: Price
+    source_schema: Price
+    endpoint: /api/v1/prices/{chainId}/{address}
+  - name: WalletBalance
+    source_schema: WalletBalance
+    endpoint: /api/v1/wallet/balances
+  - name: Route
+    source_schema: RouteShortcutTransaction
+    endpoint: /api/v1/shortcuts/route
+  - name: Bundle
+    source_schema: BundleShortcutTransaction
+    endpoint: /api/v1/shortcuts/bundle
+  - name: Quote
+    source_schema: QuoteEndpointResponse
+    endpoint: /api/v1/shortcuts/quote
+  - name: Transaction
+    source_schema: Transaction
+    description: Signer-ready tx (to/data/value/gas) returned by route/bundle.
+relationships:
+  - from: Project
+    to: Protocol
+    type: has_many
+    via: /api/v1/projects/{project}/protocols
+  - from: Protocol
+    to: Standard
+    type: has_one
+    via: slug
+  - from: Standard
+    to: Action
+    type: has_many
+    via: supported actions
+  - from: Protocol
+    to: Network
+    type: has_many
+    via: supported chains
+  - from: Token
+    to: Network
+    type: belongs_to
+    via: chainId
+  - from: Route
+    to: Token
+    type: belongs_to
+    via: tokenIn/tokenOut
+  - from: Route
+    to: Transaction
+    type: has_one
+    via: tx
+  - from: Bundle
+    to: Action
+    type: has_many
+    via: actions[]
+  - from: Bundle
+    to: Transaction
+    type: has_one
+    via: tx
+  - from: WalletBalance
+    to: Token
+    type: has_many
+    via: token

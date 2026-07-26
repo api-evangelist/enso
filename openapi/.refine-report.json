@@ -1,0 +1,30 @@
+{
+  "provider": "enso",
+  "sources": [
+    "enso-ccip-api-openapi.yml",
+    "enso-cctp-api-openapi.yml",
+    "enso-layerzero-api-openapi.yml",
+    "enso-metadata-api-openapi.yml",
+    "enso-projects-api-openapi.yml",
+    "enso-relay-api-openapi.yml",
+    "enso-shortcuts-api-openapi.yml",
+    "enso-standards-api-openapi.yml",
+    "enso-wallet-api-openapi.yml"
+  ],
+  "outputs": [
+    "enso-ccip-api-openapi.yml",
+    "enso-cctp-api-openapi.yml",
+    "enso-layerzero-api-openapi.yml",
+    "enso-metadata-api-openapi.yml",
+    "enso-projects-api-openapi.yml",
+    "enso-relay-api-openapi.yml",
+    "enso-shortcuts-api-openapi.yml",
+    "enso-standards-api-openapi.yml",
+    "enso-wallet-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

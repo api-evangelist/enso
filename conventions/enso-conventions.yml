@@ -1,0 +1,47 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.enso.build/ + openapi/enso-openapi-original.json
+authentication:
+  style: bearer-api-key
+  header: 'Authorization: Bearer <API_KEY>'
+  alt: query parameter apikey=<API_KEY>
+  ref: authentication/enso-authentication.yml
+idempotency:
+  supported: false
+  note: >-
+    Enso documents no idempotency key. Route/Bundle/Quote endpoints are
+    read-style transaction builders that return unsigned calldata and do not
+    settle state server-side, so retries are naturally safe; the caller controls
+    onchain execution and nonce/idempotency at the signing layer.
+pagination:
+  style: cursor
+  note: >-
+    List endpoints (e.g. /api/v1/tokens) use cursor-based pagination, default
+    1000 items per page.
+  response_fields:
+    meta: {total, lastPage, currentPage, perPage, prev, next, cursor}
+  ref_schema: PaginationMeta
+versioning:
+  scheme: uri-path
+  current: v1
+  base_path: /api/v1
+error_envelope:
+  format: json
+  note: >-
+    Errors return non-2xx HTTP status (400 validation, 429 rate limit) with a
+    JSON body; cross-chain flows carry structured error schemas
+    (DecodedValidationError, MessageValidationFailedError,
+    ShortcutExecutionFailedError). Not RFC 9457 problem+json.
+  ref: errors/enso-problem-types.yml
+rate_limiting:
+  signal: HTTP 429
+  default: 10 rps (600 rpm)
+  ref: rate-limits/enso-rate-limits.yml
+request_tracking:
+  referral: >-
+    Requests can be tagged with a referral code to track usage and rewards
+    (see docs /pages/build/examples/request-referral).
+chains:
+  note: >-
+    Multi-chain; chainId is a required path/query parameter on most endpoints.
+    Supported networks via /api/v1/networks.

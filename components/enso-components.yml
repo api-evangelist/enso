@@ -1,0 +1,36 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.enso.build/pages/templates/overview + https://www.npmjs.com/org/ensofinance
+summary: >-
+  Enso ships client-side React components/widgets that embed routing, bridging,
+  and checkout flows directly in a frontend, distinct from the server-side SDK.
+families:
+  - name: Shortcuts Widget
+    kind: react-component
+    package: "@ensofinance/shortcuts-widget"
+    version: 1.2.0
+    url: https://www.npmjs.com/package/@ensofinance/shortcuts-widget
+    repository: https://github.com/EnsoBuild/shortcuts-widget
+    description: Multi-purpose embeddable widget utilizing the Enso API.
+  - name: React hooks (use-defi)
+    kind: react-hooks
+    package: "@ensofinance/use-defi"
+    version: 0.3.1
+    url: https://www.npmjs.com/package/@ensofinance/use-defi
+    description: React hooks library for building against Enso shortcuts infrastructure.
+templates:
+  - name: Checkout Widget
+    description: React component for seamless crypto deposits from connected wallets.
+    docs: https://docs.enso.build/pages/templates/checkout-widget
+  - name: Cross-chain Route Widget
+    description: React component and web app for cross-chain routing of DeFi positions and tokens.
+    docs: https://docs.enso.build/pages/templates/cross-chain-route-widget
+  - name: Uniswap Migrator
+    description: React component/web app migrating Uniswap V3 positions to V4 across chains.
+    docs: https://docs.enso.build/pages/templates/uniswap-migrator
+  - name: Enso DeFi Navigator
+    description: UI to navigate projects, protocols, and positions in the Enso ecosystem.
+    docs: https://docs.enso.build/pages/templates/navigator
+  - name: Yield Migrator
+    description: App that migrates yield-bearing positions between protocols via the SDK.
+    docs: https://docs.enso.build/pages/templates/yield-migrator

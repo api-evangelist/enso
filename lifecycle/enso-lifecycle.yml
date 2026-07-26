@@ -1,0 +1,19 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.enso.build/ + https://status.enso.finance
+versioning:
+  scheme: uri-path
+  current: v1
+  base_path: /api/v1
+  docs: https://docs.enso.build/pages/api-reference/overview
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No formal deprecation/sunset policy is published as of this probe.
+changelog: https://docs.enso.build/pages/changelog
+status_page: https://status.enso.finance
+status_platform: Better Stack
+sla:
+  url: null
+  note: No public SLA/uptime commitment found; status page shows ~99.98% recent uptime.
+deprecated_operations: []

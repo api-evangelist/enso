@@ -1,0 +1,45 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/enso-openapi-original.json
+note: >-
+  No official hosted/remote Enso MCP server was found (no @modelcontextprotocol
+  package, no mcp.enso host, none in public MCP registries as of this probe).
+  Enso does ship agent-framework integrations on GitHub (EnsoBuild/plugin-enso
+  for elizaOS, EnsoBuild/goat, coinbase-agentkit, enso-agent-wallet) but these
+  are agent plugins, not an MCP server. The tool list below is a CANDIDATE
+  derived from marquee OpenAPI operations to seed a future MCP server.
+server:
+  name: enso
+  transport: http
+tools:
+  - name: route
+    description: Find the optimal route/zap between two tokens or positions and return signer-ready calldata.
+    source_operation: openapi/enso-openapi-original.json#RouterController_routeShortcutTransaction
+  - name: bundle
+    description: Bundle a list of Actions into a single executable transaction.
+    source_operation: openapi/enso-openapi-original.json#BundleController_bundleShortcutTransaction
+  - name: quote
+    description: Quote expected output amount and selected route for a token-to-token swap.
+    source_operation: openapi/enso-openapi-original.json#QuoteController_quote
+  - name: wallet_balances
+    description: Return all token balances for a given wallet across supported chains.
+    source_operation: openapi/enso-openapi-original.json#WalletController_walletBalances
+  - name: tokens
+    description: Return tokens and their details (cursor-paginated).
+    source_operation: openapi/enso-openapi-original.json#TokensController_tokens
+  - name: price
+    description: Return the price for a token on a chain.
+    source_operation: openapi/enso-openapi-original.json#PricesController_getPrice
+  - name: protocols
+    description: Return projects and protocols available to route/bundle against.
+    source_operation: openapi/enso-openapi-original.json#ProtocolsController_findAll
+  - name: networks
+    description: Return networks/chains supported by the API.
+    source_operation: openapi/enso-openapi-original.json#NetworksController_networks
+  - name: actions
+    description: Return the Actions available to compose in bundle shortcuts.
+    source_operation: openapi/enso-openapi-original.json#ActionsController_findAll
+  - name: bridge_check
+    description: Check cross-chain bridge transaction status (LayerZero/Stargate/CCIP/Relay/CCTP).
+    source_operation: openapi/enso-openapi-original.json#LayerZeroController_checkBridgeTransaction

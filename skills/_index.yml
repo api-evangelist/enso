@@ -1,0 +1,21 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/enso-openapi-original.json + https://docs.enso.build/
+note: >-
+  Packaged Agent Skills for Enso's marquee flows. Every step is grounded in a
+  real operationId verified in openapi/enso-openapi-original.json. No
+  provider-published AGENTS.md/skill files were found (Enso ships agent-framework
+  plugins on GitHub, not skill packages), so these are generated.
+skills:
+  - file: enso-route-swap.md
+    name: Swap or zap between two tokens with the Route API
+    api: openapi/enso-openapi-original.json
+    operations: [NetworksController_networks, TokensController_tokens, WalletController_createApproveTransaction, RouterController_routeShortcutTransaction]
+  - file: enso-bundle-actions.md
+    name: Compose ordered onchain actions with the Bundle API
+    api: openapi/enso-openapi-original.json
+    operations: [ActionsController_findAll, StandardsController_standards, BundleController_bundleShortcutTransaction]
+  - file: enso-quote-balances.md
+    name: Quote a swap and read wallet balances
+    api: openapi/enso-openapi-original.json
+    operations: [WalletController_walletBalances, QuoteController_quote, RouterController_routeShortcutTransaction]

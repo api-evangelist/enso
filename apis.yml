@@ -1,8 +1,30 @@
 aid: enso
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/enso.png
 name: Enso
-description: 'Enso is a company surfaced as a portfolio company of multicoin-capital, techstars and added
-  to the API Evangelist network as a stub for enrichment. Sector: crypto-web3. This profile is a lead
-  awaiting the enrichment pipeline.'
+description: >-
+  Enso is onchain infrastructure that turns DeFi product intent into signer-ready
+  transaction data. Its Route API finds the optimal path between any two tokens or
+  positions across 250+ protocols and multiple chains, while the Bundle API composes
+  ordered onchain Actions (deposit, swap, borrow, bridge, flashloan, transfer and
+  more) into a single executable transaction. Enso also exposes protocol, token,
+  price and balance data, a Quoter for a simulate-then-validate transaction-safety
+  model, cross-chain routing over Stargate/LayerZero, Chainlink CCIP, Relay and
+  Circle CCTP, and prebuilt React widgets (Checkout, cross-chain route). Developers
+  authenticate with a Bearer API key and integrate via the @ensofinance/sdk
+  TypeScript SDK. Backed by Multicoin Capital and Techstars; 100+ apps and 1,900+
+  developers build on Enso.
 url: https://raw.githubusercontent.com/api-evangelist/enso/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -13,11 +35,144 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
 - Crypto Web3
-apis: []
+- DeFi
+- Blockchain
+- Cross-chain
+- Smart Contracts
+- Transaction Routing
+- Web3 Infrastructure
+- Onchain
+apis:
+- aid: enso:enso-ccip-api
+  name: Enso ccip API
+  description: The ccip API from Enso — 2 operation(s) for ccip.
+  humanURL: https://docs.enso.build/
+  baseURL: https://api.enso.finance
+  tags:
+  - ccip
+  properties:
+  - type: OpenAPI
+    url: openapi/enso-ccip-api-openapi.yml
+  - type: ErrorCatalog
+    url: errors/enso-problem-types.yml
+  - type: DataModel
+    url: data-model/enso-data-model.yml
+- aid: enso:enso-cctp-api
+  name: Enso cctp API
+  description: The cctp API from Enso — 3 operation(s) for cctp.
+  humanURL: https://docs.enso.build/
+  baseURL: https://api.enso.finance
+  tags:
+  - cctp
+  properties:
+  - type: OpenAPI
+    url: openapi/enso-cctp-api-openapi.yml
+  - type: ErrorCatalog
+    url: errors/enso-problem-types.yml
+  - type: DataModel
+    url: data-model/enso-data-model.yml
+- aid: enso:enso-layerzero-api
+  name: Enso layerzero API
+  description: The layerzero API from Enso — 4 operation(s) for layerzero.
+  humanURL: https://docs.enso.build/
+  baseURL: https://api.enso.finance
+  tags:
+  - layerzero
+  properties:
+  - type: OpenAPI
+    url: openapi/enso-layerzero-api-openapi.yml
+  - type: ErrorCatalog
+    url: errors/enso-problem-types.yml
+  - type: DataModel
+    url: data-model/enso-data-model.yml
+- aid: enso:enso-metadata-api
+  name: Enso metadata API
+  description: The metadata API from Enso — 8 operation(s) for metadata.
+  humanURL: https://docs.enso.build/
+  baseURL: https://api.enso.finance
+  tags:
+  - metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/enso-metadata-api-openapi.yml
+  - type: ErrorCatalog
+    url: errors/enso-problem-types.yml
+  - type: DataModel
+    url: data-model/enso-data-model.yml
+- aid: enso:enso-projects-api
+  name: Enso projects API
+  description: The projects API from Enso — 2 operation(s) for projects.
+  humanURL: https://docs.enso.build/
+  baseURL: https://api.enso.finance
+  tags:
+  - projects
+  properties:
+  - type: OpenAPI
+    url: openapi/enso-projects-api-openapi.yml
+  - type: ErrorCatalog
+    url: errors/enso-problem-types.yml
+  - type: DataModel
+    url: data-model/enso-data-model.yml
+- aid: enso:enso-relay-api
+  name: Enso relay API
+  description: The relay API from Enso — 1 operation(s) for relay.
+  humanURL: https://docs.enso.build/
+  baseURL: https://api.enso.finance
+  tags:
+  - relay
+  properties:
+  - type: OpenAPI
+    url: openapi/enso-relay-api-openapi.yml
+  - type: ErrorCatalog
+    url: errors/enso-problem-types.yml
+  - type: DataModel
+    url: data-model/enso-data-model.yml
+- aid: enso:enso-shortcuts-api
+  name: Enso shortcuts API
+  description: The shortcuts API from Enso — 5 operation(s) for shortcuts.
+  humanURL: https://docs.enso.build/
+  baseURL: https://api.enso.finance
+  tags:
+  - shortcuts
+  properties:
+  - type: OpenAPI
+    url: openapi/enso-shortcuts-api-openapi.yml
+  - type: ErrorCatalog
+    url: errors/enso-problem-types.yml
+  - type: DataModel
+    url: data-model/enso-data-model.yml
+- aid: enso:enso-standards-api
+  name: Enso standards API
+  description: The standards API from Enso — 4 operation(s) for standards.
+  humanURL: https://docs.enso.build/
+  baseURL: https://api.enso.finance
+  tags:
+  - standards
+  properties:
+  - type: OpenAPI
+    url: openapi/enso-standards-api-openapi.yml
+  - type: ErrorCatalog
+    url: errors/enso-problem-types.yml
+  - type: DataModel
+    url: data-model/enso-data-model.yml
+- aid: enso:enso-wallet-api
+  name: Enso wallet API
+  description: The wallet API from Enso — 2 operation(s) for wallet.
+  humanURL: https://docs.enso.build/
+  baseURL: https://api.enso.finance
+  tags:
+  - wallet
+  properties:
+  - type: OpenAPI
+    url: openapi/enso-wallet-api-openapi.yml
+  - type: ErrorCatalog
+    url: errors/enso-problem-types.yml
+  - type: DataModel
+    url: data-model/enso-data-model.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -25,4 +180,57 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://enso.finance
+  url: https://enso.build
+- type: DeveloperPortal
+  url: https://developers.enso.build/
+- type: Documentation
+  url: https://docs.enso.build/
+- type: APIReference
+  url: https://docs.enso.build/pages/api-reference/overview
+- type: GettingStarted
+  url: https://docs.enso.build/pages/build/get-started/overview
+- type: Blog
+  url: https://blog.enso.build/
+- type: GitHubOrganization
+  url: https://github.com/EnsoBuild
+- type: Support
+  url: https://discord.com/invite/enso-build
+- type: SignUp
+  url: https://developers.enso.build/
+- type: TermsOfService
+  url: https://docs.enso.build/pages/build/reference/legal
+- type: StatusPage
+  url: https://status.enso.finance
+- type: ChangeLog
+  url: changelog/enso-changelog.yml
+- type: Authentication
+  url: authentication/enso-authentication.yml
+- type: Packages
+  url: packages/enso-packages.yml
+- type: SDKs
+  url: packages/enso-packages.yml
+- type: Components
+  url: components/enso-components.yml
+- type: MCPServer
+  url: mcp/enso-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/enso-llms.txt
+- type: Conventions
+  url: conventions/enso-conventions.yml
+- type: RateLimits
+  url: rate-limits/enso-rate-limits.yml
+- type: Lifecycle
+  url: lifecycle/enso-lifecycle.yml
+- type: Conformance
+  url: conformance/enso-conformance.yml
+- type: Sandbox
+  url: sandbox/enso-sandbox.yml
+- type: DomainSecurity
+  url: security/enso-domain-security.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

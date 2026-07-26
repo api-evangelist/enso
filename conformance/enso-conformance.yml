@@ -1,0 +1,35 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/enso-openapi-original.json + https://docs.enso.build/
+standards:
+  - id: oauth2
+    conforms: false
+    evidence: No oauth2 securityScheme; auth is HTTP Bearer API key.
+  - id: openid-connect
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors are plain JSON with HTTP status codes, not application/problem+json.
+  - id: bearer-token-auth
+    conforms: true
+    evidence: securityScheme type http scheme bearer (API key).
+  - id: cursor-pagination
+    conforms: true
+    evidence: List endpoints (/api/v1/tokens) use cursor-based pagination (PaginationMeta).
+  - id: rate-limit-signaling
+    conforms: true
+    evidence: 429 responses documented across endpoints; 10 rps / 600 rpm.
+  - id: openapi-3
+    conforms: true
+    evidence: openapi 3.0.0 spec published at api.enso.finance/api-json.
+  - id: json-api
+    conforms: false
+  - id: fapi
+    conforms: false
+compliance_program:
+  published: false
+  note: >-
+    No SOC 2 / ISO 27001 / PCI / HIPAA certifications are published. Enso is
+    onchain DeFi middleware; it publishes an API License Agreement and smart
+    contract audits (github.com/EnsoBuild/enso-audits) rather than SaaS
+    compliance certifications. No Compliance pointer wired.
