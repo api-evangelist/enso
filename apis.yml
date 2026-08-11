@@ -179,6 +179,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/enso-openapi-overlay.yaml
 - type: Website
   url: https://enso.build
 - type: DeveloperPortal
