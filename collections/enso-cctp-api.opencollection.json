@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Enso ccip cctp API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "cctp",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check CCTP bridge transaction status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/cctp/bridge/check",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of the source transaction"
+              },
+              {
+                "name": "txHash",
+                "value": "",
+                "type": "query",
+                "description": "Transaction hash of the CCTP bridge transaction on source chain"
+              }
+            ]
+          },
+          "docs": "Returns information about a cross-chain CCTP bridge transaction, including attestation status, amount, fee, and destination transaction. Rate limited to 1 request per 10 seconds."
+        },
+        {
+          "info": {
+            "name": "Get TokenMessengerV2 address for a chain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/cctp/bridge/tokenmessengerv2",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID"
+              }
+            ]
+          },
+          "docs": "Returns the CCTP TokenMessengerV2 contract address for the specified chain."
+        },
+        {
+          "info": {
+            "name": "Generate claim transaction for a CCTP bridge transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/cctp/bridge/claim",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of the source transaction"
+              },
+              {
+                "name": "txHash",
+                "value": "",
+                "type": "query",
+                "description": "Transaction hash of the CCTP bridge transaction on source chain"
+              }
+            ]
+          },
+          "docs": "Returns a ready-to-submit receiveMessage transaction for the destination chain if the attestation is complete and the transfer has not been claimed yet. Rate limited to 1 request per 10 seconds."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

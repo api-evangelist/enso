@@ -1,0 +1,507 @@
+{
+  "item": [
+    {
+      "id": "808e7921-27d6-422d-a633-9ec0f82e2249",
+      "name": "cctp",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dca5bba8-b36c-4dbd-ac12-bc8ab6f6ba8e",
+          "name": "Check CCTP bridge transaction status",
+          "request": {
+            "name": "Check CCTP bridge transaction status",
+            "description": {
+              "content": "Returns information about a cross-chain CCTP bridge transaction, including attestation status, amount, fee, and destination transaction. Rate limited to 1 request per 10 seconds.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "cctp",
+                "bridge",
+                "check"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<number>",
+                  "description": "(Required) Chain ID of the source transaction"
+                },
+                {
+                  "disabled": false,
+                  "key": "txHash",
+                  "value": "<string>",
+                  "description": "(Required) Transaction hash of the CCTP bridge transaction on source chain"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9de6f211-41b2-42ee-aedc-59d375d68ab7",
+              "name": "Bridge transaction status and details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cctp",
+                    "bridge",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "143"
+                    },
+                    {
+                      "key": "txHash",
+                      "value": "0x4ac72089eef92b827702281bb2668b416ee6d3e9d953600dc363842e473a157c"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sourceChainId\": 143,\n  \"sourceTxHash\": \"0x4ac72089eef92b827702281bb2668b416ee6d3e9d953600dc363842e473a157c\",\n  \"status\": \"delivered\",\n  \"destinationChainId\": 1,\n  \"destinationTxHash\": \"string\",\n  \"transferType\": \"fast\",\n  \"delayReason\": \"insufficient_fee\",\n  \"forward\": {\n    \"state\": \"FAILED\",\n    \"errorCode\": \"INSUFFICIENT_FEE\",\n    \"errorDetails\": \"Fee provided insufficient for forwarding\",\n    \"txHash\": \"string\"\n  },\n  \"depositForBurn\": {\n    \"amount\": \"100000\",\n    \"destinationDomain\": 0,\n    \"mintRecipient\": \"0x00000000000000000000000042d023187acedd3306e3dce2f1b9e4a81d636503\",\n    \"burnToken\": \"0x754704bc059f8c67012fed69bc8a327a5aafb603\",\n    \"destinationCaller\": \"0x0000000000000000000000000000000000000000000000000000000000000000\",\n    \"maxFee\": \"0\",\n    \"minFinalityThreshold\": 1000\n  },\n  \"depositForBurnDecoded\": {\n    \"burnToken\": {\n      \"token\": {\n        \"address\": \"0x55d398326f99059fF775485246999027B3197955\",\n        \"symbol\": \"USDT\",\n        \"name\": \"Tether USD\",\n        \"decimals\": 18\n      },\n      \"amount\": \"1000000000000000000\"\n    },\n    \"destinationChainId\": 1,\n    \"mintRecipient\": \"0x42d023187acedd3306e3dce2f1b9e4a81d636503\",\n    \"destinationCaller\": \"0x0000000000000000000000000000000000000000\",\n    \"maxFee\": {\n      \"token\": {\n        \"address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"symbol\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"decimals\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"amount\": \"1000000000000000000\"\n    },\n    \"minFinalityThreshold\": {\n      \"value\": 1000,\n      \"type\": \"fast\"\n    },\n    \"finalityThresholdExecuted\": {\n      \"value\": 1000,\n      \"type\": \"fast\"\n    },\n    \"feeExecuted\": {\n      \"token\": {\n        \"address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"symbol\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"decimals\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"amount\": \"1000000000000000000\"\n    }\n  },\n  \"depositForBurnWithHook\": {\n    \"amount\": \"100000\",\n    \"destinationDomain\": 0,\n    \"mintRecipient\": \"0x00000000000000000000000042d023187acedd3306e3dce2f1b9e4a81d636503\",\n    \"burnToken\": \"0x754704bc059f8c67012fed69bc8a327a5aafb603\",\n    \"destinationCaller\": \"0x0000000000000000000000000000000000000000000000000000000000000000\",\n    \"maxFee\": \"0\",\n    \"minFinalityThreshold\": 1000,\n    \"hookData\": \"0x636374702d666f72776172640000000000000000000000000000000000000000\"\n  },\n  \"depositForBurnWithHookDecoded\": {\n    \"burnToken\": {\n      \"token\": {\n        \"address\": \"0x55d398326f99059fF775485246999027B3197955\",\n        \"symbol\": \"USDT\",\n        \"name\": \"Tether USD\",\n        \"decimals\": 18\n      },\n      \"amount\": \"1000000000000000000\"\n    },\n    \"destinationChainId\": 1,\n    \"mintRecipient\": \"0x42d023187acedd3306e3dce2f1b9e4a81d636503\",\n    \"destinationCaller\": \"0x0000000000000000000000000000000000000000\",\n    \"maxFee\": {\n      \"token\": {\n        \"address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"symbol\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"decimals\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"amount\": \"1000000000000000000\"\n    },\n    \"minFinalityThreshold\": {\n      \"value\": 1000,\n      \"type\": \"fast\"\n    },\n    \"hookData\": {\n      \"raw\": \"0x636374702d666f72776172640000000000000000000000000000000000000000\",\n      \"forwardingService\": true,\n      \"hyperCoreTransfer\": true,\n      \"hyperCoreRecipient\": \"0x42d023187acedd3306e3dce2f1b9e4a81d636503\",\n      \"hyperCoreDestinationDex\": 4294967295,\n      \"hyperCoreDestinationDexType\": \"spot\"\n    },\n    \"finalityThresholdExecuted\": {\n      \"value\": 1000,\n      \"type\": \"fast\"\n    },\n    \"feeExecuted\": {\n      \"token\": {\n        \"address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"symbol\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"decimals\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"amount\": \"1000000000000000000\"\n    }\n  },\n  \"ensoSourceEvent\": {\n    \"blockNumber\": 7452.489336018716,\n    \"transactionHash\": \"string\",\n    \"chainId\": 1251.881033819525,\n    \"success\": true,\n    \"accountId\": \"string\",\n    \"requestId\": \"string\",\n    \"error\": \"string\",\n    \"refundDetails\": {\n      \"token\": \"string\",\n      \"amount\": \"string\",\n      \"recipient\": \"string\",\n      \"isNative\": false\n    }\n  },\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc6fc5e4-774a-47e6-a02f-b5be9a4b9827",
+              "name": "Rate limit exceeded (max 1 request per 10 seconds)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cctp",
+                    "bridge",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "143"
+                    },
+                    {
+                      "key": "txHash",
+                      "value": "0x4ac72089eef92b827702281bb2668b416ee6d3e9d953600dc363842e473a157c"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7d897191-fd49-48f8-bd65-e71fbdaa9945",
+          "name": "Get TokenMessengerV2 address for a chain",
+          "request": {
+            "name": "Get TokenMessengerV2 address for a chain",
+            "description": {
+              "content": "Returns the CCTP TokenMessengerV2 contract address for the specified chain.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "cctp",
+                "bridge",
+                "tokenmessengerv2"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<number>",
+                  "description": "(Required) Chain ID"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "95c21877-6d26-4018-90a1-331591e8cf92",
+              "name": "TokenMessengerV2 address",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cctp",
+                    "bridge",
+                    "tokenmessengerv2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"address\": \"0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "187b9afd-5258-43b1-bdd6-6f77ad978915",
+              "name": "Chain not supported by CCTP",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cctp",
+                    "bridge",
+                    "tokenmessengerv2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "02ac7d7d-b57c-433a-bf5d-e35931cb53e3",
+          "name": "Generate claim transaction for a CCTP bridge transfer",
+          "request": {
+            "name": "Generate claim transaction for a CCTP bridge transfer",
+            "description": {
+              "content": "Returns a ready-to-submit receiveMessage transaction for the destination chain if the attestation is complete and the transfer has not been claimed yet. Rate limited to 1 request per 10 seconds.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "cctp",
+                "bridge",
+                "claim"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<number>",
+                  "description": "(Required) Chain ID of the source transaction"
+                },
+                {
+                  "disabled": false,
+                  "key": "txHash",
+                  "value": "<string>",
+                  "description": "(Required) Transaction hash of the CCTP bridge transaction on source chain"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5faf9f0b-5b8b-43b5-9e43-c62f057e82e3",
+              "name": "Claim transaction or reason why not claimable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cctp",
+                    "bridge",
+                    "claim"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "143"
+                    },
+                    {
+                      "key": "txHash",
+                      "value": "0x4ac72089eef92b827702281bb2668b416ee6d3e9d953600dc363842e473a157c"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"claimable\": true,\n  \"destinationChainId\": 1,\n  \"tx\": {\n    \"to\": \"string\",\n    \"data\": \"string\",\n    \"value\": \"string\",\n    \"chainId\": 4286.23900178457\n  },\n  \"reason\": \"Already claimed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8d20063-0f36-435a-95d8-5a20b3cf2927",
+              "name": "Rate limit exceeded (max 1 request per 10 seconds)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cctp",
+                    "bridge",
+                    "claim"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "143"
+                    },
+                    {
+                      "key": "txHash",
+                      "value": "0x4ac72089eef92b827702281bb2668b416ee6d3e9d953600dc363842e473a157c"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.enso.finance",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "803b492f-b41a-4861-9eac-aac14c85c41b",
+    "name": "Enso ccip cctp API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "#### Enso API\n- Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).\n- To use the API, **you must include your API Key in the Authorization header** (Bearer format).\n- For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).\n- Get your own API Key at [enso.finance/developers](https://developers.enso.build/).",
+      "type": "text/plain"
+    }
+  }
+}

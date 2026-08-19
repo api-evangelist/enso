@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Enso ccip API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ccip",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get CCIP router address for a chain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/ccip/router",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID to get the CCIP router address for"
+              }
+            ]
+          },
+          "docs": "Returns the CCIP router contract address for the specified chain."
+        },
+        {
+          "info": {
+            "name": "Check CCIP bridge transaction status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/ccip/bridge/check",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of the source transaction"
+              },
+              {
+                "name": "txHash",
+                "value": "",
+                "type": "query",
+                "description": "Transaction hash of the CCIP bridge transaction on source chain"
+              }
+            ]
+          },
+          "docs": "Returns comprehensive information about a cross-chain CCIP bridge transaction, including CCIP message parameters, on-chain events, and transaction data from Enso."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

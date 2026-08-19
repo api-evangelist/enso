@@ -1,0 +1,344 @@
+{
+  "item": [
+    {
+      "id": "6d975790-29d7-4f4f-b0e6-5cba8e680588",
+      "name": "ccip",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f17002ae-f4d9-4182-89ce-b7399fe0ddd2",
+          "name": "Get CCIP router address for a chain",
+          "request": {
+            "name": "Get CCIP router address for a chain",
+            "description": {
+              "content": "Returns the CCIP router contract address for the specified chain.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "ccip",
+                "router"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<number>",
+                  "description": "(Required) Chain ID to get the CCIP router address for"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c0415d0e-be2e-4eaf-b4d2-90a5ae9aab96",
+              "name": "CCIP router address",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "ccip",
+                    "router"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "42161"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"router\": \"0x141fa059441E0ca23ce184B6A78bafD2A517DdE8\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04ef53b3-4015-4a30-96c3-c4114895b7e5",
+              "name": "Chain not supported by CCIP",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "ccip",
+                    "router"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "42161"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "19c8eaed-f54e-4ffe-8641-ec2d45b8a403",
+          "name": "Check CCIP bridge transaction status",
+          "request": {
+            "name": "Check CCIP bridge transaction status",
+            "description": {
+              "content": "Returns comprehensive information about a cross-chain CCIP bridge transaction, including CCIP message parameters, on-chain events, and transaction data from Enso.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "ccip",
+                "bridge",
+                "check"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<number>",
+                  "description": "(Required) Chain ID of the source transaction"
+                },
+                {
+                  "disabled": false,
+                  "key": "txHash",
+                  "value": "<string>",
+                  "description": "(Required) Transaction hash of the CCIP bridge transaction on source chain"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a5f3c49d-0852-4bcd-a0fc-f9fed4c51c0e",
+              "name": "Bridge transaction status and details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "ccip",
+                    "bridge",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "56"
+                    },
+                    {
+                      "key": "txHash",
+                      "value": "0x80f1faf0652a5618ea1de0fc5142418e380676b3c6c74d482cfac1237638d6d4"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sourceChainId\": 56,\n  \"sourceTxHash\": \"0x80f1faf0652a5618ea1de0fc5142418e380676b3c6c74d482cfac1237638d6d4\",\n  \"sourceChainIdFinality\": 5,\n  \"status\": \"ready_for_manual_execution\",\n  \"sourceChainEstimatedTimeForFinalitySeconds\": 0,\n  \"ccipSendParams\": {\n    \"destinationChainSelector\": \"15971525489660198786\",\n    \"message\": {\n      \"receiver\": \"string\",\n      \"data\": \"string\",\n      \"tokenAmounts\": [\n        {\n          \"token\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"token\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"feeToken\": \"string\",\n      \"extraArgs\": \"string\"\n    }\n  },\n  \"ccipSendParamsDecoded\": {\n    \"destinationChainId\": 8453,\n    \"data\": {\n      \"receiver\": \"0x1234567890123456789012345678901234567890\",\n      \"shortcutData\": \"0x3d3d3d3d...\",\n      \"error\": \"Could not decode message.data as (address,bytes)\"\n    },\n    \"tokenAmounts\": [\n      {\n        \"token\": {\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"symbol\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"decimals\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"amount\": \"1000000000000000000\"\n      },\n      {\n        \"token\": {\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"symbol\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"decimals\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"amount\": \"1000000000000000000\"\n      }\n    ],\n    \"fee\": {\n      \"token\": {\n        \"address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"symbol\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"decimals\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"amount\": \"5000000000000000\"\n    },\n    \"extraArgs\": {\n      \"gasLimit\": \"2000000\",\n      \"allowOutOfOrderExecution\": false\n    }\n  },\n  \"destinationChainId\": 8453,\n  \"destinationTxHash\": \"0x9a3e6a8a52b82a1f4b523b0d50be133df0ad9407814b32e42d67119e1ae1947d\",\n  \"readyForManualExecution\": true,\n  \"ensoSourceEvent\": {\n    \"blockNumber\": 9320.266318215821,\n    \"transactionHash\": \"string\",\n    \"chainId\": 2154.1041714127473,\n    \"success\": false,\n    \"accountId\": \"string\",\n    \"requestId\": \"string\",\n    \"error\": \"string\",\n    \"refundDetails\": {\n      \"token\": \"string\",\n      \"amount\": \"string\",\n      \"recipient\": \"string\",\n      \"isNative\": false\n    }\n  },\n  \"ensoDestinationEvent\": {\n    \"blockNumber\": 8379.240909838807,\n    \"transactionHash\": \"string\",\n    \"chainId\": 8923.375175465533,\n    \"success\": false,\n    \"accountId\": \"string\",\n    \"requestId\": \"string\",\n    \"error\": \"string\",\n    \"refundDetails\": {\n      \"token\": \"string\",\n      \"amount\": \"string\",\n      \"recipient\": \"string\",\n      \"isNative\": true\n    }\n  },\n  \"error\": \"Transaction receipt not found for 0x...\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "778b94df-1a94-40ac-9f0e-8b81c960a38b",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "ccip",
+                    "bridge",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "56"
+                    },
+                    {
+                      "key": "txHash",
+                      "value": "0x80f1faf0652a5618ea1de0fc5142418e380676b3c6c74d482cfac1237638d6d4"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.enso.finance",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2eb98e3c-01e6-4fac-9d02-d9934246985c",
+    "name": "Enso ccip API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "#### Enso API\n- Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).\n- To use the API, **you must include your API Key in the Authorization header** (Bearer format).\n- For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).\n- Get your own API Key at [enso.finance/developers](https://developers.enso.build/).",
+      "type": "text/plain"
+    }
+  }
+}

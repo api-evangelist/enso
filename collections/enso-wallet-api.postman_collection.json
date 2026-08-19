@@ -1,0 +1,285 @@
+{
+  "item": [
+    {
+      "id": "cc9cd561-6eb2-45d1-bfeb-c669a1c2f4de",
+      "name": "wallet",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bb9335ce-da21-4f55-be98-794738f31b8f",
+          "name": "Returns transaction that approves your EnsoWallet-v2 to spend tokens",
+          "request": {
+            "name": "Returns transaction that approves your EnsoWallet-v2 to spend tokens",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "wallet",
+                "approve"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "1",
+                  "description": "(Required) Chain ID of the network to execute the transaction on"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromAddress",
+                  "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+                  "description": "(Required) Ethereum address of the wallet to send the transaction from"
+                },
+                {
+                  "disabled": false,
+                  "key": "routingStrategy",
+                  "value": "<string>",
+                  "description": "Routing strategy to use"
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenAddress",
+                  "value": "0x6b175474e89094c44da98b954eedeac495271d0f",
+                  "description": "(Required) ERC20 token address of the token to approve"
+                },
+                {
+                  "disabled": false,
+                  "key": "amount",
+                  "value": "1000000000000000000000000000",
+                  "description": "(Required) Amount of tokens to approve in wei"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d00fd70e-ef88-42c8-843d-0fa54cec211e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "wallet",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "fromAddress",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "routingStrategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tokenAddress",
+                      "value": "0x6b175474e89094c44da98b954eedeac495271d0f"
+                    },
+                    {
+                      "key": "amount",
+                      "value": "1000000000000000000000000000"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tx\": {\n    \"data\": \"0x\",\n    \"to\": \"0x1111111111111111111111111111111111111111\",\n    \"from\": \"0xd8da6bf26964af9d7eed9e03e53415d37aa96045\",\n    \"value\": \"0\"\n  },\n  \"gas\": \"string\",\n  \"token\": \"string\",\n  \"amount\": \"string\",\n  \"spender\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3374cee2-b9ab-47cc-a021-7e3c12c3e4f0",
+          "name": "Returns all balances for a given wallet",
+          "request": {
+            "name": "Returns all balances for a given wallet",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "wallet",
+                "balances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "eoaAddress",
+                  "value": "0x93621DCA56fE26Cdee86e4F6B18E116e9758Ff11",
+                  "description": "(Required) Address of the eoa with which to associate the ensoWallet-v2 for balances"
+                },
+                {
+                  "disabled": false,
+                  "key": "useEoa",
+                  "value": "<boolean>",
+                  "description": "(Required) If true returns balances for the provided address, instead of the associated ensoWallet-v2"
+                },
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<integer>",
+                  "description": "(Required) Chain ID (or 'all') to fetch balances for specified network"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aac045eb-0371-45f6-a16c-7463a7ee87e9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "wallet",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "eoaAddress",
+                      "value": "0x93621DCA56fE26Cdee86e4F6B18E116e9758Ff11"
+                    },
+                    {
+                      "key": "useEoa",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "chainId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"token\": \"string\",\n    \"amount\": \"0x0000000\",\n    \"chainId\": 4638,\n    \"decimals\": 18,\n    \"price\": \"0.0\",\n    \"name\": \"string\",\n    \"symbol\": \"string\",\n    \"logoUri\": \"string\"\n  },\n  {\n    \"token\": \"string\",\n    \"amount\": \"0x0000000\",\n    \"chainId\": 240,\n    \"decimals\": 18,\n    \"price\": \"0.0\",\n    \"name\": \"string\",\n    \"symbol\": \"string\",\n    \"logoUri\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.enso.finance",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2f678332-b81b-4d34-9ddf-9f1cfdc2ea98",
+    "name": "Enso ccip wallet API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "#### Enso API\n- Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).\n- To use the API, **you must include your API Key in the Authorization header** (Bearer format).\n- For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).\n- Get your own API Key at [enso.finance/developers](https://developers.enso.build/).",
+      "type": "text/plain"
+    }
+  }
+}

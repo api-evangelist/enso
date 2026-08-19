@@ -1,0 +1,471 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Enso ccip shortcuts API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "shortcuts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find optimal route between tokens (direct routes, zaps)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/shortcuts/route",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of the network to execute the transaction on"
+              },
+              {
+                "name": "fromAddress",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the wallet to send the transaction from"
+              },
+              {
+                "name": "routingStrategy",
+                "value": "",
+                "type": "query",
+                "description": "Routing strategy to use"
+              },
+              {
+                "name": "executionMode",
+                "value": "",
+                "type": "query",
+                "description": "Controls how quote is built based on execution mode"
+              },
+              {
+                "name": "toEoa",
+                "value": "",
+                "type": "query",
+                "description": "Flag that indicates if gained tokenOut should be sent to EOA"
+              },
+              {
+                "name": "receiver",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the receiver of the tokenOut"
+              },
+              {
+                "name": "spender",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the spender of the tokenIn"
+              },
+              {
+                "name": "refundReceiver",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the receiver of any dust tokens that might be produced during the execution of actions"
+              },
+              {
+                "name": "amountIn",
+                "value": "",
+                "type": "query",
+                "description": "Amount of tokenIn to swap in wei"
+              },
+              {
+                "name": "minAmountOut",
+                "value": "",
+                "type": "query",
+                "description": "Minimum amount out in wei. If specified, slippage should not be specified"
+              },
+              {
+                "name": "slippage",
+                "value": "",
+                "type": "query",
+                "description": "Slippage in basis points (1/10000). e.g. 50 = 0.50%. If specified, minAmountOut should not be specified"
+              },
+              {
+                "name": "fee",
+                "value": "",
+                "type": "query",
+                "description": "Fee in basis points (1/10000) for each amountIn value. Must be in range 0-100. If specified, this percentage of each amountIn value will be sent to feeReceiver"
+              },
+              {
+                "name": "feeReceiver",
+                "value": "",
+                "type": "query",
+                "description": "The Ethereum address that will receive the collected fee. Required if fee is provided"
+              },
+              {
+                "name": "ignoreAggregators",
+                "value": "",
+                "type": "query",
+                "description": "A list of swap aggregators to be ignored from consideration"
+              },
+              {
+                "name": "ignoreStandards",
+                "value": "",
+                "type": "query",
+                "description": "A list of standards to be ignored from consideration"
+              },
+              {
+                "name": "ignoreBridges",
+                "value": "",
+                "type": "query",
+                "description": "A list of bridges to be ignored from consideration (e.g. stargate, ccip, relay)"
+              },
+              {
+                "name": "referralCode",
+                "value": "",
+                "type": "query",
+                "description": "Referral code that will be included in an on-chain event."
+              },
+              {
+                "name": "tokenIn",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+              },
+              {
+                "name": "tokenOut",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the token to swap to. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+              },
+              {
+                "name": "destinationChainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of the network to bridge to and receive tokenOut"
+              },
+              {
+                "name": "variableEstimates",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Find optimal route between tokens (direct routes, zaps)"
+        },
+        {
+          "info": {
+            "name": "Find optimal route between tokens (direct routes, zaps)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.enso.finance/api/v1/shortcuts/route",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Find optimal route between tokens (direct routes, zaps)"
+        },
+        {
+          "info": {
+            "name": "Find optimal route between token and nontokenized position",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/shortcuts/route/nontokenized",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of the network to execute the transaction on"
+              },
+              {
+                "name": "fromAddress",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the wallet to send the transaction from"
+              },
+              {
+                "name": "routingStrategy",
+                "value": "",
+                "type": "query",
+                "description": "Routing strategy to use"
+              },
+              {
+                "name": "referralCode",
+                "value": "",
+                "type": "query",
+                "description": "Referral code that will be included in an on-chain event."
+              },
+              {
+                "name": "destinationChainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of the network to bridge to and receive nontokenized position"
+              },
+              {
+                "name": "tokenIn",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+              },
+              {
+                "name": "positionOut",
+                "value": "",
+                "type": "query",
+                "description": "ID of a non-tokenized position"
+              },
+              {
+                "name": "slippage",
+                "value": "",
+                "type": "query",
+                "description": "Slippage in basis points (1/10000). If specified, minAmountOut should not be specified"
+              },
+              {
+                "name": "fee",
+                "value": "",
+                "type": "query",
+                "description": "Fee in basis points (1/10000) for each amountIn value. Must be in range 0-100. If specified, this percentage of each amountIn value will be sent to feeReceiver"
+              },
+              {
+                "name": "feeReceiver",
+                "value": "",
+                "type": "query",
+                "description": "The Ethereum address that will receive the collected fee. Required if fee is provided"
+              },
+              {
+                "name": "ignoreAggregators",
+                "value": "",
+                "type": "query",
+                "description": "A list of swap aggregators to be ignored from consideration"
+              },
+              {
+                "name": "ignoreBridges",
+                "value": "",
+                "type": "query",
+                "description": "A list of bridge protocols to be ignored from consideration"
+              },
+              {
+                "name": "ignoreStandards",
+                "value": "",
+                "type": "query",
+                "description": "A list of standards to be ignored from consideration"
+              },
+              {
+                "name": "amountIn",
+                "value": "",
+                "type": "query",
+                "description": "Amount of tokenIn to swap in wei"
+              },
+              {
+                "name": "receiver",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the receiver of the positionOut"
+              },
+              {
+                "name": "spender",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the spender of the tokenIn"
+              },
+              {
+                "name": "refundReceiver",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the receiver of any dust tokens that might be produced during the execution of actions"
+              }
+            ]
+          },
+          "docs": "Find optimal route between token and nontokenized position"
+        },
+        {
+          "info": {
+            "name": "Bundle a list of actions into a single transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.enso.finance/api/v1/shortcuts/bundle",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of the network to execute the transaction on"
+              },
+              {
+                "name": "fromAddress",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the wallet to send the transaction from"
+              },
+              {
+                "name": "referralCode",
+                "value": "",
+                "type": "query",
+                "description": "Referral code that will be included in an on-chain event."
+              },
+              {
+                "name": "routingStrategy",
+                "value": "",
+                "type": "query",
+                "description": "Routing strategy to use"
+              },
+              {
+                "name": "executionMode",
+                "value": "",
+                "type": "query",
+                "description": "Controls how quote is built based on execution mode"
+              },
+              {
+                "name": "receiver",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the receiver of the tokenOut"
+              },
+              {
+                "name": "spender",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the spender of the tokenIn"
+              },
+              {
+                "name": "refundReceiver",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the receiver of any dust tokens that might be produced during the execution of actions"
+              },
+              {
+                "name": "ignoreAggregators",
+                "value": "",
+                "type": "query",
+                "description": "A list of swap aggregators to be ignored from consideration"
+              },
+              {
+                "name": "skipQuote",
+                "value": "",
+                "type": "query",
+                "description": "Flag to skip quoting (if true, amountOut and gas will not be returned)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bundle a list of actions into a single transaction"
+        },
+        {
+          "info": {
+            "name": "Quote from a token to another",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/shortcuts/quote",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of the network to execute the transaction on"
+              },
+              {
+                "name": "fromAddress",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the wallet to send the transaction from"
+              },
+              {
+                "name": "routingStrategy",
+                "value": "",
+                "type": "query",
+                "description": "Routing strategy to use"
+              },
+              {
+                "name": "tokenIn",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+              },
+              {
+                "name": "tokenOut",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+              },
+              {
+                "name": "amountIn",
+                "value": "",
+                "type": "query",
+                "description": "Amount of tokenIn to swap in wei"
+              },
+              {
+                "name": "fee",
+                "value": "",
+                "type": "query",
+                "description": "Fee in basis points (1/10000) for each amountIn value. Must be in range 0-100. If specified, this percentage of each amountIn value will be sent to feeReceiver"
+              },
+              {
+                "name": "feeReceiver",
+                "value": "",
+                "type": "query",
+                "description": "The Ethereum address that will receive the collected fee. Required if fee is provided"
+              },
+              {
+                "name": "ignoreAggregators",
+                "value": "",
+                "type": "query",
+                "description": "A list of swap aggregators to be ignored from consideration"
+              },
+              {
+                "name": "ignoreStandards",
+                "value": "",
+                "type": "query",
+                "description": "A list of standards to be ignored from consideration"
+              }
+            ]
+          },
+          "docs": "Quote from a token to another"
+        },
+        {
+          "info": {
+            "name": "Get transaction for IPOR shortcut",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.enso.finance/api/v1/shortcuts/static/ipor",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of the network to execute the transaction on"
+              },
+              {
+                "name": "fromAddress",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the wallet to send the transaction from"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get transaction for IPOR shortcut"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,358 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Enso ccip metadata API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns networks supported by the API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/networks",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Title of the network to search for"
+              },
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of the network to search for"
+              }
+            ]
+          },
+          "docs": "Returns networks supported by the API"
+        },
+        {
+          "info": {
+            "name": "Returns price for a token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/prices/:chainId/:address",
+            "params": [
+              {
+                "name": "address",
+                "value": "",
+                "type": "path",
+                "description": "Address of the token to search for"
+              },
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "path",
+                "description": "Chain ID of the network to search for"
+              }
+            ]
+          },
+          "docs": "Returns price for a token"
+        },
+        {
+          "info": {
+            "name": "Returns price for multiple tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/prices/:chainId",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "path",
+                "description": "Chain ID of the network to search for"
+              },
+              {
+                "name": "addresses",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the token to check price for (max 100 addresses)."
+              }
+            ]
+          },
+          "docs": "Returns price for multiple tokens"
+        },
+        {
+          "info": {
+            "name": "Returns accountId connected to your api key used in the on-chain event.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/account/accountId"
+          },
+          "docs": "Returns accountId connected to your api key used in the on-chain event."
+        },
+        {
+          "info": {
+            "name": "Returns tokens and their details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/tokens",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "query",
+                "description": "The overarching project or platform associated with the DeFi token"
+              },
+              {
+                "name": "protocolSlug",
+                "value": "",
+                "type": "query",
+                "description": "The specific standard integration or version of the DeFi project"
+              },
+              {
+                "name": "underlyingTokens",
+                "value": "",
+                "type": "query",
+                "description": "Underlying tokens of defi token"
+              },
+              {
+                "name": "underlyingTokensExact",
+                "value": "",
+                "type": "query",
+                "description": "Exact composition of underlying tokens of defi token"
+              },
+              {
+                "name": "primaryAddress",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum addresses for contract interaction of defi tokens"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum addresses of the tokens"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Names of the tokens"
+              },
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query",
+                "description": "Symbols of the tokens"
+              },
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of the network of the token"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Type of token.\n      If not provided, both types will be taken into account"
+              },
+              {
+                "name": "liquidityType",
+                "value": "",
+                "type": "query",
+                "description": "Type of liquidity.\n      If not provided, both types will be taken into account"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Pagination page number. Pages are of length 1000"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (max 1000)"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. Pages are of length 1000"
+              },
+              {
+                "name": "includeMetadata",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include token metadata (symbol, name and logos)"
+              },
+              {
+                "name": "includeUnderlying",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include underlying tokes"
+              },
+              {
+                "name": "apyFrom",
+                "value": "",
+                "type": "query",
+                "description": "Only include tokens with APY over this value"
+              },
+              {
+                "name": "apyTo",
+                "value": "",
+                "type": "query",
+                "description": "Only include tokens with APY below this value"
+              },
+              {
+                "name": "tvlFrom",
+                "value": "",
+                "type": "query",
+                "description": "Only include tokens with TVL over this value"
+              },
+              {
+                "name": "tvlTo",
+                "value": "",
+                "type": "query",
+                "description": "Only include tokens with TVL below this value"
+              }
+            ]
+          },
+          "docs": "Returns tokens and their details"
+        },
+        {
+          "info": {
+            "name": "Returns aggregators supported by the API (can be controled via disableAggregators param)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/aggregators"
+          },
+          "docs": "Returns aggregators supported by the API (can be controled via disableAggregators param)"
+        },
+        {
+          "info": {
+            "name": "Returns nontokenized positions and their details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/nontokenized",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "query",
+                "description": "The overarching project or platform associated with the DeFi token"
+              },
+              {
+                "name": "protocolSlug",
+                "value": "",
+                "type": "query",
+                "description": "The specific standard integration or version of the DeFi project"
+              },
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of the network of the nontokenized position"
+              },
+              {
+                "name": "positionId",
+                "value": "",
+                "type": "query",
+                "description": "Position ID of the nontokenized position."
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "query",
+                "description": "Address representing nontokenized position."
+              },
+              {
+                "name": "primaryAddress",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum addresses for contract interaction of nontokenized position"
+              },
+              {
+                "name": "underlyingTokens",
+                "value": "",
+                "type": "query",
+                "description": "Underlying tokens of nontokenized position"
+              },
+              {
+                "name": "underlyingTokensExact",
+                "value": "",
+                "type": "query",
+                "description": "Exact composition of underlying tokens of nontokenized position"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Pagination page number"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (max 1000)"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination"
+              }
+            ]
+          },
+          "docs": "Returns nontokenized positions and their details"
+        },
+        {
+          "info": {
+            "name": "Returns projects and relevant protocols available to use",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/protocols",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of the network to search for"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "slug of the project to search for"
+              }
+            ]
+          },
+          "docs": "Returns projects and relevant protocols available to use"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

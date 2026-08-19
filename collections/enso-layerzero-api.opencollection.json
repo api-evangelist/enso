@@ -1,0 +1,148 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Enso ccip layerzero API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "layerzero",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get LayerZero pool address for a token on a specific chain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/layerzero/pool",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Token address on source chain"
+              },
+              {
+                "name": "destinationChainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of destination chain"
+              },
+              {
+                "name": "destinationToken",
+                "value": "",
+                "type": "query",
+                "description": "Token address on destination chain"
+              }
+            ]
+          },
+          "docs": "Returns the LayerZero Stargate pool address for a given token address and chain ID. Returns null if no pool exists for the token on that chain."
+        },
+        {
+          "info": {
+            "name": "Get LayerZero pool address for a token on a specific chain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/stargate/pool",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "Token address on source chain"
+              },
+              {
+                "name": "destinationChainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of destination chain"
+              },
+              {
+                "name": "destinationToken",
+                "value": "",
+                "type": "query",
+                "description": "Token address on destination chain"
+              }
+            ]
+          },
+          "docs": "Returns the LayerZero Stargate pool address for a given token address and chain ID. Returns null if no pool exists for the token on that chain."
+        },
+        {
+          "info": {
+            "name": "Check bridge transaction status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/layerzero/bridge/check",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of the source transaction"
+              },
+              {
+                "name": "txHash",
+                "value": "",
+                "type": "query",
+                "description": "Transaction hash"
+              }
+            ]
+          },
+          "docs": "Returns comprehensive information about a cross-chain bridge transaction, including LayerZero message status, on-chain events, and transaction data from Enso."
+        },
+        {
+          "info": {
+            "name": "Check bridge transaction status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/stargate/bridge/check",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of the source transaction"
+              },
+              {
+                "name": "txHash",
+                "value": "",
+                "type": "query",
+                "description": "Transaction hash"
+              }
+            ]
+          },
+          "docs": "Returns comprehensive information about a cross-chain bridge transaction, including LayerZero message status, on-chain events, and transaction data from Enso."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1720 @@
+{
+  "item": [
+    {
+      "id": "0642650d-5101-4572-bed4-c44a45524a19",
+      "name": "shortcuts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "343c7068-bb3f-4654-a23b-aab5163eacde",
+          "name": "Find optimal route between tokens (direct routes, zaps)",
+          "request": {
+            "name": "Find optimal route between tokens (direct routes, zaps)",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "shortcuts",
+                "route"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "1",
+                  "description": "(Required) Chain ID of the network to execute the transaction on"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromAddress",
+                  "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+                  "description": "(Required) Ethereum address of the wallet to send the transaction from"
+                },
+                {
+                  "disabled": false,
+                  "key": "routingStrategy",
+                  "value": "<string>",
+                  "description": "Routing strategy to use"
+                },
+                {
+                  "disabled": false,
+                  "key": "executionMode",
+                  "value": "user",
+                  "description": "Controls how quote is built based on execution mode"
+                },
+                {
+                  "disabled": false,
+                  "key": "toEoa",
+                  "value": "<boolean>",
+                  "description": "Flag that indicates if gained tokenOut should be sent to EOA"
+                },
+                {
+                  "disabled": false,
+                  "key": "receiver",
+                  "value": "<string>",
+                  "description": "Ethereum address of the receiver of the tokenOut"
+                },
+                {
+                  "disabled": false,
+                  "key": "spender",
+                  "value": "<string>",
+                  "description": "Ethereum address of the spender of the tokenIn"
+                },
+                {
+                  "disabled": false,
+                  "key": "refundReceiver",
+                  "value": "<string>",
+                  "description": "Ethereum address of the receiver of any dust tokens that might be produced during the execution of actions"
+                },
+                {
+                  "disabled": false,
+                  "key": "amountIn",
+                  "value": "<string>",
+                  "description": "(Required) Amount of tokenIn to swap in wei"
+                },
+                {
+                  "disabled": false,
+                  "key": "amountIn",
+                  "value": "<string>",
+                  "description": "(Required) Amount of tokenIn to swap in wei"
+                },
+                {
+                  "disabled": false,
+                  "key": "minAmountOut",
+                  "value": "",
+                  "description": "Minimum amount out in wei. If specified, slippage should not be specified"
+                },
+                {
+                  "disabled": false,
+                  "key": "slippage",
+                  "value": "50",
+                  "description": "Slippage in basis points (1/10000). e.g. 50 = 0.50%. If specified, minAmountOut should not be specified"
+                },
+                {
+                  "disabled": false,
+                  "key": "fee",
+                  "value": "<string>",
+                  "description": "Fee in basis points (1/10000) for each amountIn value. Must be in range 0-100. If specified, this percentage of each amountIn value will be sent to feeReceiver"
+                },
+                {
+                  "disabled": false,
+                  "key": "fee",
+                  "value": "<string>",
+                  "description": "Fee in basis points (1/10000) for each amountIn value. Must be in range 0-100. If specified, this percentage of each amountIn value will be sent to feeReceiver"
+                },
+                {
+                  "disabled": false,
+                  "key": "feeReceiver",
+                  "value": "<string>",
+                  "description": "The Ethereum address that will receive the collected fee. Required if fee is provided"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignoreAggregators",
+                  "value": "<string>",
+                  "description": "A list of swap aggregators to be ignored from consideration"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignoreAggregators",
+                  "value": "<string>",
+                  "description": "A list of swap aggregators to be ignored from consideration"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignoreStandards",
+                  "value": "<string>",
+                  "description": "A list of standards to be ignored from consideration"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignoreStandards",
+                  "value": "<string>",
+                  "description": "A list of standards to be ignored from consideration"
+                },
+                {
+                  "disabled": false,
+                  "key": "referralCode",
+                  "value": "<string>",
+                  "description": "Referral code that will be included in an on-chain event."
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenIn",
+                  "value": "<string>",
+                  "description": "(Required) Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenIn",
+                  "value": "<string>",
+                  "description": "(Required) Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenOut",
+                  "value": "<string>",
+                  "description": "(Required) Ethereum address of the token to swap to. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenOut",
+                  "value": "<string>",
+                  "description": "(Required) Ethereum address of the token to swap to. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                },
+                {
+                  "disabled": false,
+                  "key": "destinationChainId",
+                  "value": "<number>",
+                  "description": "Chain ID of the network to bridge to and receive tokenOut"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0a7f559d-2d33-4a69-95ce-f33cd4534841",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "shortcuts",
+                    "route"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "fromAddress",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "routingStrategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "executionMode",
+                      "value": "user"
+                    },
+                    {
+                      "key": "toEoa",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "receiver",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "spender",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "refundReceiver",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "amountIn",
+                      "value": "1000000000000000000"
+                    },
+                    {
+                      "key": "minAmountOut",
+                      "value": ""
+                    },
+                    {
+                      "key": "slippage",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fee",
+                      "value": "100"
+                    },
+                    {
+                      "key": "feeReceiver",
+                      "value": "0x220866B1A2219f40e72f5c628B65D54268cA3A9D"
+                    },
+                    {
+                      "key": "ignoreAggregators",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreAggregators",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreStandards",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreStandards",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "referralCode",
+                      "value": "0123456789ABCDEF"
+                    },
+                    {
+                      "key": "tokenIn",
+                      "value": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                    },
+                    {
+                      "key": "tokenOut",
+                      "value": "0x6b175474e89094c44da98b954eedeac495271d0f"
+                    },
+                    {
+                      "key": "destinationChainId",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"gas\": \"string\",\n  \"amountOut\": \"string\",\n  \"createdAt\": 9945.478016141997,\n  \"tx\": {\n    \"data\": \"string\",\n    \"to\": \"string\",\n    \"from\": \"string\",\n    \"value\": \"string\"\n  },\n  \"route\": [\n    {\n      \"tokenIn\": [\n        \"string\",\n        \"string\"\n      ],\n      \"tokenOut\": [\n        \"string\",\n        \"string\"\n      ],\n      \"protocol\": \"string\",\n      \"action\": \"string\",\n      \"primary\": \"string\",\n      \"internalRoutes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"args\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": \"string\"\n      },\n      \"sources\": [\n        \"string\",\n        \"string\"\n      ],\n      \"poolAddresses\": [\n        \"string\",\n        \"string\"\n      ],\n      \"chainId\": 7577.689366732402,\n      \"sourceChainId\": 8617.530236071267,\n      \"destinationChainId\": 2700.7342232996543,\n      \"positionOut\": [\n        \"string\",\n        \"string\"\n      ],\n      \"via\": \"cctp-forwarder\"\n    },\n    {\n      \"tokenIn\": [\n        \"string\",\n        \"string\"\n      ],\n      \"tokenOut\": [\n        \"string\",\n        \"string\"\n      ],\n      \"protocol\": \"string\",\n      \"action\": \"string\",\n      \"primary\": \"string\",\n      \"internalRoutes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"args\": {\n        \"key_0\": \"string\"\n      },\n      \"sources\": [\n        \"string\",\n        \"string\"\n      ],\n      \"poolAddresses\": [\n        \"string\",\n        \"string\"\n      ],\n      \"chainId\": 3408.5709108365413,\n      \"sourceChainId\": 9646.004593155698,\n      \"destinationChainId\": 6513.731322316284,\n      \"positionOut\": [\n        \"string\",\n        \"string\"\n      ],\n      \"via\": \"cctp-forwarder\"\n    }\n  ],\n  \"blockNumber\": 8219.572395636957,\n  \"priceImpact\": 3342.0400212065315,\n  \"feeAmount\": [\n    \"string\",\n    \"string\"\n  ],\n  \"ensoFeeAmount\": [\n    \"string\",\n    \"string\"\n  ],\n  \"minAmountOut\": \"string\",\n  \"userOp\": {\n    \"callData\": \"string\",\n    \"callGasLimit\": \"string\",\n    \"maxFeePerGas\": \"string\",\n    \"maxPriorityFeePerGas\": \"string\",\n    \"nonce\": \"string\",\n    \"preVerificationGas\": \"string\",\n    \"sender\": \"string\",\n    \"signature\": \"string\",\n    \"verificationGasLimit\": \"string\",\n    \"factory\": \"string\",\n    \"factoryData\": \"string\",\n    \"paymaster\": \"string\",\n    \"paymasterData\": \"string\",\n    \"paymasterPostOpGasLimit\": \"string\",\n    \"paymasterVerificationGasLimit\": \"string\"\n  },\n  \"bridgingEstimates\": [\n    {\n      \"fromChainId\": 3070.0666901298746,\n      \"toChainId\": 7464.070819023381,\n      \"token\": \"string\",\n      \"estimatedSeconds\": 5871.136672783893,\n      \"sendConfirmations\": 6017.439481792854,\n      \"receiveConfirmations\": 569.512784922277,\n      \"sendBlockTimeSeconds\": 9970.144987974636,\n      \"receiveBlockTimeSeconds\": 2235.074836220733,\n      \"bridge\": \"string\",\n      \"source\": \"string\",\n      \"note\": \"string\"\n    },\n    {\n      \"fromChainId\": 8486.205194563026,\n      \"toChainId\": 5997.552275341905,\n      \"token\": \"string\",\n      \"estimatedSeconds\": 1333.1440826275675,\n      \"sendConfirmations\": 1165.549518335458,\n      \"receiveConfirmations\": 9253.480610887342,\n      \"sendBlockTimeSeconds\": 5800.063570409393,\n      \"receiveBlockTimeSeconds\": 1046.3876504733937,\n      \"bridge\": \"string\",\n      \"source\": \"string\",\n      \"note\": \"string\"\n    }\n  ],\n  \"validUntil\": 9317.945222894059\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1bc96070-7afe-49f3-9ddd-29f5ce86dfd6",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "shortcuts",
+                    "route"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "fromAddress",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "routingStrategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "executionMode",
+                      "value": "user"
+                    },
+                    {
+                      "key": "toEoa",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "receiver",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "spender",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "refundReceiver",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "amountIn",
+                      "value": "1000000000000000000"
+                    },
+                    {
+                      "key": "minAmountOut",
+                      "value": ""
+                    },
+                    {
+                      "key": "slippage",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fee",
+                      "value": "100"
+                    },
+                    {
+                      "key": "feeReceiver",
+                      "value": "0x220866B1A2219f40e72f5c628B65D54268cA3A9D"
+                    },
+                    {
+                      "key": "ignoreAggregators",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreAggregators",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreStandards",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreStandards",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "referralCode",
+                      "value": "0123456789ABCDEF"
+                    },
+                    {
+                      "key": "tokenIn",
+                      "value": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                    },
+                    {
+                      "key": "tokenOut",
+                      "value": "0x6b175474e89094c44da98b954eedeac495271d0f"
+                    },
+                    {
+                      "key": "destinationChainId",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "774f36a7-0696-4b46-b622-71ac8cde8540",
+          "name": "Find optimal route between tokens (direct routes, zaps)",
+          "request": {
+            "name": "Find optimal route between tokens (direct routes, zaps)",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "shortcuts",
+                "route"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"chainId\": 1,\n  \"fromAddress\": \"0xd8da6bf26964af9d7eed9e03e53415d37aa96045\",\n  \"amountIn\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tokenIn\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tokenOut\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"routingStrategy\": \"<string>\",\n  \"executionMode\": \"user\",\n  \"toEoa\": \"<boolean>\",\n  \"receiver\": \"<string>\",\n  \"spender\": \"<string>\",\n  \"refundReceiver\": \"<string>\",\n  \"minAmountOut\": null,\n  \"slippage\": \"50\",\n  \"fee\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"feeReceiver\": \"<string>\",\n  \"ignoreAggregators\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ignoreStandards\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"referralCode\": \"<string>\",\n  \"destinationChainId\": \"<number>\",\n  \"variableEstimates\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0bccc9c2-733b-483e-83b8-e22e154ad33f",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "shortcuts",
+                    "route"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chainId\": 1,\n  \"fromAddress\": \"0xd8da6bf26964af9d7eed9e03e53415d37aa96045\",\n  \"amountIn\": [\n    \"1000000000000000000\"\n  ],\n  \"tokenIn\": [\n    \"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\"\n  ],\n  \"tokenOut\": [\n    \"0x6b175474e89094c44da98b954eedeac495271d0f\"\n  ],\n  \"routingStrategy\": \"<string>\",\n  \"executionMode\": \"user\",\n  \"toEoa\": \"<boolean>\",\n  \"receiver\": \"0xd8da6bf26964af9d7eed9e03e53415d37aa96045\",\n  \"spender\": \"0xd8da6bf26964af9d7eed9e03e53415d37aa96045\",\n  \"refundReceiver\": \"0xd8da6bf26964af9d7eed9e03e53415d37aa96045\",\n  \"minAmountOut\": null,\n  \"slippage\": \"300\",\n  \"fee\": [\n    \"100\"\n  ],\n  \"feeReceiver\": \"0x220866B1A2219f40e72f5c628B65D54268cA3A9D\",\n  \"ignoreAggregators\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ignoreStandards\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"referralCode\": \"0123456789ABCDEF\",\n  \"destinationChainId\": \"<number>\",\n  \"variableEstimates\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"gas\": \"string\",\n  \"amountOut\": \"string\",\n  \"createdAt\": 875.6302222269585,\n  \"tx\": {\n    \"data\": \"string\",\n    \"to\": \"string\",\n    \"from\": \"string\",\n    \"value\": \"string\"\n  },\n  \"route\": [\n    {\n      \"tokenIn\": [\n        \"string\",\n        \"string\"\n      ],\n      \"tokenOut\": [\n        \"string\",\n        \"string\"\n      ],\n      \"protocol\": \"string\",\n      \"action\": \"string\",\n      \"primary\": \"string\",\n      \"internalRoutes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"args\": {\n        \"key_0\": \"string\"\n      },\n      \"sources\": [\n        \"string\",\n        \"string\"\n      ],\n      \"poolAddresses\": [\n        \"string\",\n        \"string\"\n      ],\n      \"chainId\": 7436.93315918111,\n      \"sourceChainId\": 1509.0973213826287,\n      \"destinationChainId\": 5684.700899418656,\n      \"positionOut\": [\n        \"string\",\n        \"string\"\n      ],\n      \"via\": \"cctp-forwarder\"\n    },\n    {\n      \"tokenIn\": [\n        \"string\",\n        \"string\"\n      ],\n      \"tokenOut\": [\n        \"string\",\n        \"string\"\n      ],\n      \"protocol\": \"string\",\n      \"action\": \"string\",\n      \"primary\": \"string\",\n      \"internalRoutes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"args\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"sources\": [\n        \"string\",\n        \"string\"\n      ],\n      \"poolAddresses\": [\n        \"string\",\n        \"string\"\n      ],\n      \"chainId\": 9767.174349983878,\n      \"sourceChainId\": 1382.4316836409466,\n      \"destinationChainId\": 2686.7166450390046,\n      \"positionOut\": [\n        \"string\",\n        \"string\"\n      ],\n      \"via\": \"cctp-forwarder\"\n    }\n  ],\n  \"blockNumber\": 7219.113240621435,\n  \"priceImpact\": 2037.431652697972,\n  \"feeAmount\": [\n    \"string\",\n    \"string\"\n  ],\n  \"ensoFeeAmount\": [\n    \"string\",\n    \"string\"\n  ],\n  \"minAmountOut\": \"string\",\n  \"userOp\": {\n    \"callData\": \"string\",\n    \"callGasLimit\": \"string\",\n    \"maxFeePerGas\": \"string\",\n    \"maxPriorityFeePerGas\": \"string\",\n    \"nonce\": \"string\",\n    \"preVerificationGas\": \"string\",\n    \"sender\": \"string\",\n    \"signature\": \"string\",\n    \"verificationGasLimit\": \"string\",\n    \"factory\": \"string\",\n    \"factoryData\": \"string\",\n    \"paymaster\": \"string\",\n    \"paymasterData\": \"string\",\n    \"paymasterPostOpGasLimit\": \"string\",\n    \"paymasterVerificationGasLimit\": \"string\"\n  },\n  \"bridgingEstimates\": [\n    {\n      \"fromChainId\": 6360.388636802668,\n      \"toChainId\": 2034.856845427332,\n      \"token\": \"string\",\n      \"estimatedSeconds\": 1378.5428839508518,\n      \"sendConfirmations\": 3818.784141708218,\n      \"receiveConfirmations\": 1947.4055575767302,\n      \"sendBlockTimeSeconds\": 9965.461339310048,\n      \"receiveBlockTimeSeconds\": 4717.421403961783,\n      \"bridge\": \"string\",\n      \"source\": \"string\",\n      \"note\": \"string\"\n    },\n    {\n      \"fromChainId\": 6246.026489436609,\n      \"toChainId\": 3637.7044548105077,\n      \"token\": \"string\",\n      \"estimatedSeconds\": 1165.2360348871737,\n      \"sendConfirmations\": 284.3280441969942,\n      \"receiveConfirmations\": 8709.621787497543,\n      \"sendBlockTimeSeconds\": 9927.004533406753,\n      \"receiveBlockTimeSeconds\": 5166.645288957231,\n      \"bridge\": \"string\",\n      \"source\": \"string\",\n      \"note\": \"string\"\n    }\n  ],\n  \"validUntil\": 867.119976726578\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dec44eec-0697-4c64-b503-d3c12a5e5f98",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "shortcuts",
+                    "route"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chainId\": 1,\n  \"fromAddress\": \"0xd8da6bf26964af9d7eed9e03e53415d37aa96045\",\n  \"amountIn\": [\n    \"1000000000000000000\"\n  ],\n  \"tokenIn\": [\n    \"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\"\n  ],\n  \"tokenOut\": [\n    \"0x6b175474e89094c44da98b954eedeac495271d0f\"\n  ],\n  \"routingStrategy\": \"<string>\",\n  \"executionMode\": \"user\",\n  \"toEoa\": \"<boolean>\",\n  \"receiver\": \"0xd8da6bf26964af9d7eed9e03e53415d37aa96045\",\n  \"spender\": \"0xd8da6bf26964af9d7eed9e03e53415d37aa96045\",\n  \"refundReceiver\": \"0xd8da6bf26964af9d7eed9e03e53415d37aa96045\",\n  \"minAmountOut\": null,\n  \"slippage\": \"300\",\n  \"fee\": [\n    \"100\"\n  ],\n  \"feeReceiver\": \"0x220866B1A2219f40e72f5c628B65D54268cA3A9D\",\n  \"ignoreAggregators\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ignoreStandards\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"referralCode\": \"0123456789ABCDEF\",\n  \"destinationChainId\": \"<number>\",\n  \"variableEstimates\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c99b881-3296-4984-9c32-68bcb2ad739e",
+          "name": "Find optimal route between token and nontokenized position",
+          "request": {
+            "name": "Find optimal route between token and nontokenized position",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "shortcuts",
+                "route",
+                "nontokenized"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "1",
+                  "description": "Chain ID of the network to execute the transaction on"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromAddress",
+                  "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+                  "description": "(Required) Ethereum address of the wallet to send the transaction from"
+                },
+                {
+                  "disabled": false,
+                  "key": "routingStrategy",
+                  "value": "router",
+                  "description": "Routing strategy to use"
+                },
+                {
+                  "disabled": false,
+                  "key": "referralCode",
+                  "value": "<string>",
+                  "description": "Referral code that will be included in an on-chain event."
+                },
+                {
+                  "disabled": false,
+                  "key": "destinationChainId",
+                  "value": "<number>",
+                  "description": "Chain ID of the network to bridge to and receive nontokenized position"
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenIn",
+                  "value": "<string>",
+                  "description": "(Required) Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenIn",
+                  "value": "<string>",
+                  "description": "(Required) Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                },
+                {
+                  "disabled": false,
+                  "key": "positionOut",
+                  "value": "<string>",
+                  "description": "(Required) ID of a non-tokenized position"
+                },
+                {
+                  "disabled": false,
+                  "key": "slippage",
+                  "value": "50",
+                  "description": "Slippage in basis points (1/10000). If specified, minAmountOut should not be specified"
+                },
+                {
+                  "disabled": false,
+                  "key": "fee",
+                  "value": "<string>",
+                  "description": "Fee in basis points (1/10000) for each amountIn value. Must be in range 0-100. If specified, this percentage of each amountIn value will be sent to feeReceiver"
+                },
+                {
+                  "disabled": false,
+                  "key": "fee",
+                  "value": "<string>",
+                  "description": "Fee in basis points (1/10000) for each amountIn value. Must be in range 0-100. If specified, this percentage of each amountIn value will be sent to feeReceiver"
+                },
+                {
+                  "disabled": false,
+                  "key": "feeReceiver",
+                  "value": "<string>",
+                  "description": "The Ethereum address that will receive the collected fee. Required if fee is provided"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignoreAggregators",
+                  "value": "<string>",
+                  "description": "A list of swap aggregators to be ignored from consideration"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignoreAggregators",
+                  "value": "<string>",
+                  "description": "A list of swap aggregators to be ignored from consideration"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignoreBridges",
+                  "value": "<string>",
+                  "description": "A list of bridge protocols to be ignored from consideration"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignoreBridges",
+                  "value": "<string>",
+                  "description": "A list of bridge protocols to be ignored from consideration"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignoreStandards",
+                  "value": "<string>",
+                  "description": "A list of standards to be ignored from consideration"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignoreStandards",
+                  "value": "<string>",
+                  "description": "A list of standards to be ignored from consideration"
+                },
+                {
+                  "disabled": false,
+                  "key": "amountIn",
+                  "value": "<string>",
+                  "description": "(Required) Amount of tokenIn to swap in wei"
+                },
+                {
+                  "disabled": false,
+                  "key": "amountIn",
+                  "value": "<string>",
+                  "description": "(Required) Amount of tokenIn to swap in wei"
+                },
+                {
+                  "disabled": false,
+                  "key": "receiver",
+                  "value": "<string>",
+                  "description": "(Required) Ethereum address of the receiver of the positionOut"
+                },
+                {
+                  "disabled": false,
+                  "key": "spender",
+                  "value": "<string>",
+                  "description": "Ethereum address of the spender of the tokenIn"
+                },
+                {
+                  "disabled": false,
+                  "key": "refundReceiver",
+                  "value": "<string>",
+                  "description": "Ethereum address of the receiver of any dust tokens that might be produced during the execution of actions"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "31e0bffa-5fe8-4aab-9e42-289804e3cd74",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "shortcuts",
+                    "route",
+                    "nontokenized"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "80094"
+                    },
+                    {
+                      "key": "fromAddress",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "routingStrategy",
+                      "value": "router"
+                    },
+                    {
+                      "key": "referralCode",
+                      "value": "0123456789ABCDEF"
+                    },
+                    {
+                      "key": "destinationChainId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "tokenIn",
+                      "value": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                    },
+                    {
+                      "key": "positionOut",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippage",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fee",
+                      "value": "100"
+                    },
+                    {
+                      "key": "feeReceiver",
+                      "value": "0x220866B1A2219f40e72f5c628B65D54268cA3A9D"
+                    },
+                    {
+                      "key": "ignoreAggregators",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreAggregators",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreBridges",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreBridges",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreStandards",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreStandards",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "amountIn",
+                      "value": "1000000000000000000"
+                    },
+                    {
+                      "key": "receiver",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "spender",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "refundReceiver",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": 9897.339038343085,\n  \"gas\": \"string\",\n  \"amountDeposited\": \"string\",\n  \"tx\": {\n    \"data\": \"string\",\n    \"to\": \"string\",\n    \"from\": \"string\",\n    \"value\": \"string\"\n  },\n  \"route\": [\n    {\n      \"tokenIn\": [\n        \"string\",\n        \"string\"\n      ],\n      \"tokenOut\": [\n        \"string\",\n        \"string\"\n      ],\n      \"protocol\": \"string\",\n      \"action\": \"string\",\n      \"primary\": \"string\",\n      \"internalRoutes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"args\": {\n        \"key_0\": \"string\"\n      },\n      \"sources\": [\n        \"string\",\n        \"string\"\n      ],\n      \"poolAddresses\": [\n        \"string\",\n        \"string\"\n      ],\n      \"chainId\": 4926.964937107493,\n      \"sourceChainId\": 2396.6506963758625,\n      \"destinationChainId\": 6677.376150702108,\n      \"positionOut\": [\n        \"string\",\n        \"string\"\n      ],\n      \"via\": \"cctp-forwarder\"\n    },\n    {\n      \"tokenIn\": [\n        \"string\",\n        \"string\"\n      ],\n      \"tokenOut\": [\n        \"string\",\n        \"string\"\n      ],\n      \"protocol\": \"string\",\n      \"action\": \"string\",\n      \"primary\": \"string\",\n      \"internalRoutes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"args\": {\n        \"key_0\": \"string\"\n      },\n      \"sources\": [\n        \"string\",\n        \"string\"\n      ],\n      \"poolAddresses\": [\n        \"string\",\n        \"string\"\n      ],\n      \"chainId\": 2293.294759626664,\n      \"sourceChainId\": 1039.6397861645335,\n      \"destinationChainId\": 5927.619124044092,\n      \"positionOut\": [\n        \"string\",\n        \"string\"\n      ],\n      \"via\": \"cctp-forwarder\"\n    }\n  ],\n  \"amountOut\": \"string\",\n  \"priceImpact\": 6301.619635424462,\n  \"feeAmount\": [\n    \"string\",\n    \"string\"\n  ],\n  \"ensoFeeAmount\": [\n    \"string\",\n    \"string\"\n  ],\n  \"userOp\": {\n    \"callData\": \"string\",\n    \"callGasLimit\": \"string\",\n    \"maxFeePerGas\": \"string\",\n    \"maxPriorityFeePerGas\": \"string\",\n    \"nonce\": \"string\",\n    \"preVerificationGas\": \"string\",\n    \"sender\": \"string\",\n    \"signature\": \"string\",\n    \"verificationGasLimit\": \"string\",\n    \"factory\": \"string\",\n    \"factoryData\": \"string\",\n    \"paymaster\": \"string\",\n    \"paymasterData\": \"string\",\n    \"paymasterPostOpGasLimit\": \"string\",\n    \"paymasterVerificationGasLimit\": \"string\"\n  },\n  \"bridgingEstimates\": [\n    {\n      \"fromChainId\": 6285.614768859401,\n      \"toChainId\": 6721.8341216227755,\n      \"token\": \"string\",\n      \"estimatedSeconds\": 1050.7001118049275,\n      \"sendConfirmations\": 4603.181259480414,\n      \"receiveConfirmations\": 3595.334177772969,\n      \"sendBlockTimeSeconds\": 752.6240309010778,\n      \"receiveBlockTimeSeconds\": 2569.591061540969,\n      \"bridge\": \"string\",\n      \"source\": \"string\",\n      \"note\": \"string\"\n    },\n    {\n      \"fromChainId\": 7154.804936870231,\n      \"toChainId\": 4947.01784950337,\n      \"token\": \"string\",\n      \"estimatedSeconds\": 6672.212516909294,\n      \"sendConfirmations\": 9267.441782186255,\n      \"receiveConfirmations\": 8925.599037273776,\n      \"sendBlockTimeSeconds\": 6492.375069807012,\n      \"receiveBlockTimeSeconds\": 435.84998226850024,\n      \"bridge\": \"string\",\n      \"source\": \"string\",\n      \"note\": \"string\"\n    }\n  ],\n  \"validUntil\": 1476.4613765125735\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1de98889-05a2-4b85-afb9-cfc08d35930e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "shortcuts",
+                    "route",
+                    "nontokenized"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "80094"
+                    },
+                    {
+                      "key": "fromAddress",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "routingStrategy",
+                      "value": "router"
+                    },
+                    {
+                      "key": "referralCode",
+                      "value": "0123456789ABCDEF"
+                    },
+                    {
+                      "key": "destinationChainId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "tokenIn",
+                      "value": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                    },
+                    {
+                      "key": "positionOut",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippage",
+                      "value": "300"
+                    },
+                    {
+                      "key": "fee",
+                      "value": "100"
+                    },
+                    {
+                      "key": "feeReceiver",
+                      "value": "0x220866B1A2219f40e72f5c628B65D54268cA3A9D"
+                    },
+                    {
+                      "key": "ignoreAggregators",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreAggregators",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreBridges",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreBridges",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreStandards",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreStandards",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "amountIn",
+                      "value": "1000000000000000000"
+                    },
+                    {
+                      "key": "receiver",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "spender",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "refundReceiver",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c40ae7aa-5ddd-4c74-ae0a-1fbea4f36bad",
+          "name": "Bundle a list of actions into a single transaction",
+          "request": {
+            "name": "Bundle a list of actions into a single transaction",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "shortcuts",
+                "bundle"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "1",
+                  "description": "(Required) Chain ID of the network to execute the transaction on"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromAddress",
+                  "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+                  "description": "(Required) Ethereum address of the wallet to send the transaction from"
+                },
+                {
+                  "disabled": false,
+                  "key": "referralCode",
+                  "value": "<string>",
+                  "description": "Referral code that will be included in an on-chain event."
+                },
+                {
+                  "disabled": false,
+                  "key": "routingStrategy",
+                  "value": "<string>",
+                  "description": "Routing strategy to use"
+                },
+                {
+                  "disabled": false,
+                  "key": "executionMode",
+                  "value": "user",
+                  "description": "Controls how quote is built based on execution mode"
+                },
+                {
+                  "disabled": false,
+                  "key": "receiver",
+                  "value": "<string>",
+                  "description": "Ethereum address of the receiver of the tokenOut"
+                },
+                {
+                  "disabled": false,
+                  "key": "spender",
+                  "value": "<string>",
+                  "description": "Ethereum address of the spender of the tokenIn"
+                },
+                {
+                  "disabled": false,
+                  "key": "refundReceiver",
+                  "value": "<string>",
+                  "description": "Ethereum address of the receiver of any dust tokens that might be produced during the execution of actions"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignoreAggregators",
+                  "value": "<string>",
+                  "description": "A list of swap aggregators to be ignored from consideration"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignoreAggregators",
+                  "value": "<string>",
+                  "description": "A list of swap aggregators to be ignored from consideration"
+                },
+                {
+                  "disabled": false,
+                  "key": "skipQuote",
+                  "value": "<boolean>",
+                  "description": "Flag to skip quoting (if true, amountOut and gas will not be returned)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"protocol\": \"<string>\",\n    \"action\": \"<string>\",\n    \"args\": {\n      \"tokenIn\": \"<string>\",\n      \"tokenOut\": \"<string>\",\n      \"amountIn\": \"<string>\",\n      \"slippage\": \"<string>\",\n      \"receiver\": \"<string>\",\n      \"destinationChainId\": \"<integer>\",\n      \"refundReceiver\": \"<string>\",\n      \"minAmountOut\": \"<string>\",\n      \"fee\": \"<string>\",\n      \"feeReceiver\": \"<string>\",\n      \"ignoreAggregators\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"ignoreStandards\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  {\n    \"protocol\": \"<string>\",\n    \"action\": \"<string>\",\n    \"args\": {\n      \"tokenIn\": \"<string>\",\n      \"tokenOut\": \"<string>\",\n      \"amountIn\": \"<string>\",\n      \"slippage\": \"<string>\",\n      \"receiver\": \"<string>\",\n      \"destinationChainId\": \"<integer>\",\n      \"refundReceiver\": \"<string>\",\n      \"minAmountOut\": \"<string>\",\n      \"fee\": \"<string>\",\n      \"feeReceiver\": \"<string>\",\n      \"ignoreAggregators\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"ignoreStandards\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5a481795-7551-494b-9646-ffe0cd73dce1",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "shortcuts",
+                    "bundle"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "fromAddress",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "referralCode",
+                      "value": "0123456789ABCDEF"
+                    },
+                    {
+                      "key": "routingStrategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "executionMode",
+                      "value": "user"
+                    },
+                    {
+                      "key": "receiver",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "spender",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "refundReceiver",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "ignoreAggregators",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreAggregators",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "skipQuote",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"protocol\": \"enso\",\n    \"action\": \"route\",\n    \"args\": {\n      \"tokenIn\": \"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\",\n      \"tokenOut\": \"0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84\",\n      \"amountIn\": \"100000000000\",\n      \"slippage\": \"300\"\n    }\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": 20483231,\n  \"tx\": {\n    \"to\": \"0x0000000000000000000000000000000000000000\",\n    \"from\": \"0xd8da6bf26964af9d7eed9e03e53415d37aa96045\",\n    \"data\": \"0x\",\n    \"value\": \"0\"\n  },\n  \"gas\": \"450000\",\n  \"amountsOut\": {\n    \"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48\": \"999000\"\n  },\n  \"route\": [],\n  \"bundle\": [\n    {\n      \"protocol\": \"uniswap-v2\",\n      \"action\": \"swap\",\n      \"args\": {\n        \"tokenIn\": \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\",\n        \"tokenOut\": \"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48\",\n        \"amountIn\": \"1000000000000000000\",\n        \"receiver\": \"0xd8da6bf26964af9d7eed9e03e53415d37aa96045\"\n      }\n    },\n    {\n      \"protocol\": \"enso\",\n      \"action\": \"slippage\",\n      \"args\": {\n        \"bps\": \"100\",\n        \"amountOut\": {\n          \"useOutputOfCallAt\": 0\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0f06fffe-55ce-4d79-832c-892f1426c953",
+          "name": "Quote from a token to another",
+          "request": {
+            "name": "Quote from a token to another",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "shortcuts",
+                "quote"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "1",
+                  "description": "(Required) Chain ID of the network to execute the transaction on"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromAddress",
+                  "value": "<string>",
+                  "description": "Ethereum address of the wallet to send the transaction from"
+                },
+                {
+                  "disabled": false,
+                  "key": "routingStrategy",
+                  "value": "<string>",
+                  "description": "Routing strategy to use"
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenIn",
+                  "value": "<string>",
+                  "description": "(Required) Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenIn",
+                  "value": "<string>",
+                  "description": "(Required) Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenOut",
+                  "value": "<string>",
+                  "description": "(Required) Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenOut",
+                  "value": "<string>",
+                  "description": "(Required) Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                },
+                {
+                  "disabled": false,
+                  "key": "amountIn",
+                  "value": "<string>",
+                  "description": "(Required) Amount of tokenIn to swap in wei"
+                },
+                {
+                  "disabled": false,
+                  "key": "amountIn",
+                  "value": "<string>",
+                  "description": "(Required) Amount of tokenIn to swap in wei"
+                },
+                {
+                  "disabled": false,
+                  "key": "fee",
+                  "value": "<string>",
+                  "description": "Fee in basis points (1/10000) for each amountIn value. Must be in range 0-100. If specified, this percentage of each amountIn value will be sent to feeReceiver"
+                },
+                {
+                  "disabled": false,
+                  "key": "fee",
+                  "value": "<string>",
+                  "description": "Fee in basis points (1/10000) for each amountIn value. Must be in range 0-100. If specified, this percentage of each amountIn value will be sent to feeReceiver"
+                },
+                {
+                  "disabled": false,
+                  "key": "feeReceiver",
+                  "value": "<string>",
+                  "description": "The Ethereum address that will receive the collected fee. Required if fee is provided"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignoreAggregators",
+                  "value": "<string>",
+                  "description": "A list of swap aggregators to be ignored from consideration"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignoreAggregators",
+                  "value": "<string>",
+                  "description": "A list of swap aggregators to be ignored from consideration"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignoreStandards",
+                  "value": "<string>",
+                  "description": "A list of standards to be ignored from consideration"
+                },
+                {
+                  "disabled": false,
+                  "key": "ignoreStandards",
+                  "value": "<string>",
+                  "description": "A list of standards to be ignored from consideration"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "02b234c9-af57-40e8-97d9-3335014c39db",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "shortcuts",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "fromAddress",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "routingStrategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tokenIn",
+                      "value": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                    },
+                    {
+                      "key": "tokenOut",
+                      "value": "0x6b175474e89094c44da98b954eedeac495271d0f"
+                    },
+                    {
+                      "key": "amountIn",
+                      "value": "1000000000000000000"
+                    },
+                    {
+                      "key": "fee",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fee",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "feeReceiver",
+                      "value": "0x220866B1A2219f40e72f5c628B65D54268cA3A9D"
+                    },
+                    {
+                      "key": "ignoreAggregators",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreAggregators",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreStandards",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreStandards",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"amountOut\": \"string\",\n  \"route\": [\n    {\n      \"tokenIn\": [\n        \"string\",\n        \"string\"\n      ],\n      \"tokenOut\": [\n        \"string\",\n        \"string\"\n      ],\n      \"protocol\": \"string\",\n      \"action\": \"string\",\n      \"primary\": \"string\",\n      \"internalRoutes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"args\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": \"string\"\n      },\n      \"sources\": [\n        \"string\",\n        \"string\"\n      ],\n      \"poolAddresses\": [\n        \"string\",\n        \"string\"\n      ],\n      \"chainId\": 4617.56135931096,\n      \"sourceChainId\": 2451.2019754958005,\n      \"destinationChainId\": 6202.850368334951,\n      \"positionOut\": [\n        \"string\",\n        \"string\"\n      ],\n      \"via\": \"cctp-forwarder\"\n    },\n    {\n      \"tokenIn\": [\n        \"string\",\n        \"string\"\n      ],\n      \"tokenOut\": [\n        \"string\",\n        \"string\"\n      ],\n      \"protocol\": \"string\",\n      \"action\": \"string\",\n      \"primary\": \"string\",\n      \"internalRoutes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"args\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"sources\": [\n        \"string\",\n        \"string\"\n      ],\n      \"poolAddresses\": [\n        \"string\",\n        \"string\"\n      ],\n      \"chainId\": 3156.553454463734,\n      \"sourceChainId\": 1653.824940951475,\n      \"destinationChainId\": 2862.216830088186,\n      \"positionOut\": [\n        \"string\",\n        \"string\"\n      ],\n      \"via\": \"cctp-forwarder\"\n    }\n  ],\n  \"priceImpact\": 4362.543310238954,\n  \"feeAmount\": [\n    \"string\",\n    \"string\"\n  ],\n  \"ensoFeeAmount\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d8aa40f-d031-42f0-b60c-248b5afb38ec",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "shortcuts",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "fromAddress",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "routingStrategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tokenIn",
+                      "value": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                    },
+                    {
+                      "key": "tokenOut",
+                      "value": "0x6b175474e89094c44da98b954eedeac495271d0f"
+                    },
+                    {
+                      "key": "amountIn",
+                      "value": "1000000000000000000"
+                    },
+                    {
+                      "key": "fee",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fee",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "feeReceiver",
+                      "value": "0x220866B1A2219f40e72f5c628B65D54268cA3A9D"
+                    },
+                    {
+                      "key": "ignoreAggregators",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreAggregators",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreStandards",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ignoreStandards",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "34bf7180-d027-4379-8a8b-73d14cfd922b",
+          "name": "Get transaction for IPOR shortcut",
+          "request": {
+            "name": "Get transaction for IPOR shortcut",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "shortcuts",
+                "static",
+                "ipor"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "1",
+                  "description": "(Required) Chain ID of the network to execute the transaction on"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromAddress",
+                  "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+                  "description": "(Required) Ethereum address of the wallet to send the transaction from"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amountIn\": \"<string>\",\n  \"tokenIn\": \"<string>\",\n  \"tokenBToBuy\": \"<string>\",\n  \"percentageForTokenB\": \"<string>\",\n  \"isRouter\": \"<boolean>\",\n  \"slippage\": \"300\",\n  \"simulate\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "261052d3-7703-4944-ba6f-b7d496b736f6",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "shortcuts",
+                    "static",
+                    "ipor"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "fromAddress",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amountIn\": \"1000000000000000\",\n  \"tokenIn\": \"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\",\n  \"tokenBToBuy\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n  \"percentageForTokenB\": \"5000\",\n  \"isRouter\": \"<boolean>\",\n  \"slippage\": \"300\",\n  \"simulate\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": 488.02446365911464,\n  \"tx\": {\n    \"data\": \"string\",\n    \"to\": \"string\",\n    \"from\": \"string\",\n    \"value\": \"string\"\n  },\n  \"logs\": [\n    {\n      \"topics\": [\n        \"string\",\n        \"string\"\n      ],\n      \"data\": \"string\",\n      \"address\": \"string\"\n    },\n    {\n      \"topics\": [\n        \"string\",\n        \"string\"\n      ],\n      \"data\": \"string\",\n      \"address\": \"string\"\n    }\n  ],\n  \"simulationURL\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.enso.finance",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "13966210-8b28-43e8-b3ce-5c0e2e990f54",
+    "name": "Enso ccip shortcuts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "#### Enso API\n- Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).\n- To use the API, **you must include your API Key in the Authorization header** (Bearer format).\n- For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).\n- Get your own API Key at [enso.finance/developers](https://developers.enso.build/).",
+      "type": "text/plain"
+    }
+  }
+}

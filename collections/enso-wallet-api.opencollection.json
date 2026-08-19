@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Enso ccip wallet API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "wallet",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns transaction that approves your EnsoWallet-v2 to spend tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/wallet/approve",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of the network to execute the transaction on"
+              },
+              {
+                "name": "fromAddress",
+                "value": "",
+                "type": "query",
+                "description": "Ethereum address of the wallet to send the transaction from"
+              },
+              {
+                "name": "routingStrategy",
+                "value": "",
+                "type": "query",
+                "description": "Routing strategy to use"
+              },
+              {
+                "name": "tokenAddress",
+                "value": "",
+                "type": "query",
+                "description": "ERC20 token address of the token to approve"
+              },
+              {
+                "name": "amount",
+                "value": "",
+                "type": "query",
+                "description": "Amount of tokens to approve in wei"
+              }
+            ]
+          },
+          "docs": "Returns transaction that approves your EnsoWallet-v2 to spend tokens"
+        },
+        {
+          "info": {
+            "name": "Returns all balances for a given wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/wallet/balances",
+            "params": [
+              {
+                "name": "eoaAddress",
+                "value": "",
+                "type": "query",
+                "description": "Address of the eoa with which to associate the ensoWallet-v2 for balances"
+              },
+              {
+                "name": "useEoa",
+                "value": "",
+                "type": "query",
+                "description": "If true returns balances for the provided address, instead of the associated ensoWallet-v2"
+              },
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID (or 'all') to fetch balances for specified network"
+              }
+            ]
+          },
+          "docs": "Returns all balances for a given wallet"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

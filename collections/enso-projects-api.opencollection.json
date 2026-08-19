@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Enso ccip projects API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns the overarching projects or platforms associated with the available projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/projects"
+          },
+          "docs": "Returns the overarching projects or platforms associated with the available projects"
+        },
+        {
+          "info": {
+            "name": "Returns protocols available by project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/projects/:project/protocols",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "The overarching project or platform"
+              }
+            ]
+          },
+          "docs": "Returns protocols available by project"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

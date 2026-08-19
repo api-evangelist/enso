@@ -1,0 +1,389 @@
+{
+  "item": [
+    {
+      "id": "6b68051e-c88f-4e9d-bb65-788c5e63f0f0",
+      "name": "standards",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fc82966a-61ca-4856-83c8-e9a9d66bbaa3",
+          "name": "Returns actions available to use in bundle shortcuts",
+          "request": {
+            "name": "Returns actions available to use in bundle shortcuts",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "actions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4c5877e1-9ca0-4c45-bd2f-3f24ac8016f6",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"action\": \"slippage\",\n    \"inputs\": {\n      \"key_0\": {\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"optional\": true\n      },\n      \"key_1\": {\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"optional\": true\n      },\n      \"key_2\": {\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"optional\": false\n      }\n    },\n    \"variants\": [\n      {\n        \"action\": \"string\",\n        \"inputs\": {\n          \"key_0\": {\n            \"type\": \"string\",\n            \"description\": \"string\",\n            \"optional\": true\n          },\n          \"key_1\": {\n            \"type\": \"string\",\n            \"description\": \"string\",\n            \"optional\": false\n          }\n        },\n        \"bundleName\": \"string\"\n      },\n      {\n        \"action\": \"string\",\n        \"inputs\": {\n          \"key_0\": {\n            \"type\": \"string\",\n            \"description\": \"string\",\n            \"optional\": false\n          },\n          \"key_1\": {\n            \"type\": \"string\",\n            \"description\": \"string\",\n            \"optional\": true\n          },\n          \"key_2\": {\n            \"type\": \"string\",\n            \"description\": \"string\",\n            \"optional\": false\n          },\n          \"key_3\": {\n            \"type\": \"string\",\n            \"description\": \"string\",\n            \"optional\": true\n          }\n        },\n        \"bundleName\": \"string\"\n      }\n    ]\n  },\n  {\n    \"action\": \"depositwithestimate\",\n    \"inputs\": {\n      \"key_0\": {\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"optional\": false\n      },\n      \"key_1\": {\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"optional\": false\n      },\n      \"key_2\": {\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"optional\": true\n      }\n    },\n    \"variants\": [\n      {\n        \"action\": \"string\",\n        \"inputs\": {\n          \"key_0\": {\n            \"type\": \"string\",\n            \"description\": \"string\",\n            \"optional\": false\n          }\n        },\n        \"bundleName\": \"string\"\n      },\n      {\n        \"action\": \"string\",\n        \"inputs\": {\n          \"key_0\": {\n            \"type\": \"string\",\n            \"description\": \"string\",\n            \"optional\": false\n          }\n        },\n        \"bundleName\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6ae02789-b118-442d-99c5-20b2d2235480",
+          "name": "Returns actions available to use in bundle shortcuts for a given protocol",
+          "request": {
+            "name": "Returns actions available to use in bundle shortcuts for a given protocol",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "actions",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aa0ec40f-b6f0-4523-b29f-ff8de521cda3",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "actions",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"action\": \"singlewithdrawwithpositionid\",\n    \"inputs\": {\n      \"key_0\": {\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"optional\": true\n      },\n      \"key_1\": {\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"optional\": true\n      }\n    },\n    \"variants\": [\n      {\n        \"action\": \"string\",\n        \"inputs\": {\n          \"key_0\": {\n            \"type\": \"string\",\n            \"description\": \"string\",\n            \"optional\": false\n          },\n          \"key_1\": {\n            \"type\": \"string\",\n            \"description\": \"string\",\n            \"optional\": false\n          },\n          \"key_2\": {\n            \"type\": \"string\",\n            \"description\": \"string\",\n            \"optional\": true\n          },\n          \"key_3\": {\n            \"type\": \"string\",\n            \"description\": \"string\",\n            \"optional\": false\n          }\n        },\n        \"bundleName\": \"string\"\n      },\n      {\n        \"action\": \"string\",\n        \"inputs\": {\n          \"key_0\": {\n            \"type\": \"string\",\n            \"description\": \"string\",\n            \"optional\": true\n          }\n        },\n        \"bundleName\": \"string\"\n      }\n    ]\n  },\n  {\n    \"action\": \"repaywithpositionid\",\n    \"inputs\": {\n      \"key_0\": {\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"optional\": true\n      },\n      \"key_1\": {\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"optional\": false\n      },\n      \"key_2\": {\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"optional\": true\n      },\n      \"key_3\": {\n        \"type\": \"string\",\n        \"description\": \"string\",\n        \"optional\": true\n      }\n    },\n    \"variants\": [\n      {\n        \"action\": \"string\",\n        \"inputs\": {\n          \"key_0\": {\n            \"type\": \"string\",\n            \"description\": \"string\",\n            \"optional\": true\n          }\n        },\n        \"bundleName\": \"string\"\n      },\n      {\n        \"action\": \"string\",\n        \"inputs\": {\n          \"key_0\": {\n            \"type\": \"string\",\n            \"description\": \"string\",\n            \"optional\": false\n          },\n          \"key_1\": {\n            \"type\": \"string\",\n            \"description\": \"string\",\n            \"optional\": true\n          },\n          \"key_2\": {\n            \"type\": \"string\",\n            \"description\": \"string\",\n            \"optional\": false\n          }\n        },\n        \"bundleName\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9a190073-9e17-4c4f-b82e-5b9ade9757bb",
+          "name": "Returns standards and methods available to use in bundle shortcuts",
+          "request": {
+            "name": "Returns standards and methods available to use in bundle shortcuts",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "standards"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bf096337-7857-4751-b11c-b94558de799b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "standards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"protocol\": {\n      \"slug\": \"string\",\n      \"url\": \"string\"\n    },\n    \"forks\": [\n      {\n        \"slug\": \"string\",\n        \"url\": \"string\"\n      },\n      {\n        \"slug\": \"string\",\n        \"url\": \"string\"\n      }\n    ],\n    \"actions\": [\n      {\n        \"action\": \"singledepositwithpositionid\",\n        \"name\": \"string\",\n        \"functionNames\": [\n          \"string\",\n          \"string\"\n        ],\n        \"supportedChains\": [\n          {\n            \"id\": 3804.8801655231778,\n            \"name\": \"string\"\n          },\n          {\n            \"id\": 2844.588030104901,\n            \"name\": \"string\"\n          }\n        ],\n        \"inputs\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"action\": \"multitokenflashloan\",\n        \"name\": \"string\",\n        \"functionNames\": [\n          \"string\",\n          \"string\"\n        ],\n        \"supportedChains\": [\n          {\n            \"id\": 3487.1092118596093,\n            \"name\": \"string\"\n          },\n          {\n            \"id\": 6301.322530292854,\n            \"name\": \"string\"\n          }\n        ],\n        \"inputs\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ]\n  },\n  {\n    \"protocol\": {\n      \"slug\": \"string\",\n      \"url\": \"string\"\n    },\n    \"forks\": [\n      {\n        \"slug\": \"string\",\n        \"url\": \"string\"\n      },\n      {\n        \"slug\": \"string\",\n        \"url\": \"string\"\n      }\n    ],\n    \"actions\": [\n      {\n        \"action\": \"div\",\n        \"name\": \"string\",\n        \"functionNames\": [\n          \"string\",\n          \"string\"\n        ],\n        \"supportedChains\": [\n          {\n            \"id\": 684.607265697904,\n            \"name\": \"string\"\n          },\n          {\n            \"id\": 6955.106000995704,\n            \"name\": \"string\"\n          }\n        ],\n        \"inputs\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"action\": \"multiredeem\",\n        \"name\": \"string\",\n        \"functionNames\": [\n          \"string\",\n          \"string\"\n        ],\n        \"supportedChains\": [\n          {\n            \"id\": 1573.8255565719517,\n            \"name\": \"string\"\n          },\n          {\n            \"id\": 4287.072329462052,\n            \"name\": \"string\"\n          }\n        ],\n        \"inputs\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f0a7469b-0fb2-4d0c-bb7b-a912b4366215",
+          "name": "Returns a standard by slug",
+          "request": {
+            "name": "Returns a standard by slug",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "standards",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) The protocol slug"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a9242cd1-2437-4873-bd8c-302b1fc6dfda",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "standards",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) The protocol slug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"project\": \"uniswap\",\n  \"slug\": \"uniswap-v2\",\n  \"name\": \"Uniswap V2\",\n  \"description\": \"string\",\n  \"url\": \"https://app.uniswap.org/swap\",\n  \"logosUri\": [\n    \"string\",\n    \"string\"\n  ],\n  \"chains\": [\n    {\n      \"id\": 1,\n      \"name\": \"mainnet\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.enso.finance",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "30e40448-4936-4c55-8cb1-b11ee314a730",
+    "name": "Enso ccip standards API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "#### Enso API\n- Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).\n- To use the API, **you must include your API Key in the Authorization header** (Bearer format).\n- For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).\n- Get your own API Key at [enso.finance/developers](https://developers.enso.build/).",
+      "type": "text/plain"
+    }
+  }
+}

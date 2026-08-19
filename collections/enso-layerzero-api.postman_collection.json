@@ -1,0 +1,613 @@
+{
+  "item": [
+    {
+      "id": "042465f8-512c-4c7e-8a87-bfa90815607b",
+      "name": "layerzero",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f6f113e7-9be7-441c-80fb-accac3a8eaea",
+          "name": "Get LayerZero pool address for a token on a specific chain",
+          "request": {
+            "name": "Get LayerZero pool address for a token on a specific chain",
+            "description": {
+              "content": "Returns the LayerZero Stargate pool address for a given token address and chain ID. Returns null if no pool exists for the token on that chain.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "layerzero",
+                "pool"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<number>",
+                  "description": "(Required) Chain ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "token",
+                  "value": "<string>",
+                  "description": "(Required) Token address on source chain"
+                },
+                {
+                  "disabled": false,
+                  "key": "destinationChainId",
+                  "value": "<number>",
+                  "description": "Chain ID of destination chain"
+                },
+                {
+                  "disabled": false,
+                  "key": "destinationToken",
+                  "value": "<string>",
+                  "description": "Token address on destination chain"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2280995a-893a-4cba-9168-952feba8a8c0",
+              "name": "Pool address lookup result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "layerzero",
+                    "pool"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destinationChainId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "destinationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"pool\": \"0x6c96de32cea08842dcc4058c14d3aaad7fa41dee\",\n    \"chainId\": 1,\n    \"destinationChainId\": 10,\n    \"token\": \"0xdac17f958d2ee523a2206206994597c13d831ec7\",\n    \"decimals\": 6,\n    \"destinationData\": {\n      \"pool\": \"0xf03b4d9ac1d5d1e7c4cef54c2a313b9fe051a0ad\",\n      \"token\": \"0x01bff41798a0bcf287b996046ca68b395dbc1071\",\n      \"decimals\": 6\n    }\n  },\n  {\n    \"pool\": \"0x6c96de32cea08842dcc4058c14d3aaad7fa41dee\",\n    \"chainId\": 1,\n    \"destinationChainId\": 10,\n    \"token\": \"0xdac17f958d2ee523a2206206994597c13d831ec7\",\n    \"decimals\": 6,\n    \"destinationData\": {\n      \"pool\": \"0xf03b4d9ac1d5d1e7c4cef54c2a313b9fe051a0ad\",\n      \"token\": \"0x01bff41798a0bcf287b996046ca68b395dbc1071\",\n      \"decimals\": 6\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a2c82593-e057-4c03-aeca-ae463678b7e2",
+          "name": "Get LayerZero pool address for a token on a specific chain",
+          "request": {
+            "name": "Get LayerZero pool address for a token on a specific chain",
+            "description": {
+              "content": "Returns the LayerZero Stargate pool address for a given token address and chain ID. Returns null if no pool exists for the token on that chain.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stargate",
+                "pool"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<number>",
+                  "description": "(Required) Chain ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "token",
+                  "value": "<string>",
+                  "description": "(Required) Token address on source chain"
+                },
+                {
+                  "disabled": false,
+                  "key": "destinationChainId",
+                  "value": "<number>",
+                  "description": "Chain ID of destination chain"
+                },
+                {
+                  "disabled": false,
+                  "key": "destinationToken",
+                  "value": "<string>",
+                  "description": "Token address on destination chain"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7f1a4470-4318-4a8c-93f8-9233087c6f77",
+              "name": "Pool address lookup result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stargate",
+                    "pool"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destinationChainId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "destinationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"pool\": \"0x6c96de32cea08842dcc4058c14d3aaad7fa41dee\",\n    \"chainId\": 1,\n    \"destinationChainId\": 10,\n    \"token\": \"0xdac17f958d2ee523a2206206994597c13d831ec7\",\n    \"decimals\": 6,\n    \"destinationData\": {\n      \"pool\": \"0xf03b4d9ac1d5d1e7c4cef54c2a313b9fe051a0ad\",\n      \"token\": \"0x01bff41798a0bcf287b996046ca68b395dbc1071\",\n      \"decimals\": 6\n    }\n  },\n  {\n    \"pool\": \"0x6c96de32cea08842dcc4058c14d3aaad7fa41dee\",\n    \"chainId\": 1,\n    \"destinationChainId\": 10,\n    \"token\": \"0xdac17f958d2ee523a2206206994597c13d831ec7\",\n    \"decimals\": 6,\n    \"destinationData\": {\n      \"pool\": \"0xf03b4d9ac1d5d1e7c4cef54c2a313b9fe051a0ad\",\n      \"token\": \"0x01bff41798a0bcf287b996046ca68b395dbc1071\",\n      \"decimals\": 6\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6a0b4c06-a679-4b00-b79a-9456bbc6c96b",
+          "name": "Check bridge transaction status",
+          "request": {
+            "name": "Check bridge transaction status",
+            "description": {
+              "content": "Returns comprehensive information about a cross-chain bridge transaction, including LayerZero message status, on-chain events, and transaction data from Enso.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "layerzero",
+                "bridge",
+                "check"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<number>",
+                  "description": "(Required) Chain ID of the source transaction"
+                },
+                {
+                  "disabled": false,
+                  "key": "txHash",
+                  "value": "<string>",
+                  "description": "(Required) Transaction hash"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "187f0902-e20a-4a16-9dcd-99d4c6cc7e8d",
+              "name": "Bridge transaction status and details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "layerzero",
+                    "bridge",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "txHash",
+                      "value": "0x1234567890abcdef..."
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sourceChainId\": 9514.774223401073,\n  \"sourceTxHash\": \"string\",\n  \"status\": \"delivered\",\n  \"destinationChainId\": 7495.020265041367,\n  \"destinationTxHash\": \"string\",\n  \"isMultiBridge\": true,\n  \"hops\": [\n    {\n      \"sourceChainId\": 5675.907056335299,\n      \"sourceTxHash\": \"string\",\n      \"status\": \"pending\",\n      \"destinationChainId\": 5309.343518658444,\n      \"destinationTxHash\": \"string\",\n      \"layerZeroMessage\": {\n        \"srcEid\": 8820.125131916264,\n        \"dstEid\": 4075.274869310094,\n        \"status\": \"string\",\n        \"srcChainId\": 331.7863690187972,\n        \"dstChainId\": 4513.288626624348,\n        \"srcTxHash\": \"string\",\n        \"dstTxHash\": \"string\",\n        \"srcBlockNumber\": 5728.245827492321,\n        \"dstBlockNumber\": 2650.4350684579767,\n        \"srcTimestamp\": \"string\",\n        \"dstTimestamp\": \"string\",\n        \"sender\": \"string\",\n        \"receiver\": \"string\"\n      },\n      \"ensoSourceEvent\": {\n        \"blockNumber\": 7075.469039178566,\n        \"transactionHash\": \"string\",\n        \"chainId\": 8524.683424406005,\n        \"success\": true,\n        \"accountId\": \"string\",\n        \"requestId\": \"string\",\n        \"error\": \"string\",\n        \"refundDetails\": {\n          \"token\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"recipient\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"isNative\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"ensoDestinationEvent\": {\n        \"blockNumber\": 3508.371692131563,\n        \"transactionHash\": \"string\",\n        \"chainId\": 6518.742457983483,\n        \"success\": false,\n        \"accountId\": \"string\",\n        \"requestId\": \"string\",\n        \"error\": \"string\",\n        \"refundDetails\": {\n          \"token\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"recipient\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"isNative\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    {\n      \"sourceChainId\": 1512.144611458266,\n      \"sourceTxHash\": \"string\",\n      \"status\": \"unknown\",\n      \"destinationChainId\": 6081.256368313165,\n      \"destinationTxHash\": \"string\",\n      \"layerZeroMessage\": {\n        \"srcEid\": 6231.958080041816,\n        \"dstEid\": 9019.257248652024,\n        \"status\": \"string\",\n        \"srcChainId\": 4449.192209796493,\n        \"dstChainId\": 8160.336430416834,\n        \"srcTxHash\": \"string\",\n        \"dstTxHash\": \"string\",\n        \"srcBlockNumber\": 3837.665382828206,\n        \"dstBlockNumber\": 5809.133109414482,\n        \"srcTimestamp\": \"string\",\n        \"dstTimestamp\": \"string\",\n        \"sender\": \"string\",\n        \"receiver\": \"string\"\n      },\n      \"ensoSourceEvent\": {\n        \"blockNumber\": 5383.773730944288,\n        \"transactionHash\": \"string\",\n        \"chainId\": 9588.196296462114,\n        \"success\": true,\n        \"accountId\": \"string\",\n        \"requestId\": \"string\",\n        \"error\": \"string\",\n        \"refundDetails\": {\n          \"token\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"recipient\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"isNative\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"ensoDestinationEvent\": {\n        \"blockNumber\": 3201.6880446117757,\n        \"transactionHash\": \"string\",\n        \"chainId\": 6166.11351733233,\n        \"success\": false,\n        \"accountId\": \"string\",\n        \"requestId\": \"string\",\n        \"error\": \"string\",\n        \"refundDetails\": {\n          \"token\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"recipient\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"isNative\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    }\n  ],\n  \"layerZeroMessage\": {\n    \"srcEid\": 8869.883697665102,\n    \"dstEid\": 7256.059824329834,\n    \"status\": \"string\",\n    \"srcChainId\": 5791.002882983606,\n    \"dstChainId\": 3446.600044652185,\n    \"srcTxHash\": \"string\",\n    \"dstTxHash\": \"string\",\n    \"srcBlockNumber\": 3388.9852091330963,\n    \"dstBlockNumber\": 8089.736992675128,\n    \"srcTimestamp\": \"string\",\n    \"dstTimestamp\": \"string\",\n    \"sender\": \"string\",\n    \"receiver\": \"string\"\n  },\n  \"ensoSourceEvent\": {\n    \"blockNumber\": 5842.2477636349095,\n    \"transactionHash\": \"string\",\n    \"chainId\": 3886.1188633431952,\n    \"success\": false,\n    \"accountId\": \"string\",\n    \"requestId\": \"string\",\n    \"error\": \"string\",\n    \"refundDetails\": {\n      \"token\": \"string\",\n      \"amount\": \"string\",\n      \"recipient\": \"string\",\n      \"isNative\": true\n    }\n  },\n  \"ensoDestinationEvent\": {\n    \"blockNumber\": 6005.314408977928,\n    \"transactionHash\": \"string\",\n    \"chainId\": 6997.150018600053,\n    \"success\": true,\n    \"accountId\": \"string\",\n    \"requestId\": \"string\",\n    \"error\": \"string\",\n    \"refundDetails\": {\n      \"token\": \"string\",\n      \"amount\": \"string\",\n      \"recipient\": \"string\",\n      \"isNative\": true\n    }\n  },\n  \"ensoMetadata\": {\n    \"tokenIn\": \"string\",\n    \"tokenOut\": \"string\",\n    \"amountIn\": \"string\",\n    \"chainId\": 4471.902125713563,\n    \"timestamp\": 4495.4222114368085\n  },\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2fd02423-0450-4790-98c0-9c0a6d2f215a",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "layerzero",
+                    "bridge",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "txHash",
+                      "value": "0x1234567890abcdef..."
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aa804f60-3421-40f5-b576-7375d8354207",
+          "name": "Check bridge transaction status",
+          "request": {
+            "name": "Check bridge transaction status",
+            "description": {
+              "content": "Returns comprehensive information about a cross-chain bridge transaction, including LayerZero message status, on-chain events, and transaction data from Enso.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stargate",
+                "bridge",
+                "check"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<number>",
+                  "description": "(Required) Chain ID of the source transaction"
+                },
+                {
+                  "disabled": false,
+                  "key": "txHash",
+                  "value": "<string>",
+                  "description": "(Required) Transaction hash"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b722b916-61b4-4f64-b600-10898175bb9b",
+              "name": "Bridge transaction status and details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stargate",
+                    "bridge",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "txHash",
+                      "value": "0x1234567890abcdef..."
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sourceChainId\": 5022.747506217086,\n  \"sourceTxHash\": \"string\",\n  \"status\": \"pending\",\n  \"destinationChainId\": 4354.166521433686,\n  \"destinationTxHash\": \"string\",\n  \"isMultiBridge\": false,\n  \"hops\": [\n    {\n      \"sourceChainId\": 2222.448268388235,\n      \"sourceTxHash\": \"string\",\n      \"status\": \"delivered\",\n      \"destinationChainId\": 748.4401521079576,\n      \"destinationTxHash\": \"string\",\n      \"layerZeroMessage\": {\n        \"srcEid\": 8915.915145038978,\n        \"dstEid\": 2921.886508031428,\n        \"status\": \"string\",\n        \"srcChainId\": 5617.054350946759,\n        \"dstChainId\": 6086.193138637721,\n        \"srcTxHash\": \"string\",\n        \"dstTxHash\": \"string\",\n        \"srcBlockNumber\": 179.88665045505226,\n        \"dstBlockNumber\": 3424.217804221598,\n        \"srcTimestamp\": \"string\",\n        \"dstTimestamp\": \"string\",\n        \"sender\": \"string\",\n        \"receiver\": \"string\"\n      },\n      \"ensoSourceEvent\": {\n        \"blockNumber\": 4289.896993703587,\n        \"transactionHash\": \"string\",\n        \"chainId\": 4413.227790747587,\n        \"success\": true,\n        \"accountId\": \"string\",\n        \"requestId\": \"string\",\n        \"error\": \"string\",\n        \"refundDetails\": {\n          \"token\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"recipient\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"isNative\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"ensoDestinationEvent\": {\n        \"blockNumber\": 6192.9474395110465,\n        \"transactionHash\": \"string\",\n        \"chainId\": 6669.662556670738,\n        \"success\": false,\n        \"accountId\": \"string\",\n        \"requestId\": \"string\",\n        \"error\": \"string\",\n        \"refundDetails\": {\n          \"token\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"recipient\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"isNative\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    {\n      \"sourceChainId\": 9948.909408643252,\n      \"sourceTxHash\": \"string\",\n      \"status\": \"failed\",\n      \"destinationChainId\": 784.790112534881,\n      \"destinationTxHash\": \"string\",\n      \"layerZeroMessage\": {\n        \"srcEid\": 9349.435007500068,\n        \"dstEid\": 7524.785940255056,\n        \"status\": \"string\",\n        \"srcChainId\": 8994.938060099137,\n        \"dstChainId\": 925.5106609140639,\n        \"srcTxHash\": \"string\",\n        \"dstTxHash\": \"string\",\n        \"srcBlockNumber\": 7679.401259213736,\n        \"dstBlockNumber\": 6662.428523139845,\n        \"srcTimestamp\": \"string\",\n        \"dstTimestamp\": \"string\",\n        \"sender\": \"string\",\n        \"receiver\": \"string\"\n      },\n      \"ensoSourceEvent\": {\n        \"blockNumber\": 176.30704878272562,\n        \"transactionHash\": \"string\",\n        \"chainId\": 3027.3357482745123,\n        \"success\": false,\n        \"accountId\": \"string\",\n        \"requestId\": \"string\",\n        \"error\": \"string\",\n        \"refundDetails\": {\n          \"token\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"recipient\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"isNative\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"ensoDestinationEvent\": {\n        \"blockNumber\": 9033.178718683814,\n        \"transactionHash\": \"string\",\n        \"chainId\": 8114.553821719299,\n        \"success\": true,\n        \"accountId\": \"string\",\n        \"requestId\": \"string\",\n        \"error\": \"string\",\n        \"refundDetails\": {\n          \"token\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"recipient\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"isNative\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    }\n  ],\n  \"layerZeroMessage\": {\n    \"srcEid\": 7690.186555825356,\n    \"dstEid\": 5588.418130354636,\n    \"status\": \"string\",\n    \"srcChainId\": 6402.242119062048,\n    \"dstChainId\": 2634.330835696814,\n    \"srcTxHash\": \"string\",\n    \"dstTxHash\": \"string\",\n    \"srcBlockNumber\": 666.3471362738516,\n    \"dstBlockNumber\": 2409.725256426636,\n    \"srcTimestamp\": \"string\",\n    \"dstTimestamp\": \"string\",\n    \"sender\": \"string\",\n    \"receiver\": \"string\"\n  },\n  \"ensoSourceEvent\": {\n    \"blockNumber\": 6072.984639885413,\n    \"transactionHash\": \"string\",\n    \"chainId\": 5883.597556912685,\n    \"success\": true,\n    \"accountId\": \"string\",\n    \"requestId\": \"string\",\n    \"error\": \"string\",\n    \"refundDetails\": {\n      \"token\": \"string\",\n      \"amount\": \"string\",\n      \"recipient\": \"string\",\n      \"isNative\": true\n    }\n  },\n  \"ensoDestinationEvent\": {\n    \"blockNumber\": 797.2599035456374,\n    \"transactionHash\": \"string\",\n    \"chainId\": 2048.69358358135,\n    \"success\": true,\n    \"accountId\": \"string\",\n    \"requestId\": \"string\",\n    \"error\": \"string\",\n    \"refundDetails\": {\n      \"token\": \"string\",\n      \"amount\": \"string\",\n      \"recipient\": \"string\",\n      \"isNative\": true\n    }\n  },\n  \"ensoMetadata\": {\n    \"tokenIn\": \"string\",\n    \"tokenOut\": \"string\",\n    \"amountIn\": \"string\",\n    \"chainId\": 2175.682324356887,\n    \"timestamp\": 406.62917188417634\n  },\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "68b87c04-cf40-4c7e-8862-5a5a34dbb313",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stargate",
+                    "bridge",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "txHash",
+                      "value": "0x1234567890abcdef..."
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.enso.finance",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "81362dc7-f37c-4090-993f-758c1e8838e9",
+    "name": "Enso ccip layerzero API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "#### Enso API\n- Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).\n- To use the API, **you must include your API Key in the Authorization header** (Bearer format).\n- For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).\n- Get your own API Key at [enso.finance/developers](https://developers.enso.build/).",
+      "type": "text/plain"
+    }
+  }
+}

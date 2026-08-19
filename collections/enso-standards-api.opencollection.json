@@ -1,0 +1,83 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Enso ccip standards API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "standards",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns actions available to use in bundle shortcuts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/actions"
+          },
+          "docs": "Returns actions available to use in bundle shortcuts"
+        },
+        {
+          "info": {
+            "name": "Returns actions available to use in bundle shortcuts for a given protocol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/actions/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns actions available to use in bundle shortcuts for a given protocol"
+        },
+        {
+          "info": {
+            "name": "Returns standards and methods available to use in bundle shortcuts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/standards"
+          },
+          "docs": "Returns standards and methods available to use in bundle shortcuts"
+        },
+        {
+          "info": {
+            "name": "Returns a standard by slug",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/standards/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The protocol slug"
+              }
+            ]
+          },
+          "docs": "Returns a standard by slug"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

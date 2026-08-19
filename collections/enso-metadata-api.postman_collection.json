@@ -1,0 +1,1131 @@
+{
+  "item": [
+    {
+      "id": "67f4ea3f-ec68-4de7-82de-a711b501c378",
+      "name": "metadata",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "51256858-ac94-405d-9cb5-c694ac6cfea6",
+          "name": "Returns networks supported by the API",
+          "request": {
+            "name": "Returns networks supported by the API",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "networks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e823b323-1194-42d3-8ac9-8828a90ecd30",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "networks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Ethereum\",\n    \"isConnected\": true\n  },\n  {\n    \"id\": 1,\n    \"name\": \"Ethereum\",\n    \"isConnected\": true\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bd015913-1adf-415c-9126-b86673bb65ea",
+          "name": "Returns price for a token",
+          "request": {
+            "name": "Returns price for a token",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "prices",
+                ":chainId",
+                ":address"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "address",
+                  "description": "(Required) Address of the token to search for"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "chainId",
+                  "description": "(Required) Chain ID of the network to search for"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "531487d6-d2dc-4da7-a45d-990e7e80f24e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "prices",
+                    ":chainId",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "address",
+                      "description": "(Required) Address of the token to search for"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "chainId",
+                      "description": "(Required) Chain ID of the network to search for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"decimals\": 8,\n  \"price\": 27052,\n  \"address\": \"0x2260fac5e5542a773aa44fbcfedf7c193bc2c599\",\n  \"chainId\": 1,\n  \"symbol\": \"WBTC\",\n  \"name\": \"Wrapped Bitcoin\",\n  \"timestamp\": 1695197412\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "af12cf5d-98da-4192-9421-b210c31dee06",
+          "name": "Returns price for multiple tokens",
+          "request": {
+            "name": "Returns price for multiple tokens",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "prices",
+                ":chainId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "addresses",
+                  "value": "<string>",
+                  "description": "(Required) Ethereum address of the token to check price for (max 100 addresses)."
+                },
+                {
+                  "disabled": false,
+                  "key": "addresses",
+                  "value": "<string>",
+                  "description": "(Required) Ethereum address of the token to check price for (max 100 addresses)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "chainId",
+                  "description": "(Required) Chain ID of the network to search for"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "26ef3110-aa94-42d8-8059-3380be853390",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "prices",
+                    ":chainId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "chainId",
+                      "description": "(Required) Chain ID of the network to search for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"decimals\": 8,\n    \"price\": 27052,\n    \"address\": \"0x2260fac5e5542a773aa44fbcfedf7c193bc2c599\",\n    \"chainId\": 1,\n    \"symbol\": \"WBTC\",\n    \"name\": \"Wrapped Bitcoin\",\n    \"timestamp\": 1695197412\n  },\n  {\n    \"decimals\": 8,\n    \"price\": 27052,\n    \"address\": \"0x2260fac5e5542a773aa44fbcfedf7c193bc2c599\",\n    \"chainId\": 1,\n    \"symbol\": \"WBTC\",\n    \"name\": \"Wrapped Bitcoin\",\n    \"timestamp\": 1695197412\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4e849472-900f-46d3-beb8-a9c0be143ee6",
+          "name": "Returns accountId connected to your api key used in the on-chain event.",
+          "request": {
+            "name": "Returns accountId connected to your api key used in the on-chain event.",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "account",
+                "accountId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f2203065-2537-461e-957f-4d955c6e75fc",
+              "name": "Your accountId",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "account",
+                    "accountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fee03d77-cfb3-4fdf-9cbf-bf71d88198f2",
+          "name": "Returns tokens and their details",
+          "request": {
+            "name": "Returns tokens and their details",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "project",
+                  "value": "<string>",
+                  "description": "The overarching project or platform associated with the DeFi token"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocolSlug",
+                  "value": "<string>",
+                  "description": "The specific standard integration or version of the DeFi project"
+                },
+                {
+                  "disabled": false,
+                  "key": "underlyingTokens",
+                  "value": "<string>",
+                  "description": "Underlying tokens of defi token"
+                },
+                {
+                  "disabled": false,
+                  "key": "underlyingTokens",
+                  "value": "<string>",
+                  "description": "Underlying tokens of defi token"
+                },
+                {
+                  "disabled": false,
+                  "key": "underlyingTokensExact",
+                  "value": "<string>",
+                  "description": "Exact composition of underlying tokens of defi token"
+                },
+                {
+                  "disabled": false,
+                  "key": "underlyingTokensExact",
+                  "value": "<string>",
+                  "description": "Exact composition of underlying tokens of defi token"
+                },
+                {
+                  "disabled": false,
+                  "key": "primaryAddress",
+                  "value": "<string>",
+                  "description": "Ethereum addresses for contract interaction of defi tokens"
+                },
+                {
+                  "disabled": false,
+                  "key": "primaryAddress",
+                  "value": "<string>",
+                  "description": "Ethereum addresses for contract interaction of defi tokens"
+                },
+                {
+                  "disabled": false,
+                  "key": "address",
+                  "value": "<string>",
+                  "description": "Ethereum addresses of the tokens"
+                },
+                {
+                  "disabled": false,
+                  "key": "address",
+                  "value": "<string>",
+                  "description": "Ethereum addresses of the tokens"
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Names of the tokens"
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Names of the tokens"
+                },
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>",
+                  "description": "Symbols of the tokens"
+                },
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>",
+                  "description": "Symbols of the tokens"
+                },
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<number>",
+                  "description": "Chain ID of the network of the token"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Type of token.\n      If not provided, both types will be taken into account"
+                },
+                {
+                  "disabled": false,
+                  "key": "liquidityType",
+                  "value": "<string>",
+                  "description": "Type of liquidity.\n      If not provided, both types will be taken into account"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<number>",
+                  "description": "Pagination page number. Pages are of length 1000"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "1000",
+                  "description": "Number of items per page (max 1000)"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<number>",
+                  "description": "Cursor for pagination. Pages are of length 1000"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeMetadata",
+                  "value": "false",
+                  "description": "Whether to include token metadata (symbol, name and logos)"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeUnderlying",
+                  "value": "true",
+                  "description": "Whether to include underlying tokes"
+                },
+                {
+                  "disabled": false,
+                  "key": "apyFrom",
+                  "value": "<number>",
+                  "description": "Only include tokens with APY over this value"
+                },
+                {
+                  "disabled": false,
+                  "key": "apyTo",
+                  "value": "<number>",
+                  "description": "Only include tokens with APY below this value"
+                },
+                {
+                  "disabled": false,
+                  "key": "tvlFrom",
+                  "value": "<number>",
+                  "description": "Only include tokens with TVL over this value"
+                },
+                {
+                  "disabled": false,
+                  "key": "tvlTo",
+                  "value": "<number>",
+                  "description": "Only include tokens with TVL below this value"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c221d77a-05b5-4dd2-8979-06d92dd26eb1",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "project",
+                      "value": "aave"
+                    },
+                    {
+                      "key": "protocolSlug",
+                      "value": "aave-v2"
+                    },
+                    {
+                      "key": "underlyingTokens",
+                      "value": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+                    },
+                    {
+                      "key": "underlyingTokensExact",
+                      "value": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+                    },
+                    {
+                      "key": "primaryAddress",
+                      "value": "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9"
+                    },
+                    {
+                      "key": "address",
+                      "value": "0x030bA81f1c18d280636F32af80b9AAd02Cf0854e"
+                    },
+                    {
+                      "key": "name",
+                      "value": "Bridged USDT"
+                    },
+                    {
+                      "key": "symbol",
+                      "value": "USDC"
+                    },
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "type",
+                      "value": "defi"
+                    },
+                    {
+                      "key": "liquidityType",
+                      "value": "SingleToken"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "100"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "includeMetadata",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeUnderlying",
+                      "value": "false"
+                    },
+                    {
+                      "key": "apyFrom",
+                      "value": "1"
+                    },
+                    {
+                      "key": "apyTo",
+                      "value": "10"
+                    },
+                    {
+                      "key": "tvlFrom",
+                      "value": "0"
+                    },
+                    {
+                      "key": "tvlTo",
+                      "value": "10000000"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 4188.6167586548,\n    \"perPage\": 9777.213119562934,\n    \"lastPage\": 2574.905525783818,\n    \"currentPage\": 5124.814593483023,\n    \"prev\": 8560.782639052966,\n    \"next\": 9821.315223125193,\n    \"cursor\": 6957.176345349153\n  },\n  \"data\": [\n    {\n      \"address\": \"string\",\n      \"chainId\": 9483.373971932924,\n      \"type\": \"string\",\n      \"decimals\": 1869.2074268776992,\n      \"symbol\": \"string\",\n      \"name\": \"string\",\n      \"logosUri\": [\n        \"string\",\n        \"string\"\n      ],\n      \"underlyingTokens\": [\n        {\n          \"address\": \"string\",\n          \"chainId\": 1129.1270081379312,\n          \"type\": \"string\",\n          \"decimals\": 7200.302645004362,\n          \"symbol\": \"string\",\n          \"name\": \"string\",\n          \"logosUri\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"address\": \"string\",\n          \"chainId\": 659.4339363180624,\n          \"type\": \"string\",\n          \"decimals\": 9277.625082344952,\n          \"symbol\": \"string\",\n          \"name\": \"string\",\n          \"logosUri\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"project\": \"aave\",\n      \"protocol\": \"string\",\n      \"depositType\": 1383.7607061792612,\n      \"redeemType\": 8002.928969223042,\n      \"apy\": 3.8,\n      \"apyBase\": 2.6,\n      \"apyReward\": 1.2,\n      \"borrowApyBase\": 2.6,\n      \"borrowApyReward\": 1.2,\n      \"tvl\": 3001020.8,\n      \"primaryAddress\": \"string\"\n    },\n    {\n      \"address\": \"string\",\n      \"chainId\": 5410.650263525042,\n      \"type\": \"string\",\n      \"decimals\": 4501.195585004803,\n      \"symbol\": \"string\",\n      \"name\": \"string\",\n      \"logosUri\": [\n        \"string\",\n        \"string\"\n      ],\n      \"underlyingTokens\": [\n        {\n          \"address\": \"string\",\n          \"chainId\": 2655.9631002952765,\n          \"type\": \"string\",\n          \"decimals\": 2615.8938673655307,\n          \"symbol\": \"string\",\n          \"name\": \"string\",\n          \"logosUri\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"address\": \"string\",\n          \"chainId\": 3314.8391784247665,\n          \"type\": \"string\",\n          \"decimals\": 2340.0671289486518,\n          \"symbol\": \"string\",\n          \"name\": \"string\",\n          \"logosUri\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"project\": \"aave\",\n      \"protocol\": \"string\",\n      \"depositType\": 3680.656835261501,\n      \"redeemType\": 8032.642638851196,\n      \"apy\": 3.8,\n      \"apyBase\": 2.6,\n      \"apyReward\": 1.2,\n      \"borrowApyBase\": 2.6,\n      \"borrowApyReward\": 1.2,\n      \"tvl\": 3001020.8,\n      \"primaryAddress\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4781f40f-0c63-413d-9005-d2a5769819b1",
+          "name": "Returns aggregators supported by the API (can be controled via disableAggregators param)",
+          "request": {
+            "name": "Returns aggregators supported by the API (can be controled via disableAggregators param)",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "aggregators"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "32fdbd8d-c562-4a62-8451-cee8a8204a12",
+              "name": "Returns a list of aggregators",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "aggregators"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"string\",\n  \"string\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "34cfe282-0c1a-4cc9-9e81-9daaffb993af",
+          "name": "Returns nontokenized positions and their details",
+          "request": {
+            "name": "Returns nontokenized positions and their details",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "nontokenized"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "project",
+                  "value": "<string>",
+                  "description": "The overarching project or platform associated with the DeFi token"
+                },
+                {
+                  "disabled": false,
+                  "key": "protocolSlug",
+                  "value": "<string>",
+                  "description": "The specific standard integration or version of the DeFi project"
+                },
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<number>",
+                  "description": "Chain ID of the network of the nontokenized position"
+                },
+                {
+                  "disabled": false,
+                  "key": "positionId",
+                  "value": "<string>",
+                  "description": "Position ID of the nontokenized position."
+                },
+                {
+                  "disabled": false,
+                  "key": "positionId",
+                  "value": "<string>",
+                  "description": "Position ID of the nontokenized position."
+                },
+                {
+                  "disabled": false,
+                  "key": "address",
+                  "value": "<string>",
+                  "description": "Address representing nontokenized position."
+                },
+                {
+                  "disabled": false,
+                  "key": "address",
+                  "value": "<string>",
+                  "description": "Address representing nontokenized position."
+                },
+                {
+                  "disabled": false,
+                  "key": "primaryAddress",
+                  "value": "<string>",
+                  "description": "Ethereum addresses for contract interaction of nontokenized position"
+                },
+                {
+                  "disabled": false,
+                  "key": "primaryAddress",
+                  "value": "<string>",
+                  "description": "Ethereum addresses for contract interaction of nontokenized position"
+                },
+                {
+                  "disabled": false,
+                  "key": "underlyingTokens",
+                  "value": "<string>",
+                  "description": "Underlying tokens of nontokenized position"
+                },
+                {
+                  "disabled": false,
+                  "key": "underlyingTokens",
+                  "value": "<string>",
+                  "description": "Underlying tokens of nontokenized position"
+                },
+                {
+                  "disabled": false,
+                  "key": "underlyingTokensExact",
+                  "value": "<string>",
+                  "description": "Exact composition of underlying tokens of nontokenized position"
+                },
+                {
+                  "disabled": false,
+                  "key": "underlyingTokensExact",
+                  "value": "<string>",
+                  "description": "Exact composition of underlying tokens of nontokenized position"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<number>",
+                  "description": "Pagination page number"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "1000",
+                  "description": "Number of items per page (max 1000)"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<number>",
+                  "description": "Cursor for pagination"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "af589d21-182e-4d12-a385-b317ad963ea9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "nontokenized"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "project",
+                      "value": "orderly"
+                    },
+                    {
+                      "key": "protocolSlug",
+                      "value": "orderly-one-kodiak"
+                    },
+                    {
+                      "key": "chainId",
+                      "value": "80094"
+                    },
+                    {
+                      "key": "positionId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "positionId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "primaryAddress",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "primaryAddress",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "underlyingTokens",
+                      "value": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+                    },
+                    {
+                      "key": "underlyingTokensExact",
+                      "value": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "100"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 2290.017665613219,\n    \"perPage\": 1305.3506092548084,\n    \"lastPage\": 9116.811042363986,\n    \"currentPage\": 6065.759247340231,\n    \"prev\": 1037.30624005429,\n    \"next\": 2388.3930379919793,\n    \"cursor\": 5476.105772999871\n  },\n  \"data\": [\n    {\n      \"chainId\": 340.0615114915195,\n      \"project\": \"string\",\n      \"protocol\": \"string\",\n      \"address\": \"string\",\n      \"positionId\": \"string\",\n      \"primaryAddress\": \"string\",\n      \"name\": \"string\",\n      \"logosUri\": \"string\",\n      \"underlyingTokens\": [\n        {\n          \"address\": \"string\",\n          \"chainId\": 941.551194500192,\n          \"type\": \"string\",\n          \"decimals\": 3461.4958202793046,\n          \"symbol\": \"string\",\n          \"name\": \"string\",\n          \"logosUri\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"address\": \"string\",\n          \"chainId\": 8159.349415784058,\n          \"type\": \"string\",\n          \"decimals\": 1082.1149708198175,\n          \"symbol\": \"string\",\n          \"name\": \"string\",\n          \"logosUri\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    },\n    {\n      \"chainId\": 1939.4607712639445,\n      \"project\": \"string\",\n      \"protocol\": \"string\",\n      \"address\": \"string\",\n      \"positionId\": \"string\",\n      \"primaryAddress\": \"string\",\n      \"name\": \"string\",\n      \"logosUri\": \"string\",\n      \"underlyingTokens\": [\n        {\n          \"address\": \"string\",\n          \"chainId\": 6243.540040624397,\n          \"type\": \"string\",\n          \"decimals\": 2854.2110388802334,\n          \"symbol\": \"string\",\n          \"name\": \"string\",\n          \"logosUri\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"address\": \"string\",\n          \"chainId\": 3378.3646002953437,\n          \"type\": \"string\",\n          \"decimals\": 6685.880089907568,\n          \"symbol\": \"string\",\n          \"name\": \"string\",\n          \"logosUri\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dd69a50a-2825-4bcf-96e0-811e784bcca4",
+          "name": "Returns projects and relevant protocols available to use",
+          "request": {
+            "name": "Returns projects and relevant protocols available to use",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "protocols"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2451aaf6-053d-4427-8657-50231a3ad8b7",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "protocols"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"project\": \"uniswap\",\n    \"slug\": \"uniswap-v2\",\n    \"name\": \"Uniswap V2\",\n    \"description\": \"string\",\n    \"url\": \"https://app.uniswap.org/swap\",\n    \"logosUri\": [\n      \"string\",\n      \"string\"\n    ],\n    \"chains\": [\n      {\n        \"id\": 1,\n        \"name\": \"mainnet\"\n      }\n    ]\n  },\n  {\n    \"project\": \"uniswap\",\n    \"slug\": \"uniswap-v2\",\n    \"name\": \"Uniswap V2\",\n    \"description\": \"string\",\n    \"url\": \"https://app.uniswap.org/swap\",\n    \"logosUri\": [\n      \"string\",\n      \"string\"\n    ],\n    \"chains\": [\n      {\n        \"id\": 1,\n        \"name\": \"mainnet\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.enso.finance",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0f62bb0f-5862-47e1-bb2e-0131a55f9cd9",
+    "name": "Enso ccip metadata API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "#### Enso API\n- Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).\n- To use the API, **you must include your API Key in the Authorization header** (Bearer format).\n- For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).\n- Get your own API Key at [enso.finance/developers](https://developers.enso.build/).",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Enso ccip relay API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "relay",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check Relay bridge transaction status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.enso.finance/api/v1/relay/bridge/check",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query",
+                "description": "Chain ID of the source transaction"
+              },
+              {
+                "name": "txHash",
+                "value": "",
+                "type": "query",
+                "description": "Transaction hash of the Relay bridge transaction on source chain"
+              }
+            ]
+          },
+          "docs": "Returns comprehensive information about a cross-chain Relay bridge transaction, including Relay message parameters, on-chain events, and transaction data from Enso."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

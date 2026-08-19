@@ -1,0 +1,201 @@
+{
+  "item": [
+    {
+      "id": "f1583957-ffed-4e40-84b1-e9eb110392af",
+      "name": "relay",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7eabff97-4d8f-40a9-bb2e-cda80bb37725",
+          "name": "Check Relay bridge transaction status",
+          "request": {
+            "name": "Check Relay bridge transaction status",
+            "description": {
+              "content": "Returns comprehensive information about a cross-chain Relay bridge transaction, including Relay message parameters, on-chain events, and transaction data from Enso.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "relay",
+                "bridge",
+                "check"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<number>",
+                  "description": "(Required) Chain ID of the source transaction"
+                },
+                {
+                  "disabled": false,
+                  "key": "txHash",
+                  "value": "<string>",
+                  "description": "(Required) Transaction hash of the Relay bridge transaction on source chain"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ac63aa0a-adec-42b4-9b59-4d5994be0903",
+              "name": "Bridge transaction status and details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "relay",
+                    "bridge",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "txHash",
+                      "value": "0x94e5ea92d395fc8969b3253395ce58d51b27781c7305376d494f0804b109a8b5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sourceChainId\": 1,\n  \"sourceTxHash\": \"0x80f1faf0652a5618ea1de0fc5142418e380676b3c6c74d482cfac1237638d6d4\",\n  \"status\": \"pending\",\n  \"destinationChainId\": 8453,\n  \"destinationTxHash\": \"0x9a3e6a8a52b82a1f4b523b0d50be133df0ad9407814b32e42d67119e1ae1947d\",\n  \"relayRequest\": {\n    \"status\": \"success\",\n    \"user\": \"0x1234567890123456789012345678901234567890\",\n    \"recipient\": \"0x1234567890123456789012345678901234567890\",\n    \"inTxs\": [\n      {\n        \"hash\": \"0x80f1faf0652a5618ea1de0fc5142418e380676b3c6c74d482cfac1237638d6d4\",\n        \"chainId\": 8453,\n        \"block\": 12345678,\n        \"timestamp\": 1700000000,\n        \"status\": \"success\"\n      },\n      {\n        \"hash\": \"0x80f1faf0652a5618ea1de0fc5142418e380676b3c6c74d482cfac1237638d6d4\",\n        \"chainId\": 8453,\n        \"block\": 12345678,\n        \"timestamp\": 1700000000,\n        \"status\": \"success\"\n      }\n    ],\n    \"outTxs\": [\n      {\n        \"hash\": \"0x80f1faf0652a5618ea1de0fc5142418e380676b3c6c74d482cfac1237638d6d4\",\n        \"chainId\": 8453,\n        \"block\": 12345678,\n        \"timestamp\": 1700000000,\n        \"status\": \"success\"\n      },\n      {\n        \"hash\": \"0x80f1faf0652a5618ea1de0fc5142418e380676b3c6c74d482cfac1237638d6d4\",\n        \"chainId\": 8453,\n        \"block\": 12345678,\n        \"timestamp\": 1700000000,\n        \"status\": \"success\"\n      }\n    ],\n    \"currency\": {\n      \"chainId\": 1,\n      \"address\": \"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48\",\n      \"symbol\": \"USDC\",\n      \"name\": \"USD Coin\",\n      \"decimals\": 6\n    },\n    \"fees\": {\n      \"gas\": \"50000000000000\",\n      \"fixed\": \"0\",\n      \"price\": \"100000\",\n      \"gateway\": \"0\"\n    },\n    \"feesUsd\": {\n      \"gas\": \"50000000000000\",\n      \"fixed\": \"0\",\n      \"price\": \"100000\",\n      \"gateway\": \"0\"\n    },\n    \"failReason\": \"EXECUTION_REVERTED\",\n    \"createdAt\": \"2024-01-15T12:00:00Z\",\n    \"updatedAt\": \"2024-01-15T12:05:00Z\"\n  },\n  \"ensoSourceEvent\": {\n    \"blockNumber\": 9838.596391561588,\n    \"transactionHash\": \"string\",\n    \"chainId\": 7012.175030556072,\n    \"success\": true,\n    \"accountId\": \"string\",\n    \"requestId\": \"string\",\n    \"error\": \"string\",\n    \"refundDetails\": {\n      \"token\": \"string\",\n      \"amount\": \"string\",\n      \"recipient\": \"string\",\n      \"isNative\": false\n    }\n  },\n  \"ensoDestinationEvent\": {\n    \"blockNumber\": 4883.987548190395,\n    \"transactionHash\": \"string\",\n    \"chainId\": 7426.402546320585,\n    \"success\": false,\n    \"accountId\": \"string\",\n    \"requestId\": \"string\",\n    \"error\": \"string\",\n    \"refundDetails\": {\n      \"token\": \"string\",\n      \"amount\": \"string\",\n      \"recipient\": \"string\",\n      \"isNative\": false\n    }\n  },\n  \"error\": \"Transaction receipt not found for 0x...\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "75ac2b3e-f266-4fd1-8650-e3d90fecaaef",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "relay",
+                    "bridge",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "txHash",
+                      "value": "0x94e5ea92d395fc8969b3253395ce58d51b27781c7305376d494f0804b109a8b5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.enso.finance",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "205069b2-5779-4d7b-9b84-a1dda0d0bc58",
+    "name": "Enso ccip relay API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "#### Enso API\n- Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).\n- To use the API, **you must include your API Key in the Authorization header** (Bearer format).\n- For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).\n- Get your own API Key at [enso.finance/developers](https://developers.enso.build/).",
+      "type": "text/plain"
+    }
+  }
+}

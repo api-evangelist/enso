@@ -1,0 +1,217 @@
+{
+  "item": [
+    {
+      "id": "637d2283-668a-4dab-93ed-dc7bfdb3e4d6",
+      "name": "projects",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3b98ae3f-9728-4f52-88d7-145c1dddec5e",
+          "name": "Returns the overarching projects or platforms associated with the available projects",
+          "request": {
+            "name": "Returns the overarching projects or platforms associated with the available projects",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "projects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "98a4caf8-84fc-442b-8269-a5e2c2a24d4a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"protocols\": [\n      \"string\",\n      \"string\"\n    ],\n    \"chains\": [\n      7469.5798251246615,\n      3983.3931967771587\n    ]\n  },\n  {\n    \"id\": \"string\",\n    \"protocols\": [\n      \"string\",\n      \"string\"\n    ],\n    \"chains\": [\n      8205.825330840677,\n      3038.8974375064927\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a6448501-ec12-4ab4-bbc8-f72f17992763",
+          "name": "Returns protocols available by project",
+          "request": {
+            "name": "Returns protocols available by project",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                ":project",
+                "protocols"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project",
+                  "description": "(Required) The overarching project or platform"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "876d0cde-6ea5-459b-83fc-3d43fa821123",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "projects",
+                    ":project",
+                    "protocols"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) The overarching project or platform"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"project\": \"uniswap\",\n    \"slug\": \"uniswap-v2\",\n    \"name\": \"Uniswap V2\",\n    \"description\": \"string\",\n    \"url\": \"https://app.uniswap.org/swap\",\n    \"logosUri\": [\n      \"string\",\n      \"string\"\n    ],\n    \"chains\": [\n      {\n        \"id\": 1,\n        \"name\": \"mainnet\"\n      }\n    ]\n  },\n  {\n    \"project\": \"uniswap\",\n    \"slug\": \"uniswap-v2\",\n    \"name\": \"Uniswap V2\",\n    \"description\": \"string\",\n    \"url\": \"https://app.uniswap.org/swap\",\n    \"logosUri\": [\n      \"string\",\n      \"string\"\n    ],\n    \"chains\": [\n      {\n        \"id\": 1,\n        \"name\": \"mainnet\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.enso.finance",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d6c4601d-3942-49b5-a61b-fd317a23fe29",
+    "name": "Enso ccip projects API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "#### Enso API\n- Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).\n- To use the API, **you must include your API Key in the Authorization header** (Bearer format).\n- For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).\n- Get your own API Key at [enso.finance/developers](https://developers.enso.build/).",
+      "type": "text/plain"
+    }
+  }
+}
