@@ -41,6 +41,16 @@ tags:
 - Crypto Web3
 - DeFi
 - Blockchain
+- Cross-Chain
+- Smart Contracts
+- Transaction Routing
+- Web3 Infrastructure
+- Onchain
+tags_raw:
+- Company
+- Crypto Web3
+- DeFi
+- Blockchain
 - Cross-chain
 - Smart Contracts
 - Transaction Routing
@@ -81,6 +91,8 @@ apis:
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
   tags:
+  - LayerZero
+  tags_raw:
   - layerzero
   properties:
   - type: OpenAPI
@@ -95,6 +107,8 @@ apis:
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
   tags:
+  - Metadata
+  tags_raw:
   - metadata
   properties:
   - type: OpenAPI
@@ -109,6 +123,8 @@ apis:
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
   tags:
+  - Project
+  tags_raw:
   - projects
   properties:
   - type: OpenAPI
@@ -123,6 +139,8 @@ apis:
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
   tags:
+  - Relay
+  tags_raw:
   - relay
   properties:
   - type: OpenAPI
@@ -137,6 +155,8 @@ apis:
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
   tags:
+  - Shortcuts
+  tags_raw:
   - shortcuts
   properties:
   - type: OpenAPI
@@ -151,6 +171,8 @@ apis:
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
   tags:
+  - Standards
+  tags_raw:
   - standards
   properties:
   - type: OpenAPI
@@ -165,6 +187,8 @@ apis:
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
   tags:
+  - Wallets
+  tags_raw:
   - wallet
   properties:
   - type: OpenAPI
