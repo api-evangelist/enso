@@ -53,7 +53,7 @@ tags:
 - Crypto Web3
 - DeFi
 - Blockchain
-- Cross-Chain
+- Cross-chain
 - Smart Contracts
 - Transaction Routing
 - Web3 Infrastructure
@@ -103,7 +103,7 @@ apis:
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
   tags:
-  - LayerZero
+  - layerzero
   tags_raw:
   - layerzero
   properties:
@@ -151,7 +151,7 @@ apis:
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
   tags:
-  - Relay
+  - relay
   tags_raw:
   - relay
   properties:
@@ -183,7 +183,7 @@ apis:
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
   tags:
-  - Standards
+  - standards
   tags_raw:
   - standards
   properties:
