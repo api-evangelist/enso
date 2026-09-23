@@ -1,15 +1,15 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Enso ccip projects API
+  title: Enso Projects API
   description: '#### Enso API
 
-    - Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).
+    - Find detailed documentation on docs.enso.finance.
 
     - To use the API, **you must include your API Key in the Authorization header** (Bearer format).
 
     - For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).
 
-    - Get your own API Key at [enso.finance/developers](https://developers.enso.build/).'
+    - Get your own API Key at enso.finance/developers.'
   version: '1.0'
   contact: {}
 servers:
@@ -17,12 +17,12 @@ servers:
 security:
 - bearer: []
 tags:
-- name: projects
+- name: Projects
 paths:
   /api/v1/projects:
     get:
       operationId: ProjectsController_standards
-      summary: Returns the overarching projects or platforms associated with the available projects
+      summary: Returns the overarching projects or platforms associated with the available…
       parameters: []
       responses:
         '200':
@@ -34,7 +34,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Project'
       tags:
-      - projects
+      - Projects
   /api/v1/projects/{project}/protocols:
     get:
       operationId: ProjectsController_getStandardsByProject
@@ -57,51 +57,19 @@ paths:
                 items:
                   $ref: '#/components/schemas/ProtocolModel'
       tags:
-      - projects
+      - Projects
 components:
   schemas:
-    ProtocolModel:
+    Network:
       type: object
       properties:
-        project:
-          type: string
-          example: uniswap
-        slug:
-          type: string
-          example: uniswap-v2
+        id:
+          type: number
         name:
           type: string
-          example: Uniswap V2
-          nullable: true
-        description:
-          type: string
-          nullable: true
-        url:
-          type: string
-          example: https://app.uniswap.org/swap
-          nullable: true
-        logosUri:
-          example: https://icons.llama.fi/uniswap-v2.png
-          nullable: true
-          type: array
-          items:
-            type: string
-        chains:
-          nullable: true
-          example:
-          - id: 1
-            name: mainnet
-          type: array
-          items:
-            $ref: '#/components/schemas/Network'
       required:
-      - project
-      - slug
+      - id
       - name
-      - description
-      - url
-      - logosUri
-      - chains
     Project:
       type: object
       properties:
@@ -118,16 +86,53 @@ components:
       required:
       - id
       - protocols
-    Network:
+    ProtocolModel:
       type: object
       properties:
-        id:
-          type: number
-        name:
+        project:
           type: string
+          example: uniswap
+        slug:
+          type: string
+          example: uniswap-v2
+        name:
+          type:
+          - string
+          - 'null'
+          example: Uniswap V2
+        description:
+          type:
+          - string
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+          example: https://app.uniswap.org/swap
+        logosUri:
+          example: https://icons.llama.fi/uniswap-v2.png
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        chains:
+          example:
+          - id: 1
+            name: mainnet
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Network'
       required:
-      - id
+      - project
+      - slug
       - name
+      - description
+      - url
+      - logosUri
+      - chains
   securitySchemes:
     bearer:
       scheme: bearer

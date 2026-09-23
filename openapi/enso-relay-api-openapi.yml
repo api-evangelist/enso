@@ -1,15 +1,15 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Enso ccip relay API
+  title: Enso Relay API
   description: '#### Enso API
 
-    - Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).
+    - Find detailed documentation on docs.enso.finance.
 
     - To use the API, **you must include your API Key in the Authorization header** (Bearer format).
 
     - For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).
 
-    - Get your own API Key at [enso.finance/developers](https://developers.enso.build/).'
+    - Get your own API Key at enso.finance/developers.'
   version: '1.0'
   contact: {}
 servers:
@@ -17,7 +17,7 @@ servers:
 security:
 - bearer: []
 tags:
-- name: relay
+- name: Relay
 paths:
   /api/v1/relay/bridge/check:
     get:
@@ -49,7 +49,7 @@ paths:
         '429':
           description: Rate limit exceeded
       tags:
-      - relay
+      - Relay
 components:
   schemas:
     RelayRequestData:
@@ -144,12 +144,10 @@ components:
           - $ref: '#/components/schemas/RelayRequestData'
         ensoSourceEvent:
           description: Enso shortcut event from source chain (ShortcutExecuted + execution result). Null if not found.
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/EnsoEvent'
         ensoDestinationEvent:
           description: Enso shortcut event from destination chain (ShortcutExecuted + execution result). Null if not found.
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/EnsoEvent'
         error:
@@ -160,35 +158,29 @@ components:
       - sourceChainId
       - sourceTxHash
       - status
-    RelayCurrencyInfo:
+    RelayFees:
       type: object
       properties:
-        chainId:
-          type: number
-          description: Chain ID of the currency
-          example: 1
-        address:
+        gas:
           type: string
-          description: Token contract address
-          example: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
-        symbol:
+          description: Estimated gas cost in wei
+          example: '50000000000000'
+        fixed:
           type: string
-          description: Token symbol
-          example: USDC
-        name:
+          description: Fixed fee in wei
+          example: '0'
+        price:
           type: string
-          description: Token name
-          example: USD Coin
-        decimals:
-          type: number
-          description: Token decimals
-          example: 6
+          description: Dynamic fee from chain and amount in wei
+          example: '100000'
+        gateway:
+          type: string
+          description: Fee taken by API gateway in wei
+          example: '0'
       required:
-      - chainId
-      - address
-      - symbol
-      - name
-      - decimals
+      - gas
+      - fixed
+      - price
     RelayTx:
       type: object
       properties:
@@ -248,29 +240,35 @@ components:
       - transactionHash
       - chainId
       - success
-    RelayFees:
+    RelayCurrencyInfo:
       type: object
       properties:
-        gas:
+        chainId:
+          type: number
+          description: Chain ID of the currency
+          example: 1
+        address:
           type: string
-          description: Estimated gas cost in wei
-          example: '50000000000000'
-        fixed:
+          description: Token contract address
+          example: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+        symbol:
           type: string
-          description: Fixed fee in wei
-          example: '0'
-        price:
+          description: Token symbol
+          example: USDC
+        name:
           type: string
-          description: Dynamic fee from chain and amount in wei
-          example: '100000'
-        gateway:
-          type: string
-          description: Fee taken by API gateway in wei
-          example: '0'
+          description: Token name
+          example: USD Coin
+        decimals:
+          type: number
+          description: Token decimals
+          example: 6
       required:
-      - gas
-      - fixed
-      - price
+      - chainId
+      - address
+      - symbol
+      - name
+      - decimals
     RefundDetails:
       type: object
       properties:

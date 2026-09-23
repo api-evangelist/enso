@@ -1,15 +1,15 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Enso ccip API
+  title: Enso Ccip API
   description: '#### Enso API
 
-    - Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).
+    - Find detailed documentation on docs.enso.finance.
 
     - To use the API, **you must include your API Key in the Authorization header** (Bearer format).
 
     - For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).
 
-    - Get your own API Key at [enso.finance/developers](https://developers.enso.build/).'
+    - Get your own API Key at enso.finance/developers.'
   version: '1.0'
   contact: {}
 servers:
@@ -76,6 +76,53 @@ paths:
       - ccip
 components:
   schemas:
+    TokenAmount:
+      type: object
+      properties:
+        token:
+          description: Token information
+          allOf:
+          - $ref: '#/components/schemas/TokenInfo'
+        amount:
+          type: string
+          description: Token amount (in wei/smallest unit)
+          example: '1000000000000000000'
+      required:
+      - token
+      - amount
+    CcipSendParamsDecoded:
+      type: object
+      properties:
+        destinationChainId:
+          type: number
+          description: Destination chain ID
+          example: 8453
+        data:
+          description: Decoded message data containing receiver address and shortcut execution data
+          allOf:
+          - $ref: '#/components/schemas/DecodedMessageData'
+        tokenAmounts:
+          description: Token amounts being transferred cross-chain with full token metadata
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenAmount'
+        fee:
+          description: CCIP fee details with token information
+          allOf:
+          - $ref: '#/components/schemas/FeeDetails'
+        extraArgs:
+          description: CCIP extra arguments (gas limit and execution order preferences)
+          allOf:
+          - $ref: '#/components/schemas/ExtraArgs'
+    CcipRouterResponse:
+      type: object
+      properties:
+        router:
+          type: string
+          description: CCIP router contract address for the specified chain
+          example: '0x141fa059441E0ca23ce184B6A78bafD2A517DdE8'
+      required:
+      - router
     CcipSendParams:
       type: object
       properties:
@@ -90,6 +137,88 @@ components:
       required:
       - destinationChainSelector
       - message
+    CcipEvmTokenAmount:
+      type: object
+      properties:
+        token:
+          type: string
+        amount:
+          type: string
+      required:
+      - token
+      - amount
+    DecodedMessageData:
+      type: object
+      properties:
+        receiver:
+          type: string
+          description: Receiver address extracted from CCIP message data
+          example: '0x1234567890123456789012345678901234567890'
+        shortcutData:
+          type: string
+          description: Encoded shortcut execution data (commands and state for Enso router)
+          example: 0x3d3d3d3d...
+        error:
+          type: string
+          description: Error message if message.data could not be decoded as (address,bytes)
+          example: Could not decode message.data as (address,bytes)
+      required:
+      - receiver
+      - shortcutData
+    CcipEvm2AnyMessage:
+      type: object
+      properties:
+        receiver:
+          type: string
+        data:
+          type: string
+        tokenAmounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CcipEvmTokenAmount'
+        feeToken:
+          type: string
+        extraArgs:
+          type: string
+      required:
+      - receiver
+      - data
+      - tokenAmounts
+      - feeToken
+      - extraArgs
+    EnsoEvent:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: Account ID from ShortcutExecuted event
+        requestId:
+          type: string
+          description: Request ID from ShortcutExecuted event
+        blockNumber:
+          type: number
+          description: Block number where the event was emitted
+        transactionHash:
+          type: string
+          description: Transaction hash
+        chainId:
+          type: number
+          description: Chain ID where the event was emitted
+        success:
+          type: boolean
+          description: Whether the shortcut execution was successful
+        error:
+          type: string
+          description: Error data if execution failed
+        refundDetails:
+          description: Refund details if execution failed and funds were returned
+          allOf:
+          - $ref: '#/components/schemas/RefundDetails'
+      required:
+      - blockNumber
+      - transactionHash
+      - chainId
+      - success
     TokenInfo:
       type: object
       properties:
@@ -111,33 +240,6 @@ components:
           example: 18
       required:
       - address
-    CcipRouterResponse:
-      type: object
-      properties:
-        router:
-          type: string
-          description: CCIP router contract address for the specified chain
-          example: '0x141fa059441E0ca23ce184B6A78bafD2A517DdE8'
-      required:
-      - router
-    DecodedMessageData:
-      type: object
-      properties:
-        receiver:
-          type: string
-          description: Receiver address extracted from CCIP message data
-          example: '0x1234567890123456789012345678901234567890'
-        shortcutData:
-          type: string
-          description: Encoded shortcut execution data (commands and state for Enso router)
-          example: 0x3d3d3d3d...
-        error:
-          type: string
-          description: Error message if message.data could not be decoded as (address,bytes)
-          example: Could not decode message.data as (address,bytes)
-      required:
-      - receiver
-      - shortcutData
     ExtraArgs:
       type: object
       properties:
@@ -217,12 +319,10 @@ components:
           example: true
         ensoSourceEvent:
           description: Enso shortcut event from source chain (ShortcutExecuted + execution result). Null if not found.
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/EnsoEvent'
         ensoDestinationEvent:
           description: Enso shortcut event from destination chain (ShortcutExecuted + execution result). Null if not found.
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/EnsoEvent'
         error:
@@ -234,108 +334,6 @@ components:
       - sourceTxHash
       - sourceChainIdFinality
       - status
-    CcipSendParamsDecoded:
-      type: object
-      properties:
-        destinationChainId:
-          type: number
-          description: Destination chain ID
-          example: 8453
-        data:
-          description: Decoded message data containing receiver address and shortcut execution data
-          allOf:
-          - $ref: '#/components/schemas/DecodedMessageData'
-        tokenAmounts:
-          description: Token amounts being transferred cross-chain with full token metadata
-          type: array
-          items:
-            $ref: '#/components/schemas/TokenAmount'
-        fee:
-          description: CCIP fee details with token information
-          allOf:
-          - $ref: '#/components/schemas/FeeDetails'
-        extraArgs:
-          description: CCIP extra arguments (gas limit and execution order preferences)
-          allOf:
-          - $ref: '#/components/schemas/ExtraArgs'
-    EnsoEvent:
-      type: object
-      properties:
-        accountId:
-          type: string
-          description: Account ID from ShortcutExecuted event
-        requestId:
-          type: string
-          description: Request ID from ShortcutExecuted event
-        blockNumber:
-          type: number
-          description: Block number where the event was emitted
-        transactionHash:
-          type: string
-          description: Transaction hash
-        chainId:
-          type: number
-          description: Chain ID where the event was emitted
-        success:
-          type: boolean
-          description: Whether the shortcut execution was successful
-        error:
-          type: string
-          description: Error data if execution failed
-        refundDetails:
-          description: Refund details if execution failed and funds were returned
-          allOf:
-          - $ref: '#/components/schemas/RefundDetails'
-      required:
-      - blockNumber
-      - transactionHash
-      - chainId
-      - success
-    CcipEvm2AnyMessage:
-      type: object
-      properties:
-        receiver:
-          type: string
-        data:
-          type: string
-        tokenAmounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/CcipEvmTokenAmount'
-        feeToken:
-          type: string
-        extraArgs:
-          type: string
-      required:
-      - receiver
-      - data
-      - tokenAmounts
-      - feeToken
-      - extraArgs
-    TokenAmount:
-      type: object
-      properties:
-        token:
-          description: Token information
-          allOf:
-          - $ref: '#/components/schemas/TokenInfo'
-        amount:
-          type: string
-          description: Token amount (in wei/smallest unit)
-          example: '1000000000000000000'
-      required:
-      - token
-      - amount
-    CcipEvmTokenAmount:
-      type: object
-      properties:
-        token:
-          type: string
-        amount:
-          type: string
-      required:
-      - token
-      - amount
     RefundDetails:
       type: object
       properties:

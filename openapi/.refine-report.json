@@ -1,15 +1,7 @@
 {
   "provider": "enso",
   "sources": [
-    "enso-ccip-api-openapi.yml",
-    "enso-cctp-api-openapi.yml",
-    "enso-layerzero-api-openapi.yml",
-    "enso-metadata-api-openapi.yml",
-    "enso-projects-api-openapi.yml",
-    "enso-relay-api-openapi.yml",
-    "enso-shortcuts-api-openapi.yml",
-    "enso-standards-api-openapi.yml",
-    "enso-wallet-api-openapi.yml"
+    "_original/enso-openapi-original.json"
   ],
   "outputs": [
     "enso-ccip-api-openapi.yml",
@@ -25,6 +17,28 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "enso-openapi-original.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "enso-openapi-original.json: declared missing tag: ccip",
+    "enso-openapi-original.json: declared missing tag: cctp",
+    "enso-openapi-original.json: declared missing tag: layerzero",
+    "enso-openapi-original.json: declared missing tag: metadata",
+    "enso-openapi-original.json: declared missing tag: projects",
+    "enso-openapi-original.json: declared missing tag: relay",
+    "enso-openapi-original.json: declared missing tag: standards",
+    "enso-openapi-original.json: declared missing tag: wallet",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "enso-ccip-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "enso-cctp-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "enso-layerzero-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "enso-metadata-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "enso-projects-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "enso-relay-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "enso-shortcuts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "enso-standards-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "enso-wallet-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
