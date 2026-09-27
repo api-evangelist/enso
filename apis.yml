@@ -73,7 +73,7 @@ tags_raw:
 - Onchain
 apis:
 - aid: enso:enso-ccip-api
-  name: Enso ccip API
+  name: Enso Ccip API
   description: The ccip API from Enso — 2 operation(s) for ccip.
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
@@ -87,7 +87,7 @@ apis:
   - type: DataModel
     url: data-model/enso-data-model.yml
 - aid: enso:enso-cctp-api
-  name: Enso cctp API
+  name: Enso Cctp API
   description: The cctp API from Enso — 3 operation(s) for cctp.
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
@@ -101,7 +101,7 @@ apis:
   - type: DataModel
     url: data-model/enso-data-model.yml
 - aid: enso:enso-layerzero-api
-  name: Enso layerzero API
+  name: Enso Layerzero API
   description: The layerzero API from Enso — 4 operation(s) for layerzero.
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
@@ -117,7 +117,7 @@ apis:
   - type: DataModel
     url: data-model/enso-data-model.yml
 - aid: enso:enso-metadata-api
-  name: Enso metadata API
+  name: Enso Metadata API
   description: The metadata API from Enso — 8 operation(s) for metadata.
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
@@ -133,7 +133,7 @@ apis:
   - type: DataModel
     url: data-model/enso-data-model.yml
 - aid: enso:enso-projects-api
-  name: Enso projects API
+  name: Enso Projects API
   description: The projects API from Enso — 2 operation(s) for projects.
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
@@ -149,7 +149,7 @@ apis:
   - type: DataModel
     url: data-model/enso-data-model.yml
 - aid: enso:enso-relay-api
-  name: Enso relay API
+  name: Enso Relay API
   description: The relay API from Enso — 1 operation(s) for relay.
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
@@ -165,7 +165,7 @@ apis:
   - type: DataModel
     url: data-model/enso-data-model.yml
 - aid: enso:enso-shortcuts-api
-  name: Enso shortcuts API
+  name: Enso Shortcuts API
   description: The shortcuts API from Enso — 5 operation(s) for shortcuts.
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
@@ -181,7 +181,7 @@ apis:
   - type: DataModel
     url: data-model/enso-data-model.yml
 - aid: enso:enso-standards-api
-  name: Enso standards API
+  name: Enso Standards API
   description: The standards API from Enso — 4 operation(s) for standards.
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
@@ -197,7 +197,7 @@ apis:
   - type: DataModel
     url: data-model/enso-data-model.yml
 - aid: enso:enso-wallet-api
-  name: Enso wallet API
+  name: Enso Wallet API
   description: The wallet API from Enso — 2 operation(s) for wallet.
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance

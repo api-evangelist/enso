@@ -62,7 +62,7 @@ paths:
       - layerzero
   /api/v1/stargate/pool:
     get:
-      operationId: LayerZeroController_getPoolAddress
+      operationId: getApiV1StargatePool
       summary: Get LayerZero pool address for a token on a specific chain
       description: Returns the LayerZero Stargate pool address for a given token address and chain ID. Returns null if no pool exists for the token on that chain.
       parameters:
@@ -101,6 +101,8 @@ paths:
                   $ref: '#/components/schemas/LZPoolLookupResponse'
       tags:
       - layerzero
+      x-operation-id-source: normalized
+      x-operation-id-original: LayerZeroController_getPoolAddress
   /api/v1/layerzero/bridge/check:
     get:
       operationId: LayerZeroController_checkBridgeTransaction
@@ -133,7 +135,7 @@ paths:
       - layerzero
   /api/v1/stargate/bridge/check:
     get:
-      operationId: LayerZeroController_checkBridgeTransaction
+      operationId: getApiV1StargateBridgeCheck
       summary: Check bridge transaction status
       description: Returns comprehensive information about a cross-chain bridge transaction, including LayerZero message status, on-chain events, and transaction data from Enso.
       parameters:
@@ -161,27 +163,10 @@ paths:
           description: Rate limit exceeded
       tags:
       - layerzero
+      x-operation-id-source: normalized
+      x-operation-id-original: LayerZeroController_checkBridgeTransaction
 components:
   schemas:
-    LZDestinationTokenData:
-      type: object
-      properties:
-        pool:
-          type: string
-          description: LayerZero pool address on the destination chain
-          example: '0xf03b4d9ac1d5d1e7c4cef54c2a313b9fe051a0ad'
-        token:
-          type: string
-          description: Token address on the destination chain
-          example: '0x01bff41798a0bcf287b996046ca68b395dbc1071'
-        decimals:
-          type: number
-          description: Decimals of the token on the destination chain
-          example: 6
-      required:
-      - pool
-      - token
-      - decimals
     LayerZeroMessageStatus:
       type: object
       properties:
@@ -268,6 +253,39 @@ components:
       - sourceChainId
       - sourceTxHash
       - status
+    EnsoEvent:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: Account ID from ShortcutExecuted event
+        requestId:
+          type: string
+          description: Request ID from ShortcutExecuted event
+        blockNumber:
+          type: number
+          description: Block number where the event was emitted
+        transactionHash:
+          type: string
+          description: Transaction hash
+        chainId:
+          type: number
+          description: Chain ID where the event was emitted
+        success:
+          type: boolean
+          description: Whether the shortcut execution was successful
+        error:
+          type: string
+          description: Error data if execution failed
+        refundDetails:
+          description: Refund details if execution failed and funds were returned
+          allOf:
+          - $ref: '#/components/schemas/RefundDetails'
+      required:
+      - blockNumber
+      - transactionHash
+      - chainId
+      - success
     BridgeTransactionResponse:
       type: object
       properties:
@@ -323,73 +341,25 @@ components:
       - sourceChainId
       - sourceTxHash
       - status
-    LZPoolLookupResponse:
+    LZDestinationTokenData:
       type: object
       properties:
         pool:
           type: string
-          description: LayerZero pool address for the source token
-          example: '0x6c96de32cea08842dcc4058c14d3aaad7fa41dee'
-        chainId:
-          type: number
-          description: Source chain ID
-          example: 1
-        destinationChainId:
-          type: number
-          description: Destination chain ID
-          example: 10
+          description: LayerZero pool address on the destination chain
+          example: '0xf03b4d9ac1d5d1e7c4cef54c2a313b9fe051a0ad'
         token:
           type: string
-          description: Source token address
-          example: '0xdac17f958d2ee523a2206206994597c13d831ec7'
+          description: Token address on the destination chain
+          example: '0x01bff41798a0bcf287b996046ca68b395dbc1071'
         decimals:
           type: number
-          description: Decimals of the source token
+          description: Decimals of the token on the destination chain
           example: 6
-        destinationData:
-          description: Details about the destination pool and token
-          allOf:
-          - $ref: '#/components/schemas/LZDestinationTokenData'
       required:
       - pool
-      - chainId
-      - destinationChainId
       - token
       - decimals
-      - destinationData
-    EnsoEvent:
-      type: object
-      properties:
-        accountId:
-          type: string
-          description: Account ID from ShortcutExecuted event
-        requestId:
-          type: string
-          description: Request ID from ShortcutExecuted event
-        blockNumber:
-          type: number
-          description: Block number where the event was emitted
-        transactionHash:
-          type: string
-          description: Transaction hash
-        chainId:
-          type: number
-          description: Chain ID where the event was emitted
-        success:
-          type: boolean
-          description: Whether the shortcut execution was successful
-        error:
-          type: string
-          description: Error data if execution failed
-        refundDetails:
-          description: Refund details if execution failed and funds were returned
-          allOf:
-          - $ref: '#/components/schemas/RefundDetails'
-      required:
-      - blockNumber
-      - transactionHash
-      - chainId
-      - success
     EnsoMetadata:
       type: object
       properties:
@@ -428,6 +398,40 @@ components:
       - amount
       - recipient
       - isNative
+    LZPoolLookupResponse:
+      type: object
+      properties:
+        pool:
+          type: string
+          description: LayerZero pool address for the source token
+          example: '0x6c96de32cea08842dcc4058c14d3aaad7fa41dee'
+        chainId:
+          type: number
+          description: Source chain ID
+          example: 1
+        destinationChainId:
+          type: number
+          description: Destination chain ID
+          example: 10
+        token:
+          type: string
+          description: Source token address
+          example: '0xdac17f958d2ee523a2206206994597c13d831ec7'
+        decimals:
+          type: number
+          description: Decimals of the source token
+          example: 6
+        destinationData:
+          description: Details about the destination pool and token
+          allOf:
+          - $ref: '#/components/schemas/LZDestinationTokenData'
+      required:
+      - pool
+      - chainId
+      - destinationChainId
+      - token
+      - decimals
+      - destinationData
   securitySchemes:
     bearer:
       scheme: bearer

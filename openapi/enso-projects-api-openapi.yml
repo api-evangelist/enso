@@ -70,22 +70,6 @@ components:
       required:
       - id
       - name
-    Project:
-      type: object
-      properties:
-        id:
-          type: string
-        chains:
-          type: array
-          items:
-            type: number
-        protocols:
-          type: array
-          items:
-            type: string
-      required:
-      - id
-      - protocols
     ProtocolModel:
       type: object
       properties:
@@ -133,6 +117,22 @@ components:
       - url
       - logosUri
       - chains
+    Project:
+      type: object
+      properties:
+        id:
+          type: string
+        chains:
+          type: array
+          items:
+            type: number
+        protocols:
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - protocols
   securitySchemes:
     bearer:
       scheme: bearer

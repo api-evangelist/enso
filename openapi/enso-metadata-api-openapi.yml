@@ -461,6 +461,43 @@ paths:
       - Metadata
 components:
   schemas:
+    PaginationMeta:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total amount of pages
+        lastPage:
+          type:
+          - number
+          - 'null'
+          description: Last page number
+        currentPage:
+          type:
+          - number
+          - 'null'
+          description: Current page number
+        perPage:
+          type: number
+          description: Amount of elements per page
+        prev:
+          type:
+          - number
+          - 'null'
+          description: Previous page
+        next:
+          type:
+          - number
+          - 'null'
+          description: Next page
+        cursor:
+          type:
+          - number
+          - 'null'
+          description: Cursor for pagination
+      required:
+      - total
+      - perPage
     TokenModel:
       type: object
       properties:
@@ -498,53 +535,15 @@ components:
       - chainId
       - type
       - decimals
-    ProtocolModel:
+    PaginatedResult:
       type: object
       properties:
-        project:
-          type: string
-          example: uniswap
-        slug:
-          type: string
-          example: uniswap-v2
-        name:
-          type:
-          - string
-          - 'null'
-          example: Uniswap V2
-        description:
-          type:
-          - string
-          - 'null'
-        url:
-          type:
-          - string
-          - 'null'
-          example: https://app.uniswap.org/swap
-        logosUri:
-          example: https://icons.llama.fi/uniswap-v2.png
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        chains:
-          example:
-          - id: 1
-            name: mainnet
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Network'
+        meta:
+          description: Metadata for pagination
+          allOf:
+          - $ref: '#/components/schemas/PaginationMeta'
       required:
-      - project
-      - slug
-      - name
-      - description
-      - url
-      - logosUri
-      - chains
+      - meta
     ConnectedNetwork:
       type: object
       properties:
@@ -561,6 +560,16 @@ components:
       - id
       - name
       - isConnected
+    Network:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+      required:
+      - id
+      - name
     PositionModel:
       type: object
       properties:
@@ -663,6 +672,35 @@ components:
       - chainId
       - type
       - decimals
+    Price:
+      type: object
+      properties:
+        decimals:
+          type: number
+          example: 8
+        price:
+          type: number
+          example: 27052
+        address:
+          type: string
+          example: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+        symbol:
+          type: string
+          example: WBTC
+        name:
+          type: string
+          example: Wrapped Bitcoin
+        timestamp:
+          type: number
+          example: 1695197412
+        chainId:
+          type: number
+          example: 1
+      required:
+      - decimals
+      - price
+      - address
+      - chainId
     NonTokenizedModel:
       type: object
       properties:
@@ -704,91 +742,53 @@ components:
       - address
       - positionId
       - primaryAddress
-    Price:
+    ProtocolModel:
       type: object
       properties:
-        decimals:
-          type: number
-          example: 8
-        price:
-          type: number
-          example: 27052
-        address:
+        project:
           type: string
-          example: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
-        symbol:
+          example: uniswap
+        slug:
           type: string
-          example: WBTC
+          example: uniswap-v2
         name:
-          type: string
-          example: Wrapped Bitcoin
-        timestamp:
-          type: number
-          example: 1695197412
-        chainId:
-          type: number
-          example: 1
+          type:
+          - string
+          - 'null'
+          example: Uniswap V2
+        description:
+          type:
+          - string
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+          example: https://app.uniswap.org/swap
+        logosUri:
+          example: https://icons.llama.fi/uniswap-v2.png
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        chains:
+          example:
+          - id: 1
+            name: mainnet
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Network'
       required:
-      - decimals
-      - price
-      - address
-      - chainId
-    PaginatedResult:
-      type: object
-      properties:
-        meta:
-          description: Metadata for pagination
-          allOf:
-          - $ref: '#/components/schemas/PaginationMeta'
-      required:
-      - meta
-    Network:
-      type: object
-      properties:
-        id:
-          type: number
-        name:
-          type: string
-      required:
-      - id
+      - project
+      - slug
       - name
-    PaginationMeta:
-      type: object
-      properties:
-        total:
-          type: number
-          description: Total amount of pages
-        lastPage:
-          type:
-          - number
-          - 'null'
-          description: Last page number
-        currentPage:
-          type:
-          - number
-          - 'null'
-          description: Current page number
-        perPage:
-          type: number
-          description: Amount of elements per page
-        prev:
-          type:
-          - number
-          - 'null'
-          description: Previous page
-        next:
-          type:
-          - number
-          - 'null'
-          description: Next page
-        cursor:
-          type:
-          - number
-          - 'null'
-          description: Cursor for pagination
-      required:
-      - total
-      - perPage
+      - description
+      - url
+      - logosUri
+      - chains
   securitySchemes:
     bearer:
       scheme: bearer

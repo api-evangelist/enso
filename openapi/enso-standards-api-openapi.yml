@@ -95,18 +95,6 @@ paths:
       - Standards
 components:
   schemas:
-    ActionInputMetadata:
-      type: object
-      properties:
-        type:
-          type: string
-        description:
-          type: string
-        optional:
-          type: boolean
-      required:
-      - type
-      - description
     ActionVariant:
       type: object
       properties:
@@ -121,53 +109,141 @@ components:
       required:
       - action
       - inputs
-    ProtocolModel:
+    Standard:
       type: object
       properties:
-        project:
-          type: string
-          example: uniswap
+        protocol:
+          $ref: '#/components/schemas/Protocol'
+        forks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Protocol'
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StandardAction'
+      required:
+      - protocol
+      - forks
+      - actions
+    Protocol:
+      type: object
+      properties:
         slug:
           type: string
-          example: uniswap-v2
-        name:
-          type:
-          - string
-          - 'null'
-          example: Uniswap V2
-        description:
-          type:
-          - string
-          - 'null'
         url:
-          type:
-          - string
-          - 'null'
-          example: https://app.uniswap.org/swap
-        logosUri:
-          example: https://icons.llama.fi/uniswap-v2.png
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        chains:
-          example:
-          - id: 1
-            name: mainnet
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Network'
+          type: string
       required:
-      - project
       - slug
-      - name
-      - description
       - url
-      - logosUri
-      - chains
+    ActionInputMetadata:
+      type: object
+      properties:
+        type:
+          type: string
+        description:
+          type: string
+        optional:
+          type: boolean
+      required:
+      - type
+      - description
+    Network:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+      required:
+      - id
+      - name
+    Action:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - approve
+          - borrow
+          - borrowwithpositionid
+          - bridge
+          - deposit
+          - singledeposit
+          - singledepositwithpositionid
+          - multideposit
+          - multidepositwithpositionid
+          - tokenizedsingledeposit
+          - tokenizedmultideposit
+          - multioutsingledeposit
+          - depositclmm
+          - depositwithestimate
+          - encodedswap
+          - flashloan
+          - singletokenflashloan
+          - multitokenflashloan
+          - harvest
+          - nftborrow
+          - nftdeposit
+          - nftmultideposit
+          - nftmultiredeem
+          - nftredeem
+          - nftrepay
+          - permittransferfrom
+          - redeem
+          - singleredeem
+          - singleredeemwithpositionid
+          - multiredeem
+          - tokenizedsingleredeem
+          - tokenizedmultiredeem
+          - redeemclmm
+          - redeemwithestimate
+          - repay
+          - repaywithpositionid
+          - swap
+          - transfer
+          - transferfrom
+          - withdraw
+          - singlewithdraw
+          - singlewithdrawwithpositionid
+          - multiwithdraw
+          - route
+          - call
+          - split
+          - ondosplit
+          - merge
+          - balance
+          - minamountout
+          - slippage
+          - fee
+          - ensofee
+          - paymasterfee
+          - depositposition
+          - add
+          - sub
+          - mul
+          - div
+          - min
+          - max
+          - isequal
+          - islessthan
+          - isequalorlessthan
+          - isgreaterthan
+          - isequalorgreaterthan
+          - not
+          - check
+          - toggle
+        inputs:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ActionInputMetadata'
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionVariant'
+      required:
+      - action
+      - inputs
     StandardAction:
       type: object
       properties:
@@ -263,129 +339,53 @@ components:
       - functionNames
       - supportedChains
       - inputs
-    Protocol:
+    ProtocolModel:
       type: object
       properties:
+        project:
+          type: string
+          example: uniswap
         slug:
           type: string
-        url:
-          type: string
-      required:
-      - slug
-      - url
-    Network:
-      type: object
-      properties:
-        id:
-          type: number
+          example: uniswap-v2
         name:
-          type: string
+          type:
+          - string
+          - 'null'
+          example: Uniswap V2
+        description:
+          type:
+          - string
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+          example: https://app.uniswap.org/swap
+        logosUri:
+          example: https://icons.llama.fi/uniswap-v2.png
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        chains:
+          example:
+          - id: 1
+            name: mainnet
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Network'
       required:
-      - id
+      - project
+      - slug
       - name
-    Standard:
-      type: object
-      properties:
-        protocol:
-          $ref: '#/components/schemas/Protocol'
-        forks:
-          type: array
-          items:
-            $ref: '#/components/schemas/Protocol'
-        actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/StandardAction'
-      required:
-      - protocol
-      - forks
-      - actions
-    Action:
-      type: object
-      properties:
-        action:
-          type: string
-          enum:
-          - approve
-          - borrow
-          - borrowwithpositionid
-          - bridge
-          - deposit
-          - singledeposit
-          - singledepositwithpositionid
-          - multideposit
-          - multidepositwithpositionid
-          - tokenizedsingledeposit
-          - tokenizedmultideposit
-          - multioutsingledeposit
-          - depositclmm
-          - depositwithestimate
-          - encodedswap
-          - flashloan
-          - singletokenflashloan
-          - multitokenflashloan
-          - harvest
-          - nftborrow
-          - nftdeposit
-          - nftmultideposit
-          - nftmultiredeem
-          - nftredeem
-          - nftrepay
-          - permittransferfrom
-          - redeem
-          - singleredeem
-          - singleredeemwithpositionid
-          - multiredeem
-          - tokenizedsingleredeem
-          - tokenizedmultiredeem
-          - redeemclmm
-          - redeemwithestimate
-          - repay
-          - repaywithpositionid
-          - swap
-          - transfer
-          - transferfrom
-          - withdraw
-          - singlewithdraw
-          - singlewithdrawwithpositionid
-          - multiwithdraw
-          - route
-          - call
-          - split
-          - ondosplit
-          - merge
-          - balance
-          - minamountout
-          - slippage
-          - fee
-          - ensofee
-          - paymasterfee
-          - depositposition
-          - add
-          - sub
-          - mul
-          - div
-          - min
-          - max
-          - isequal
-          - islessthan
-          - isequalorlessthan
-          - isgreaterthan
-          - isequalorgreaterthan
-          - not
-          - check
-          - toggle
-        inputs:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ActionInputMetadata'
-        variants:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionVariant'
-      required:
-      - action
-      - inputs
+      - description
+      - url
+      - logosUri
+      - chains
   securitySchemes:
     bearer:
       scheme: bearer
