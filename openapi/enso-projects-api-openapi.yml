@@ -60,16 +60,6 @@ paths:
       - Projects
 components:
   schemas:
-    Network:
-      type: object
-      properties:
-        id:
-          type: number
-        name:
-          type: string
-      required:
-      - id
-      - name
     ProtocolModel:
       type: object
       properties:
@@ -117,6 +107,16 @@ components:
       - url
       - logosUri
       - chains
+    Network:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+      required:
+      - id
+      - name
     Project:
       type: object
       properties:

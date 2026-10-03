@@ -136,6 +136,31 @@ components:
       - data
       - to
       - from
+    WalletApproveTransaction:
+      type: object
+      properties:
+        tx:
+          description: The transaction object to use in `ethers`
+          allOf:
+          - $ref: '#/components/schemas/WalletTransaction'
+        gas:
+          type: string
+          description: The gas estimate for the transaction
+        token:
+          type: string
+          description: The token address to approve
+        amount:
+          type: string
+          description: The amount of tokens to approve
+        spender:
+          type: string
+          description: The spender address to approve
+      required:
+      - tx
+      - gas
+      - token
+      - amount
+      - spender
     WalletBalance:
       type: object
       properties:
@@ -183,31 +208,6 @@ components:
       - name
       - symbol
       - logoUri
-    WalletApproveTransaction:
-      type: object
-      properties:
-        tx:
-          description: The transaction object to use in `ethers`
-          allOf:
-          - $ref: '#/components/schemas/WalletTransaction'
-        gas:
-          type: string
-          description: The gas estimate for the transaction
-        token:
-          type: string
-          description: The token address to approve
-        amount:
-          type: string
-          description: The amount of tokens to approve
-        spender:
-          type: string
-          description: The spender address to approve
-      required:
-      - tx
-      - gas
-      - token
-      - amount
-      - spender
   securitySchemes:
     bearer:
       scheme: bearer

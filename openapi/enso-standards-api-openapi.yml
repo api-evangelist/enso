@@ -95,59 +95,6 @@ paths:
       - Standards
 components:
   schemas:
-    ActionVariant:
-      type: object
-      properties:
-        action:
-          type: string
-        inputs:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ActionInputMetadata'
-        bundleName:
-          type: string
-      required:
-      - action
-      - inputs
-    Standard:
-      type: object
-      properties:
-        protocol:
-          $ref: '#/components/schemas/Protocol'
-        forks:
-          type: array
-          items:
-            $ref: '#/components/schemas/Protocol'
-        actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/StandardAction'
-      required:
-      - protocol
-      - forks
-      - actions
-    Protocol:
-      type: object
-      properties:
-        slug:
-          type: string
-        url:
-          type: string
-      required:
-      - slug
-      - url
-    ActionInputMetadata:
-      type: object
-      properties:
-        type:
-          type: string
-        description:
-          type: string
-        optional:
-          type: boolean
-      required:
-      - type
-      - description
     Network:
       type: object
       properties:
@@ -244,6 +191,106 @@ components:
       required:
       - action
       - inputs
+    ProtocolModel:
+      type: object
+      properties:
+        project:
+          type: string
+          example: uniswap
+        slug:
+          type: string
+          example: uniswap-v2
+        name:
+          type:
+          - string
+          - 'null'
+          example: Uniswap V2
+        description:
+          type:
+          - string
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+          example: https://app.uniswap.org/swap
+        logosUri:
+          example: https://icons.llama.fi/uniswap-v2.png
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        chains:
+          example:
+          - id: 1
+            name: mainnet
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Network'
+      required:
+      - project
+      - slug
+      - name
+      - description
+      - url
+      - logosUri
+      - chains
+    Standard:
+      type: object
+      properties:
+        protocol:
+          $ref: '#/components/schemas/Protocol'
+        forks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Protocol'
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StandardAction'
+      required:
+      - protocol
+      - forks
+      - actions
+    ActionVariant:
+      type: object
+      properties:
+        action:
+          type: string
+        inputs:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ActionInputMetadata'
+        bundleName:
+          type: string
+      required:
+      - action
+      - inputs
+    Protocol:
+      type: object
+      properties:
+        slug:
+          type: string
+        url:
+          type: string
+      required:
+      - slug
+      - url
+    ActionInputMetadata:
+      type: object
+      properties:
+        type:
+          type: string
+        description:
+          type: string
+        optional:
+          type: boolean
+      required:
+      - type
+      - description
     StandardAction:
       type: object
       properties:
@@ -339,53 +386,6 @@ components:
       - functionNames
       - supportedChains
       - inputs
-    ProtocolModel:
-      type: object
-      properties:
-        project:
-          type: string
-          example: uniswap
-        slug:
-          type: string
-          example: uniswap-v2
-        name:
-          type:
-          - string
-          - 'null'
-          example: Uniswap V2
-        description:
-          type:
-          - string
-          - 'null'
-        url:
-          type:
-          - string
-          - 'null'
-          example: https://app.uniswap.org/swap
-        logosUri:
-          example: https://icons.llama.fi/uniswap-v2.png
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        chains:
-          example:
-          - id: 1
-            name: mainnet
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Network'
-      required:
-      - project
-      - slug
-      - name
-      - description
-      - url
-      - logosUri
-      - chains
   securitySchemes:
     bearer:
       scheme: bearer

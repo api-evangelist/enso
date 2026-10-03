@@ -52,97 +52,6 @@ paths:
       - Relay
 components:
   schemas:
-    RelayRequestData:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Relay request status
-          example: success
-          enum:
-          - success
-          - failure
-          - refund
-          - pending
-          - depositing
-          - waiting
-        user:
-          type: string
-          description: User address that initiated the bridge
-          example: '0x1234567890123456789012345678901234567890'
-        recipient:
-          type: string
-          description: Recipient address on destination chain
-          example: '0x1234567890123456789012345678901234567890'
-        inTxs:
-          description: Source chain transactions
-          type: array
-          items:
-            $ref: '#/components/schemas/RelayTx'
-        outTxs:
-          description: Destination chain transactions
-          type: array
-          items:
-            $ref: '#/components/schemas/RelayTx'
-        currency:
-          description: Currency being bridged
-          allOf:
-          - $ref: '#/components/schemas/RelayCurrencyInfo'
-        fees:
-          description: Fee breakdown in wei
-          allOf:
-          - $ref: '#/components/schemas/RelayFees'
-        feesUsd:
-          description: Fee breakdown in USD
-          allOf:
-          - $ref: '#/components/schemas/RelayFees'
-        failReason:
-          type: string
-          description: Reason for failure if the bridge failed
-          example: EXECUTION_REVERTED
-        createdAt:
-          type: string
-          description: When the relay request was created
-          example: '2024-01-15T12:00:00Z'
-        updatedAt:
-          type: string
-          description: When the relay request was last updated
-          example: '2024-01-15T12:05:00Z'
-      required:
-      - status
-    EnsoEvent:
-      type: object
-      properties:
-        accountId:
-          type: string
-          description: Account ID from ShortcutExecuted event
-        requestId:
-          type: string
-          description: Request ID from ShortcutExecuted event
-        blockNumber:
-          type: number
-          description: Block number where the event was emitted
-        transactionHash:
-          type: string
-          description: Transaction hash
-        chainId:
-          type: number
-          description: Chain ID where the event was emitted
-        success:
-          type: boolean
-          description: Whether the shortcut execution was successful
-        error:
-          type: string
-          description: Error data if execution failed
-        refundDetails:
-          description: Refund details if execution failed and funds were returned
-          allOf:
-          - $ref: '#/components/schemas/RefundDetails'
-      required:
-      - blockNumber
-      - transactionHash
-      - chainId
-      - success
     RelayCurrencyInfo:
       type: object
       properties:
@@ -220,6 +129,59 @@ components:
       - sourceChainId
       - sourceTxHash
       - status
+    EnsoEvent:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: Account ID from ShortcutExecuted event
+        requestId:
+          type: string
+          description: Request ID from ShortcutExecuted event
+        blockNumber:
+          type: number
+          description: Block number where the event was emitted
+        transactionHash:
+          type: string
+          description: Transaction hash
+        chainId:
+          type: number
+          description: Chain ID where the event was emitted
+        success:
+          type: boolean
+          description: Whether the shortcut execution was successful
+        error:
+          type: string
+          description: Error data if execution failed
+        refundDetails:
+          description: Refund details if execution failed and funds were returned
+          allOf:
+          - $ref: '#/components/schemas/RefundDetails'
+      required:
+      - blockNumber
+      - transactionHash
+      - chainId
+      - success
+    RefundDetails:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token address (0xeee... for native token)
+        amount:
+          type: string
+          description: Amount refunded
+        recipient:
+          type: string
+          description: Recipient address
+        isNative:
+          type: boolean
+          description: Whether the refund is in native token
+      required:
+      - token
+      - amount
+      - recipient
+      - isNative
     RelayTx:
       type: object
       properties:
@@ -246,26 +208,6 @@ components:
       required:
       - hash
       - chainId
-    RefundDetails:
-      type: object
-      properties:
-        token:
-          type: string
-          description: Token address (0xeee... for native token)
-        amount:
-          type: string
-          description: Amount refunded
-        recipient:
-          type: string
-          description: Recipient address
-        isNative:
-          type: boolean
-          description: Whether the refund is in native token
-      required:
-      - token
-      - amount
-      - recipient
-      - isNative
     RelayFees:
       type: object
       properties:
@@ -289,6 +231,64 @@ components:
       - gas
       - fixed
       - price
+    RelayRequestData:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Relay request status
+          example: success
+          enum:
+          - success
+          - failure
+          - refund
+          - pending
+          - depositing
+          - waiting
+        user:
+          type: string
+          description: User address that initiated the bridge
+          example: '0x1234567890123456789012345678901234567890'
+        recipient:
+          type: string
+          description: Recipient address on destination chain
+          example: '0x1234567890123456789012345678901234567890'
+        inTxs:
+          description: Source chain transactions
+          type: array
+          items:
+            $ref: '#/components/schemas/RelayTx'
+        outTxs:
+          description: Destination chain transactions
+          type: array
+          items:
+            $ref: '#/components/schemas/RelayTx'
+        currency:
+          description: Currency being bridged
+          allOf:
+          - $ref: '#/components/schemas/RelayCurrencyInfo'
+        fees:
+          description: Fee breakdown in wei
+          allOf:
+          - $ref: '#/components/schemas/RelayFees'
+        feesUsd:
+          description: Fee breakdown in USD
+          allOf:
+          - $ref: '#/components/schemas/RelayFees'
+        failReason:
+          type: string
+          description: Reason for failure if the bridge failed
+          example: EXECUTION_REVERTED
+        createdAt:
+          type: string
+          description: When the relay request was created
+          example: '2024-01-15T12:00:00Z'
+        updatedAt:
+          type: string
+          description: When the relay request was last updated
+          example: '2024-01-15T12:05:00Z'
+      required:
+      - status
   securitySchemes:
     bearer:
       scheme: bearer

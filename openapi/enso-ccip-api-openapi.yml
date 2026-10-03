@@ -76,57 +76,20 @@ paths:
       - ccip
 components:
   schemas:
-    FeeDetails:
+    TokenAmount:
       type: object
       properties:
         token:
-          description: Fee token information
+          description: Token information
           allOf:
           - $ref: '#/components/schemas/TokenInfo'
         amount:
           type: string
-          description: Fee amount paid for CCIP message (in wei/smallest unit)
-          example: '5000000000000000'
+          description: Token amount (in wei/smallest unit)
+          example: '1000000000000000000'
       required:
       - token
       - amount
-    ExtraArgs:
-      type: object
-      properties:
-        gasLimit:
-          type: string
-          description: Gas limit allocated for shortcut execution on destination chain
-          example: '2000000'
-        allowOutOfOrderExecution:
-          type: boolean
-          description: Whether CCIP can execute this message out of order (true = allow)
-          example: false
-      required:
-      - gasLimit
-      - allowOutOfOrderExecution
-    CcipSendParams:
-      type: object
-      properties:
-        destinationChainSelector:
-          type: string
-          description: Destination chain selector (CCIP format, not Enso ChainId). See https://docs.chain.link/ccip/supported-networks
-          example: '15971525489660198786'
-        message:
-          description: CCIP message parameters (Client.EVM2AnyMessage structure with receiver, data, tokenAmounts, feeToken, extraArgs)
-          allOf:
-          - $ref: '#/components/schemas/CcipEvm2AnyMessage'
-      required:
-      - destinationChainSelector
-      - message
-    CcipRouterResponse:
-      type: object
-      properties:
-        router:
-          type: string
-          description: CCIP router contract address for the specified chain
-          example: '0x141fa059441E0ca23ce184B6A78bafD2A517DdE8'
-      required:
-      - router
     EnsoEvent:
       type: object
       properties:
@@ -160,45 +123,94 @@ components:
       - transactionHash
       - chainId
       - success
-    CcipEvm2AnyMessage:
+    CcipEvmTokenAmount:
       type: object
       properties:
-        receiver:
+        token:
           type: string
-        data:
-          type: string
-        tokenAmounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/CcipEvmTokenAmount'
-        feeToken:
-          type: string
-        extraArgs:
+        amount:
           type: string
       required:
-      - receiver
-      - data
-      - tokenAmounts
-      - feeToken
-      - extraArgs
-    DecodedMessageData:
+      - token
+      - amount
+    CcipRouterResponse:
       type: object
       properties:
-        receiver:
+        router:
           type: string
-          description: Receiver address extracted from CCIP message data
-          example: '0x1234567890123456789012345678901234567890'
-        shortcutData:
-          type: string
-          description: Encoded shortcut execution data (commands and state for Enso router)
-          example: 0x3d3d3d3d...
-        error:
-          type: string
-          description: Error message if message.data could not be decoded as (address,bytes)
-          example: Could not decode message.data as (address,bytes)
+          description: CCIP router contract address for the specified chain
+          example: '0x141fa059441E0ca23ce184B6A78bafD2A517DdE8'
       required:
-      - receiver
-      - shortcutData
+      - router
+    TokenInfo:
+      type: object
+      properties:
+        address:
+          type: string
+          description: Token contract address
+          example: '0x55d398326f99059fF775485246999027B3197955'
+        symbol:
+          type: string
+          description: Token symbol (e.g., USDT, USDC)
+          example: USDT
+        name:
+          type: string
+          description: Token full name
+          example: Tether USD
+        decimals:
+          type: number
+          description: Token decimals
+          example: 18
+      required:
+      - address
+    RefundDetails:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token address (0xeee... for native token)
+        amount:
+          type: string
+          description: Amount refunded
+        recipient:
+          type: string
+          description: Recipient address
+        isNative:
+          type: boolean
+          description: Whether the refund is in native token
+      required:
+      - token
+      - amount
+      - recipient
+      - isNative
+    ExtraArgs:
+      type: object
+      properties:
+        gasLimit:
+          type: string
+          description: Gas limit allocated for shortcut execution on destination chain
+          example: '2000000'
+        allowOutOfOrderExecution:
+          type: boolean
+          description: Whether CCIP can execute this message out of order (true = allow)
+          example: false
+      required:
+      - gasLimit
+      - allowOutOfOrderExecution
+    FeeDetails:
+      type: object
+      properties:
+        token:
+          description: Fee token information
+          allOf:
+          - $ref: '#/components/schemas/TokenInfo'
+        amount:
+          type: string
+          description: Fee amount paid for CCIP message (in wei/smallest unit)
+          example: '5000000000000000'
+      required:
+      - token
+      - amount
     CcipBridgeTransactionResponse:
       type: object
       properties:
@@ -265,57 +277,6 @@ components:
       - sourceTxHash
       - sourceChainIdFinality
       - status
-    TokenInfo:
-      type: object
-      properties:
-        address:
-          type: string
-          description: Token contract address
-          example: '0x55d398326f99059fF775485246999027B3197955'
-        symbol:
-          type: string
-          description: Token symbol (e.g., USDT, USDC)
-          example: USDT
-        name:
-          type: string
-          description: Token full name
-          example: Tether USD
-        decimals:
-          type: number
-          description: Token decimals
-          example: 18
-      required:
-      - address
-    RefundDetails:
-      type: object
-      properties:
-        token:
-          type: string
-          description: Token address (0xeee... for native token)
-        amount:
-          type: string
-          description: Amount refunded
-        recipient:
-          type: string
-          description: Recipient address
-        isNative:
-          type: boolean
-          description: Whether the refund is in native token
-      required:
-      - token
-      - amount
-      - recipient
-      - isNative
-    CcipEvmTokenAmount:
-      type: object
-      properties:
-        token:
-          type: string
-        amount:
-          type: string
-      required:
-      - token
-      - amount
     CcipSendParamsDecoded:
       type: object
       properties:
@@ -340,20 +301,59 @@ components:
           description: CCIP extra arguments (gas limit and execution order preferences)
           allOf:
           - $ref: '#/components/schemas/ExtraArgs'
-    TokenAmount:
+    CcipEvm2AnyMessage:
       type: object
       properties:
-        token:
-          description: Token information
-          allOf:
-          - $ref: '#/components/schemas/TokenInfo'
-        amount:
+        receiver:
           type: string
-          description: Token amount (in wei/smallest unit)
-          example: '1000000000000000000'
+        data:
+          type: string
+        tokenAmounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CcipEvmTokenAmount'
+        feeToken:
+          type: string
+        extraArgs:
+          type: string
       required:
-      - token
-      - amount
+      - receiver
+      - data
+      - tokenAmounts
+      - feeToken
+      - extraArgs
+    DecodedMessageData:
+      type: object
+      properties:
+        receiver:
+          type: string
+          description: Receiver address extracted from CCIP message data
+          example: '0x1234567890123456789012345678901234567890'
+        shortcutData:
+          type: string
+          description: Encoded shortcut execution data (commands and state for Enso router)
+          example: 0x3d3d3d3d...
+        error:
+          type: string
+          description: Error message if message.data could not be decoded as (address,bytes)
+          example: Could not decode message.data as (address,bytes)
+      required:
+      - receiver
+      - shortcutData
+    CcipSendParams:
+      type: object
+      properties:
+        destinationChainSelector:
+          type: string
+          description: Destination chain selector (CCIP format, not Enso ChainId). See https://docs.chain.link/ccip/supported-networks
+          example: '15971525489660198786'
+        message:
+          description: CCIP message parameters (Client.EVM2AnyMessage structure with receiver, data, tokenAmounts, feeToken, extraArgs)
+          allOf:
+          - $ref: '#/components/schemas/CcipEvm2AnyMessage'
+      required:
+      - destinationChainSelector
+      - message
   securitySchemes:
     bearer:
       scheme: bearer
