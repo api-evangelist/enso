@@ -95,16 +95,6 @@ paths:
       - Standards
 components:
   schemas:
-    Network:
-      type: object
-      properties:
-        id:
-          type: number
-        name:
-          type: string
-      required:
-      - id
-      - name
     Action:
       type: object
       properties:
@@ -255,42 +245,6 @@ components:
       - protocol
       - forks
       - actions
-    ActionVariant:
-      type: object
-      properties:
-        action:
-          type: string
-        inputs:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ActionInputMetadata'
-        bundleName:
-          type: string
-      required:
-      - action
-      - inputs
-    Protocol:
-      type: object
-      properties:
-        slug:
-          type: string
-        url:
-          type: string
-      required:
-      - slug
-      - url
-    ActionInputMetadata:
-      type: object
-      properties:
-        type:
-          type: string
-        description:
-          type: string
-        optional:
-          type: boolean
-      required:
-      - type
-      - description
     StandardAction:
       type: object
       properties:
@@ -386,6 +340,52 @@ components:
       - functionNames
       - supportedChains
       - inputs
+    ActionInputMetadata:
+      type: object
+      properties:
+        type:
+          type: string
+        description:
+          type: string
+        optional:
+          type: boolean
+      required:
+      - type
+      - description
+    ActionVariant:
+      type: object
+      properties:
+        action:
+          type: string
+        inputs:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ActionInputMetadata'
+        bundleName:
+          type: string
+      required:
+      - action
+      - inputs
+    Protocol:
+      type: object
+      properties:
+        slug:
+          type: string
+        url:
+          type: string
+      required:
+      - slug
+      - url
+    Network:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+      required:
+      - id
+      - name
   securitySchemes:
     bearer:
       scheme: bearer

@@ -107,20 +107,170 @@ paths:
       - cctp
 components:
   schemas:
-    TokenAmount:
+    RefundDetails:
       type: object
       properties:
         token:
-          description: Token information
-          allOf:
-          - $ref: '#/components/schemas/TokenInfo'
+          type: string
+          description: Token address (0xeee... for native token)
         amount:
           type: string
-          description: Token amount (in wei/smallest unit)
-          example: '1000000000000000000'
+          description: Amount refunded
+        recipient:
+          type: string
+          description: Recipient address
+        isNative:
+          type: boolean
+          description: Whether the refund is in native token
       required:
       - token
       - amount
+      - recipient
+      - isNative
+    DepositForBurnParams:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: Amount in token subunits
+          example: '100000'
+        destinationDomain:
+          type: number
+          description: CCTP destination domain ID
+          example: 0
+        mintRecipient:
+          type: string
+          description: Mint recipient as bytes32
+          example: '0x00000000000000000000000042d023187acedd3306e3dce2f1b9e4a81d636503'
+        burnToken:
+          type: string
+          description: Burn token address on source chain
+          example: '0x754704bc059f8c67012fed69bc8a327a5aafb603'
+        destinationCaller:
+          type: string
+          description: Destination caller restriction (bytes32(0) = anyone)
+          example: '0x0000000000000000000000000000000000000000000000000000000000000000'
+        maxFee:
+          type: string
+          description: Maximum fee in token subunits
+          example: '0'
+        minFinalityThreshold:
+          type: number
+          description: Minimum finality threshold
+          example: 1000
+      required:
+      - amount
+      - destinationDomain
+      - mintRecipient
+      - burnToken
+      - destinationCaller
+      - maxFee
+      - minFinalityThreshold
+    DepositForBurnWithHookDecoded:
+      type: object
+      properties:
+        burnToken:
+          $ref: '#/components/schemas/TokenAmount'
+        destinationChainId:
+          type: number
+          description: Destination chain ID
+          example: 1
+        mintRecipient:
+          type: string
+          description: Recipient address on destination chain (decoded from bytes32)
+          example: '0x42d023187acedd3306e3dce2f1b9e4a81d636503'
+        destinationCaller:
+          type: string
+          description: Destination caller as EVM address (decoded from bytes32)
+          example: '0x0000000000000000000000000000000000000000'
+        maxFee:
+          description: Maximum fee with token info
+          allOf:
+          - $ref: '#/components/schemas/TokenAmount'
+        minFinalityThreshold:
+          description: Requested finality threshold and type
+          allOf:
+          - $ref: '#/components/schemas/FinalityInfo'
+        finalityThresholdExecuted:
+          description: Actual finality threshold executed by Circle (may differ from requested)
+          allOf:
+          - $ref: '#/components/schemas/FinalityInfo'
+        feeExecuted:
+          description: Actual fee deducted from minted amount, with token info
+          allOf:
+          - $ref: '#/components/schemas/TokenAmount'
+        hookData:
+          description: hookData payload. `forwardingService` is true when the bytes match Circle's "cctp-forward" magic.
+          allOf:
+          - $ref: '#/components/schemas/HookDataInfo'
+      required:
+      - burnToken
+      - destinationChainId
+      - mintRecipient
+      - destinationCaller
+      - maxFee
+      - minFinalityThreshold
+      - hookData
+    CctpClaimTransaction:
+      type: object
+      properties:
+        to:
+          type: string
+        data:
+          type: string
+        value:
+          type: string
+        chainId:
+          type: number
+      required:
+      - to
+      - data
+      - value
+      - chainId
+    DepositForBurnWithHookParams:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: Amount in token subunits
+          example: '100000'
+        destinationDomain:
+          type: number
+          description: CCTP destination domain ID
+          example: 0
+        mintRecipient:
+          type: string
+          description: Mint recipient as bytes32
+          example: '0x00000000000000000000000042d023187acedd3306e3dce2f1b9e4a81d636503'
+        burnToken:
+          type: string
+          description: Burn token address on source chain
+          example: '0x754704bc059f8c67012fed69bc8a327a5aafb603'
+        destinationCaller:
+          type: string
+          description: Destination caller restriction (bytes32(0) = anyone)
+          example: '0x0000000000000000000000000000000000000000000000000000000000000000'
+        maxFee:
+          type: string
+          description: Maximum fee in token subunits
+          example: '0'
+        minFinalityThreshold:
+          type: number
+          description: Minimum finality threshold
+          example: 1000
+        hookData:
+          type: string
+          description: Raw hookData bytes
+          example: '0x636374702d666f72776172640000000000000000000000000000000000000000'
+      required:
+      - amount
+      - destinationDomain
+      - mintRecipient
+      - burnToken
+      - destinationCaller
+      - maxFee
+      - minFinalityThreshold
+      - hookData
     CctpBridgeTransactionResponse:
       type: object
       properties:
@@ -189,248 +339,6 @@ components:
       - sourceChainId
       - sourceTxHash
       - status
-    CctpTokenMessengerResponse:
-      type: object
-      properties:
-        address:
-          type: string
-          description: TokenMessengerV2 contract address on the specified chain
-          example: '0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d'
-      required:
-      - address
-    DepositForBurnWithHookParams:
-      type: object
-      properties:
-        amount:
-          type: string
-          description: Amount in token subunits
-          example: '100000'
-        destinationDomain:
-          type: number
-          description: CCTP destination domain ID
-          example: 0
-        mintRecipient:
-          type: string
-          description: Mint recipient as bytes32
-          example: '0x00000000000000000000000042d023187acedd3306e3dce2f1b9e4a81d636503'
-        burnToken:
-          type: string
-          description: Burn token address on source chain
-          example: '0x754704bc059f8c67012fed69bc8a327a5aafb603'
-        destinationCaller:
-          type: string
-          description: Destination caller restriction (bytes32(0) = anyone)
-          example: '0x0000000000000000000000000000000000000000000000000000000000000000'
-        maxFee:
-          type: string
-          description: Maximum fee in token subunits
-          example: '0'
-        minFinalityThreshold:
-          type: number
-          description: Minimum finality threshold
-          example: 1000
-        hookData:
-          type: string
-          description: Raw hookData bytes
-          example: '0x636374702d666f72776172640000000000000000000000000000000000000000'
-      required:
-      - amount
-      - destinationDomain
-      - mintRecipient
-      - burnToken
-      - destinationCaller
-      - maxFee
-      - minFinalityThreshold
-      - hookData
-    EnsoEvent:
-      type: object
-      properties:
-        accountId:
-          type: string
-          description: Account ID from ShortcutExecuted event
-        requestId:
-          type: string
-          description: Request ID from ShortcutExecuted event
-        blockNumber:
-          type: number
-          description: Block number where the event was emitted
-        transactionHash:
-          type: string
-          description: Transaction hash
-        chainId:
-          type: number
-          description: Chain ID where the event was emitted
-        success:
-          type: boolean
-          description: Whether the shortcut execution was successful
-        error:
-          type: string
-          description: Error data if execution failed
-        refundDetails:
-          description: Refund details if execution failed and funds were returned
-          allOf:
-          - $ref: '#/components/schemas/RefundDetails'
-      required:
-      - blockNumber
-      - transactionHash
-      - chainId
-      - success
-    DepositForBurnWithHookDecoded:
-      type: object
-      properties:
-        burnToken:
-          $ref: '#/components/schemas/TokenAmount'
-        destinationChainId:
-          type: number
-          description: Destination chain ID
-          example: 1
-        mintRecipient:
-          type: string
-          description: Recipient address on destination chain (decoded from bytes32)
-          example: '0x42d023187acedd3306e3dce2f1b9e4a81d636503'
-        destinationCaller:
-          type: string
-          description: Destination caller as EVM address (decoded from bytes32)
-          example: '0x0000000000000000000000000000000000000000'
-        maxFee:
-          description: Maximum fee with token info
-          allOf:
-          - $ref: '#/components/schemas/TokenAmount'
-        minFinalityThreshold:
-          description: Requested finality threshold and type
-          allOf:
-          - $ref: '#/components/schemas/FinalityInfo'
-        finalityThresholdExecuted:
-          description: Actual finality threshold executed by Circle (may differ from requested)
-          allOf:
-          - $ref: '#/components/schemas/FinalityInfo'
-        feeExecuted:
-          description: Actual fee deducted from minted amount, with token info
-          allOf:
-          - $ref: '#/components/schemas/TokenAmount'
-        hookData:
-          description: hookData payload. `forwardingService` is true when the bytes match Circle's "cctp-forward" magic.
-          allOf:
-          - $ref: '#/components/schemas/HookDataInfo'
-      required:
-      - burnToken
-      - destinationChainId
-      - mintRecipient
-      - destinationCaller
-      - maxFee
-      - minFinalityThreshold
-      - hookData
-    TokenInfo:
-      type: object
-      properties:
-        address:
-          type: string
-          description: Token contract address
-          example: '0x55d398326f99059fF775485246999027B3197955'
-        symbol:
-          type: string
-          description: Token symbol (e.g., USDT, USDC)
-          example: USDT
-        name:
-          type: string
-          description: Token full name
-          example: Tether USD
-        decimals:
-          type: number
-          description: Token decimals
-          example: 18
-      required:
-      - address
-    HookDataInfo:
-      type: object
-      properties:
-        raw:
-          type: string
-          description: Raw hookData bytes
-          example: '0x636374702d666f72776172640000000000000000000000000000000000000000'
-        forwardingService:
-          type: boolean
-          description: Whether the hookData payload matches Circle's Forwarding Service "cctp-forward" magic bytes.
-          example: true
-        hyperCoreTransfer:
-          type: boolean
-          description: True when the hookData is the 56-byte HyperCore forwarding payload (forwards the mint into HyperCore via the CctpForwarder).
-          example: true
-        hyperCoreRecipient:
-          type: string
-          description: HyperCore recipient decoded from the forwarding hookData (present for HyperCore transfers).
-          example: '0x42d023187acedd3306e3dce2f1b9e4a81d636503'
-        hyperCoreDestinationDex:
-          type: number
-          description: Raw destinationDex from the HyperCore hookData (0 = perps, 4294967295 = spot).
-          example: 4294967295
-        hyperCoreDestinationDexType:
-          type: string
-          description: Human-readable HyperCore destination DEX.
-          enum:
-          - perps
-          - spot
-          - unknown
-          example: spot
-      required:
-      - raw
-      - forwardingService
-    RefundDetails:
-      type: object
-      properties:
-        token:
-          type: string
-          description: Token address (0xeee... for native token)
-        amount:
-          type: string
-          description: Amount refunded
-        recipient:
-          type: string
-          description: Recipient address
-        isNative:
-          type: boolean
-          description: Whether the refund is in native token
-      required:
-      - token
-      - amount
-      - recipient
-      - isNative
-    CctpClaimTransaction:
-      type: object
-      properties:
-        to:
-          type: string
-        data:
-          type: string
-        value:
-          type: string
-        chainId:
-          type: number
-      required:
-      - to
-      - data
-      - value
-      - chainId
-    ForwardingStatusInfo:
-      type: object
-      properties:
-        state:
-          type: string
-          description: Raw forward state reported by Circle's Forwarding Service (e.g. PENDING, COMPLETED, FAILED). Present only for forwarding-service transfers (incl. HyperCore deposits).
-          example: FAILED
-        errorCode:
-          type: string
-          description: Error code when the forward failed (e.g. INSUFFICIENT_FEE).
-          example: INSUFFICIENT_FEE
-        errorDetails:
-          type: string
-          description: Human-readable details when the forward failed.
-          example: Fee provided insufficient for forwarding
-        txHash:
-          type: string
-          description: Transaction hash of the forward (mint) transaction on the destination chain.
-      required:
-      - state
     CctpClaimResponse:
       type: object
       properties:
@@ -452,6 +360,64 @@ components:
           example: Already claimed
       required:
       - claimable
+    FinalityInfo:
+      type: object
+      properties:
+        value:
+          type: number
+          description: Raw finality threshold value
+          example: 1000
+        type:
+          type: string
+          description: 'Transfer type: fast (<= 1000) or standard (>= 2000)'
+          enum:
+          - fast
+          - standard
+          example: fast
+      required:
+      - value
+      - type
+    TokenInfo:
+      type: object
+      properties:
+        address:
+          type: string
+          description: Token contract address
+          example: '0x55d398326f99059fF775485246999027B3197955'
+        symbol:
+          type: string
+          description: Token symbol (e.g., USDT, USDC)
+          example: USDT
+        name:
+          type: string
+          description: Token full name
+          example: Tether USD
+        decimals:
+          type: number
+          description: Token decimals
+          example: 18
+      required:
+      - address
+    ForwardingStatusInfo:
+      type: object
+      properties:
+        state:
+          type: string
+          description: Raw forward state reported by Circle's Forwarding Service (e.g. PENDING, COMPLETED, FAILED). Present only for forwarding-service transfers (incl. HyperCore deposits).
+          example: FAILED
+        errorCode:
+          type: string
+          description: Error code when the forward failed (e.g. INSUFFICIENT_FEE).
+          example: INSUFFICIENT_FEE
+        errorDetails:
+          type: string
+          description: Human-readable details when the forward failed.
+          example: Fee provided insufficient for forwarding
+        txHash:
+          type: string
+          description: Transaction hash of the forward (mint) transaction on the destination chain.
+      required:
+      - state
     DepositForBurnDecoded:
       type: object
       properties:
@@ -492,62 +458,96 @@ components:
       - destinationCaller
       - maxFee
       - minFinalityThreshold
-    DepositForBurnParams:
+    HookDataInfo:
       type: object
       properties:
+        raw:
+          type: string
+          description: Raw hookData bytes
+          example: '0x636374702d666f72776172640000000000000000000000000000000000000000'
+        forwardingService:
+          type: boolean
+          description: Whether the hookData payload matches Circle's Forwarding Service "cctp-forward" magic bytes.
+          example: true
+        hyperCoreTransfer:
+          type: boolean
+          description: True when the hookData is the 56-byte HyperCore forwarding payload (forwards the mint into HyperCore via the CctpForwarder).
+          example: true
+        hyperCoreRecipient:
+          type: string
+          description: HyperCore recipient decoded from the forwarding hookData (present for HyperCore transfers).
+          example: '0x42d023187acedd3306e3dce2f1b9e4a81d636503'
+        hyperCoreDestinationDex:
+          type: number
+          description: Raw destinationDex from the HyperCore hookData (0 = perps, 4294967295 = spot).
+          example: 4294967295
+        hyperCoreDestinationDexType:
+          type: string
+          description: Human-readable HyperCore destination DEX.
+          enum:
+          - perps
+          - spot
+          - unknown
+          example: spot
+      required:
+      - raw
+      - forwardingService
+    EnsoEvent:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: Account ID from ShortcutExecuted event
+        requestId:
+          type: string
+          description: Request ID from ShortcutExecuted event
+        blockNumber:
+          type: number
+          description: Block number where the event was emitted
+        transactionHash:
+          type: string
+          description: Transaction hash
+        chainId:
+          type: number
+          description: Chain ID where the event was emitted
+        success:
+          type: boolean
+          description: Whether the shortcut execution was successful
+        error:
+          type: string
+          description: Error data if execution failed
+        refundDetails:
+          description: Refund details if execution failed and funds were returned
+          allOf:
+          - $ref: '#/components/schemas/RefundDetails'
+      required:
+      - blockNumber
+      - transactionHash
+      - chainId
+      - success
+    TokenAmount:
+      type: object
+      properties:
+        token:
+          description: Token information
+          allOf:
+          - $ref: '#/components/schemas/TokenInfo'
         amount:
           type: string
-          description: Amount in token subunits
-          example: '100000'
-        destinationDomain:
-          type: number
-          description: CCTP destination domain ID
-          example: 0
-        mintRecipient:
-          type: string
-          description: Mint recipient as bytes32
-          example: '0x00000000000000000000000042d023187acedd3306e3dce2f1b9e4a81d636503'
-        burnToken:
-          type: string
-          description: Burn token address on source chain
-          example: '0x754704bc059f8c67012fed69bc8a327a5aafb603'
-        destinationCaller:
-          type: string
-          description: Destination caller restriction (bytes32(0) = anyone)
-          example: '0x0000000000000000000000000000000000000000000000000000000000000000'
-        maxFee:
-          type: string
-          description: Maximum fee in token subunits
-          example: '0'
-        minFinalityThreshold:
-          type: number
-          description: Minimum finality threshold
-          example: 1000
+          description: Token amount (in wei/smallest unit)
+          example: '1000000000000000000'
       required:
+      - token
       - amount
-      - destinationDomain
-      - mintRecipient
-      - burnToken
-      - destinationCaller
-      - maxFee
-      - minFinalityThreshold
-    FinalityInfo:
+    CctpTokenMessengerResponse:
       type: object
       properties:
-        value:
-          type: number
-          description: Raw finality threshold value
-          example: 1000
-        type:
+        address:
           type: string
-          description: 'Transfer type: fast (<= 1000) or standard (>= 2000)'
-          enum:
-          - fast
-          - standard
-          example: fast
+          description: TokenMessengerV2 contract address on the specified chain
+          example: '0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d'
       required:
-      - value
-      - type
+      - address
   securitySchemes:
     bearer:
       scheme: bearer

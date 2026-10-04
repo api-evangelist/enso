@@ -117,25 +117,6 @@ paths:
       - Wallet
 components:
   schemas:
-    WalletTransaction:
-      type: object
-      properties:
-        data:
-          type: string
-          example: 0x
-        to:
-          type: string
-          example: '0x1111111111111111111111111111111111111111'
-        from:
-          type: string
-          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
-        value:
-          type: string
-          example: '0'
-      required:
-      - data
-      - to
-      - from
     WalletApproveTransaction:
       type: object
       properties:
@@ -208,6 +189,25 @@ components:
       - name
       - symbol
       - logoUri
+    WalletTransaction:
+      type: object
+      properties:
+        data:
+          type: string
+          example: 0x
+        to:
+          type: string
+          example: '0x1111111111111111111111111111111111111111'
+        from:
+          type: string
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+        value:
+          type: string
+          example: '0'
+      required:
+      - data
+      - to
+      - from
   securitySchemes:
     bearer:
       scheme: bearer

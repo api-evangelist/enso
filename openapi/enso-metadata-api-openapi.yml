@@ -461,16 +461,52 @@ paths:
       - Metadata
 components:
   schemas:
-    Network:
+    TokenModel:
       type: object
       properties:
-        id:
-          type: number
-        name:
+        address:
           type: string
+          description: Ethereum address of the token
+        chainId:
+          type: number
+          description: Chain ID of the network of the token
+        type:
+          type: string
+          description: Type of token
+        decimals:
+          type: number
+          description: Token decimals
+        symbol:
+          type:
+          - string
+          - 'null'
+          description: Token name
+        name:
+          type:
+          - string
+          - 'null'
+          description: Token symbol
+        logosUri:
+          description: A list of logos for the token
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
       required:
-      - id
-      - name
+      - address
+      - chainId
+      - type
+      - decimals
+    PaginatedResult:
+      type: object
+      properties:
+        meta:
+          description: Metadata for pagination
+          allOf:
+          - $ref: '#/components/schemas/PaginationMeta'
+      required:
+      - meta
     ProtocolModel:
       type: object
       properties:
@@ -518,43 +554,43 @@ components:
       - url
       - logosUri
       - chains
-    TokenModel:
+    PaginationMeta:
       type: object
       properties:
-        address:
-          type: string
-          description: Ethereum address of the token
-        chainId:
+        total:
           type: number
-          description: Chain ID of the network of the token
-        type:
-          type: string
-          description: Type of token
-        decimals:
+          description: Total amount of pages
+        lastPage:
+          type:
+          - number
+          - 'null'
+          description: Last page number
+        currentPage:
+          type:
+          - number
+          - 'null'
+          description: Current page number
+        perPage:
           type: number
-          description: Token decimals
-        symbol:
+          description: Amount of elements per page
+        prev:
           type:
-          - string
+          - number
           - 'null'
-          description: Token name
-        name:
+          description: Previous page
+        next:
           type:
-          - string
+          - number
           - 'null'
-          description: Token symbol
-        logosUri:
-          description: A list of logos for the token
+          description: Next page
+        cursor:
           type:
-          - array
+          - number
           - 'null'
-          items:
-            type: string
+          description: Cursor for pagination
       required:
-      - address
-      - chainId
-      - type
-      - decimals
+      - total
+      - perPage
     PositionModel:
       type: object
       properties:
@@ -657,35 +693,6 @@ components:
       - chainId
       - type
       - decimals
-    Price:
-      type: object
-      properties:
-        decimals:
-          type: number
-          example: 8
-        price:
-          type: number
-          example: 27052
-        address:
-          type: string
-          example: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
-        symbol:
-          type: string
-          example: WBTC
-        name:
-          type: string
-          example: Wrapped Bitcoin
-        timestamp:
-          type: number
-          example: 1695197412
-        chainId:
-          type: number
-          example: 1
-      required:
-      - decimals
-      - price
-      - address
-      - chainId
     NonTokenizedModel:
       type: object
       properties:
@@ -727,43 +734,6 @@ components:
       - address
       - positionId
       - primaryAddress
-    PaginationMeta:
-      type: object
-      properties:
-        total:
-          type: number
-          description: Total amount of pages
-        lastPage:
-          type:
-          - number
-          - 'null'
-          description: Last page number
-        currentPage:
-          type:
-          - number
-          - 'null'
-          description: Current page number
-        perPage:
-          type: number
-          description: Amount of elements per page
-        prev:
-          type:
-          - number
-          - 'null'
-          description: Previous page
-        next:
-          type:
-          - number
-          - 'null'
-          description: Next page
-        cursor:
-          type:
-          - number
-          - 'null'
-          description: Cursor for pagination
-      required:
-      - total
-      - perPage
     ConnectedNetwork:
       type: object
       properties:
@@ -780,15 +750,45 @@ components:
       - id
       - name
       - isConnected
-    PaginatedResult:
+    Price:
       type: object
       properties:
-        meta:
-          description: Metadata for pagination
-          allOf:
-          - $ref: '#/components/schemas/PaginationMeta'
+        decimals:
+          type: number
+          example: 8
+        price:
+          type: number
+          example: 27052
+        address:
+          type: string
+          example: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+        symbol:
+          type: string
+          example: WBTC
+        name:
+          type: string
+          example: Wrapped Bitcoin
+        timestamp:
+          type: number
+          example: 1695197412
+        chainId:
+          type: number
+          example: 1
       required:
-      - meta
+      - decimals
+      - price
+      - address
+      - chainId
+    Network:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+      required:
+      - id
+      - name
   securitySchemes:
     bearer:
       scheme: bearer

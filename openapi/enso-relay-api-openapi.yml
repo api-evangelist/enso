@@ -52,6 +52,26 @@ paths:
       - Relay
 components:
   schemas:
+    RefundDetails:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token address (0xeee... for native token)
+        amount:
+          type: string
+          description: Amount refunded
+        recipient:
+          type: string
+          description: Recipient address
+        isNative:
+          type: boolean
+          description: Whether the refund is in native token
+      required:
+      - token
+      - amount
+      - recipient
+      - isNative
     RelayCurrencyInfo:
       type: object
       properties:
@@ -81,156 +101,6 @@ components:
       - symbol
       - name
       - decimals
-    RelayBridgeTransactionResponse:
-      type: object
-      properties:
-        sourceChainId:
-          type: number
-          description: Source chain ID where the Relay message was sent from
-          example: 1
-        sourceTxHash:
-          type: string
-          description: Source chain transaction hash
-          example: '0x80f1faf0652a5618ea1de0fc5142418e380676b3c6c74d482cfac1237638d6d4'
-        destinationChainId:
-          type: number
-          description: Destination chain ID where the Relay message was delivered
-          example: 8453
-        destinationTxHash:
-          type: string
-          description: Destination chain transaction hash (if message was delivered)
-          example: '0x9a3e6a8a52b82a1f4b523b0d50be133df0ad9407814b32e42d67119e1ae1947d'
-        status:
-          type: string
-          description: Overall bridge status
-          enum:
-          - pending
-          - inflight
-          - delivered
-          - failed
-          - unknown
-        relayRequest:
-          description: Relay API request data with fee breakdown and status details
-          allOf:
-          - $ref: '#/components/schemas/RelayRequestData'
-        ensoSourceEvent:
-          description: Enso shortcut event from source chain (ShortcutExecuted + execution result). Null if not found.
-          allOf:
-          - $ref: '#/components/schemas/EnsoEvent'
-        ensoDestinationEvent:
-          description: Enso shortcut event from destination chain (ShortcutExecuted + execution result). Null if not found.
-          allOf:
-          - $ref: '#/components/schemas/EnsoEvent'
-        error:
-          type: string
-          description: Error message if the API request failed (e.g., transaction not found, API errors)
-          example: Transaction receipt not found for 0x...
-      required:
-      - sourceChainId
-      - sourceTxHash
-      - status
-    EnsoEvent:
-      type: object
-      properties:
-        accountId:
-          type: string
-          description: Account ID from ShortcutExecuted event
-        requestId:
-          type: string
-          description: Request ID from ShortcutExecuted event
-        blockNumber:
-          type: number
-          description: Block number where the event was emitted
-        transactionHash:
-          type: string
-          description: Transaction hash
-        chainId:
-          type: number
-          description: Chain ID where the event was emitted
-        success:
-          type: boolean
-          description: Whether the shortcut execution was successful
-        error:
-          type: string
-          description: Error data if execution failed
-        refundDetails:
-          description: Refund details if execution failed and funds were returned
-          allOf:
-          - $ref: '#/components/schemas/RefundDetails'
-      required:
-      - blockNumber
-      - transactionHash
-      - chainId
-      - success
-    RefundDetails:
-      type: object
-      properties:
-        token:
-          type: string
-          description: Token address (0xeee... for native token)
-        amount:
-          type: string
-          description: Amount refunded
-        recipient:
-          type: string
-          description: Recipient address
-        isNative:
-          type: boolean
-          description: Whether the refund is in native token
-      required:
-      - token
-      - amount
-      - recipient
-      - isNative
-    RelayTx:
-      type: object
-      properties:
-        hash:
-          type: string
-          description: Transaction hash
-          example: '0x80f1faf0652a5618ea1de0fc5142418e380676b3c6c74d482cfac1237638d6d4'
-        chainId:
-          type: number
-          description: Chain ID
-          example: 8453
-        block:
-          type: number
-          description: Block number
-          example: 12345678
-        timestamp:
-          type: number
-          description: Transaction timestamp (unix seconds)
-          example: 1700000000
-        status:
-          type: string
-          description: Transaction status
-          example: success
-      required:
-      - hash
-      - chainId
-    RelayFees:
-      type: object
-      properties:
-        gas:
-          type: string
-          description: Estimated gas cost in wei
-          example: '50000000000000'
-        fixed:
-          type: string
-          description: Fixed fee in wei
-          example: '0'
-        price:
-          type: string
-          description: Dynamic fee from chain and amount in wei
-          example: '100000'
-        gateway:
-          type: string
-          description: Fee taken by API gateway in wei
-          example: '0'
-      required:
-      - gas
-      - fixed
-      - price
     RelayRequestData:
       type: object
       properties:
@@ -289,6 +159,136 @@ components:
           example: '2024-01-15T12:05:00Z'
       required:
       - status
+    RelayTx:
+      type: object
+      properties:
+        hash:
+          type: string
+          description: Transaction hash
+          example: '0x80f1faf0652a5618ea1de0fc5142418e380676b3c6c74d482cfac1237638d6d4'
+        chainId:
+          type: number
+          description: Chain ID
+          example: 8453
+        block:
+          type: number
+          description: Block number
+          example: 12345678
+        timestamp:
+          type: number
+          description: Transaction timestamp (unix seconds)
+          example: 1700000000
+        status:
+          type: string
+          description: Transaction status
+          example: success
+      required:
+      - hash
+      - chainId
+    EnsoEvent:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: Account ID from ShortcutExecuted event
+        requestId:
+          type: string
+          description: Request ID from ShortcutExecuted event
+        blockNumber:
+          type: number
+          description: Block number where the event was emitted
+        transactionHash:
+          type: string
+          description: Transaction hash
+        chainId:
+          type: number
+          description: Chain ID where the event was emitted
+        success:
+          type: boolean
+          description: Whether the shortcut execution was successful
+        error:
+          type: string
+          description: Error data if execution failed
+        refundDetails:
+          description: Refund details if execution failed and funds were returned
+          allOf:
+          - $ref: '#/components/schemas/RefundDetails'
+      required:
+      - blockNumber
+      - transactionHash
+      - chainId
+      - success
+    RelayBridgeTransactionResponse:
+      type: object
+      properties:
+        sourceChainId:
+          type: number
+          description: Source chain ID where the Relay message was sent from
+          example: 1
+        sourceTxHash:
+          type: string
+          description: Source chain transaction hash
+          example: '0x80f1faf0652a5618ea1de0fc5142418e380676b3c6c74d482cfac1237638d6d4'
+        destinationChainId:
+          type: number
+          description: Destination chain ID where the Relay message was delivered
+          example: 8453
+        destinationTxHash:
+          type: string
+          description: Destination chain transaction hash (if message was delivered)
+          example: '0x9a3e6a8a52b82a1f4b523b0d50be133df0ad9407814b32e42d67119e1ae1947d'
+        status:
+          type: string
+          description: Overall bridge status
+          enum:
+          - pending
+          - inflight
+          - delivered
+          - failed
+          - unknown
+        relayRequest:
+          description: Relay API request data with fee breakdown and status details
+          allOf:
+          - $ref: '#/components/schemas/RelayRequestData'
+        ensoSourceEvent:
+          description: Enso shortcut event from source chain (ShortcutExecuted + execution result). Null if not found.
+          allOf:
+          - $ref: '#/components/schemas/EnsoEvent'
+        ensoDestinationEvent:
+          description: Enso shortcut event from destination chain (ShortcutExecuted + execution result). Null if not found.
+          allOf:
+          - $ref: '#/components/schemas/EnsoEvent'
+        error:
+          type: string
+          description: Error message if the API request failed (e.g., transaction not found, API errors)
+          example: Transaction receipt not found for 0x...
+      required:
+      - sourceChainId
+      - sourceTxHash
+      - status
+    RelayFees:
+      type: object
+      properties:
+        gas:
+          type: string
+          description: Estimated gas cost in wei
+          example: '50000000000000'
+        fixed:
+          type: string
+          description: Fixed fee in wei
+          example: '0'
+        price:
+          type: string
+          description: Dynamic fee from chain and amount in wei
+          example: '100000'
+        gateway:
+          type: string
+          description: Fee taken by API gateway in wei
+          example: '0'
+      required:
+      - gas
+      - fixed
+      - price
   securitySchemes:
     bearer:
       scheme: bearer
