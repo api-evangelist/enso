@@ -61,6 +61,8 @@ tags:
 - Transaction Routing
 - Web3 Infrastructure
 - Onchain
+- Web3
+- Cryptocurrency
 tags_raw:
 - Company
 - Crypto Web3
@@ -71,6 +73,8 @@ tags_raw:
 - Transaction Routing
 - Web3 Infrastructure
 - Onchain
+- Web3
+- Cryptocurrency
 apis:
 - aid: enso:enso-ccip-api
   name: Enso Ccip API
