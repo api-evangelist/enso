@@ -50,7 +50,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-07-19'
+modified: '2026-10-06'
 tags:
 - Company
 - Crypto Web3
@@ -222,6 +222,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- url: https://blog.enso.build/rss/
+  type: BlogRSS
 - type: Overlay
   url: overlays/enso-openapi-overlay.yaml
 - type: Website
