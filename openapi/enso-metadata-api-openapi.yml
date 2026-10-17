@@ -461,136 +461,6 @@ paths:
       - Metadata
 components:
   schemas:
-    TokenModel:
-      type: object
-      properties:
-        address:
-          type: string
-          description: Ethereum address of the token
-        chainId:
-          type: number
-          description: Chain ID of the network of the token
-        type:
-          type: string
-          description: Type of token
-        decimals:
-          type: number
-          description: Token decimals
-        symbol:
-          type:
-          - string
-          - 'null'
-          description: Token name
-        name:
-          type:
-          - string
-          - 'null'
-          description: Token symbol
-        logosUri:
-          description: A list of logos for the token
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      required:
-      - address
-      - chainId
-      - type
-      - decimals
-    PaginatedResult:
-      type: object
-      properties:
-        meta:
-          description: Metadata for pagination
-          allOf:
-          - $ref: '#/components/schemas/PaginationMeta'
-      required:
-      - meta
-    ProtocolModel:
-      type: object
-      properties:
-        project:
-          type: string
-          example: uniswap
-        slug:
-          type: string
-          example: uniswap-v2
-        name:
-          type:
-          - string
-          - 'null'
-          example: Uniswap V2
-        description:
-          type:
-          - string
-          - 'null'
-        url:
-          type:
-          - string
-          - 'null'
-          example: https://app.uniswap.org/swap
-        logosUri:
-          example: https://icons.llama.fi/uniswap-v2.png
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        chains:
-          example:
-          - id: 1
-            name: mainnet
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Network'
-      required:
-      - project
-      - slug
-      - name
-      - description
-      - url
-      - logosUri
-      - chains
-    PaginationMeta:
-      type: object
-      properties:
-        total:
-          type: number
-          description: Total amount of pages
-        lastPage:
-          type:
-          - number
-          - 'null'
-          description: Last page number
-        currentPage:
-          type:
-          - number
-          - 'null'
-          description: Current page number
-        perPage:
-          type: number
-          description: Amount of elements per page
-        prev:
-          type:
-          - number
-          - 'null'
-          description: Previous page
-        next:
-          type:
-          - number
-          - 'null'
-          description: Next page
-        cursor:
-          type:
-          - number
-          - 'null'
-          description: Cursor for pagination
-      required:
-      - total
-      - perPage
     PositionModel:
       type: object
       properties:
@@ -693,6 +563,125 @@ components:
       - chainId
       - type
       - decimals
+    ProtocolModel:
+      type: object
+      properties:
+        project:
+          type: string
+          example: uniswap
+        slug:
+          type: string
+          example: uniswap-v2
+        name:
+          type:
+          - string
+          - 'null'
+          example: Uniswap V2
+        description:
+          type:
+          - string
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+          example: https://app.uniswap.org/swap
+        logosUri:
+          example: https://icons.llama.fi/uniswap-v2.png
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        chains:
+          example:
+          - id: 1
+            name: mainnet
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Network'
+      required:
+      - project
+      - slug
+      - name
+      - description
+      - url
+      - logosUri
+      - chains
+    PaginatedResult:
+      type: object
+      properties:
+        meta:
+          description: Metadata for pagination
+          allOf:
+          - $ref: '#/components/schemas/PaginationMeta'
+      required:
+      - meta
+    ConnectedNetwork:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: Ethereum
+        isConnected:
+          type: boolean
+          example: true
+      required:
+      - id
+      - name
+      - isConnected
+    Network:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+      required:
+      - id
+      - name
+    TokenModel:
+      type: object
+      properties:
+        address:
+          type: string
+          description: Ethereum address of the token
+        chainId:
+          type: number
+          description: Chain ID of the network of the token
+        type:
+          type: string
+          description: Type of token
+        decimals:
+          type: number
+          description: Token decimals
+        symbol:
+          type:
+          - string
+          - 'null'
+          description: Token name
+        name:
+          type:
+          - string
+          - 'null'
+          description: Token symbol
+        logosUri:
+          description: A list of logos for the token
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      required:
+      - address
+      - chainId
+      - type
+      - decimals
     NonTokenizedModel:
       type: object
       properties:
@@ -734,22 +723,43 @@ components:
       - address
       - positionId
       - primaryAddress
-    ConnectedNetwork:
+    PaginationMeta:
       type: object
       properties:
-        id:
+        total:
           type: number
-          example: 1
-        name:
-          type: string
-          example: Ethereum
-        isConnected:
-          type: boolean
-          example: true
+          description: Total amount of pages
+        lastPage:
+          type:
+          - number
+          - 'null'
+          description: Last page number
+        currentPage:
+          type:
+          - number
+          - 'null'
+          description: Current page number
+        perPage:
+          type: number
+          description: Amount of elements per page
+        prev:
+          type:
+          - number
+          - 'null'
+          description: Previous page
+        next:
+          type:
+          - number
+          - 'null'
+          description: Next page
+        cursor:
+          type:
+          - number
+          - 'null'
+          description: Cursor for pagination
       required:
-      - id
-      - name
-      - isConnected
+      - total
+      - perPage
     Price:
       type: object
       properties:
@@ -779,16 +789,6 @@ components:
       - price
       - address
       - chainId
-    Network:
-      type: object
-      properties:
-        id:
-          type: number
-        name:
-          type: string
-      required:
-      - id
-      - name
   securitySchemes:
     bearer:
       scheme: bearer
