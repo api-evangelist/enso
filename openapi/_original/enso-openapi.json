@@ -1,0 +1,5052 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/v1/shortcuts/quote": {
+      "get": {
+        "operationId": "QuoteController_quote",
+        "summary": "Quote from a token to another",
+        "description": "Returns the expected output amount and selected route for a token swap without executable transaction calldata.",
+        "parameters": [
+          {
+            "name": "chainId",
+            "required": false,
+            "in": "query",
+            "description": "Chain ID of the network to execute the quote on",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "fromAddress",
+            "required": false,
+            "in": "query",
+            "description": "Ethereum address of the wallet to quote from",
+            "schema": {
+              "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+              "type": "string"
+            }
+          },
+          {
+            "name": "tokenIn",
+            "required": true,
+            "in": "query",
+            "description": "Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "schema": {
+              "example": [
+                "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "0x",
+                  "1inch",
+                  "openocean",
+                  "kyberswap",
+                  "native",
+                  "paraswap",
+                  "bebop",
+                  "barter",
+                  "sushiswap-router",
+                  "ooga-booga",
+                  "renegade",
+                  "uniswap",
+                  "rooster",
+                  "wowmax",
+                  "grapher",
+                  "hyperbloom",
+                  "hyperswap",
+                  "hyperflow",
+                  "fly",
+                  "eisen",
+                  "nordstern",
+                  "everlong",
+                  "bitget"
+                ]
+              }
+            }
+          },
+          {
+            "name": "tokenOut",
+            "required": true,
+            "in": "query",
+            "description": "Ethereum address of the token to swap to. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "schema": {
+              "example": [
+                "0x6b175474e89094c44da98b954eedeac495271d0f"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "0x",
+                  "1inch",
+                  "openocean",
+                  "kyberswap",
+                  "native",
+                  "paraswap",
+                  "bebop",
+                  "barter",
+                  "sushiswap-router",
+                  "ooga-booga",
+                  "renegade",
+                  "uniswap",
+                  "rooster",
+                  "wowmax",
+                  "grapher",
+                  "hyperbloom",
+                  "hyperswap",
+                  "hyperflow",
+                  "fly",
+                  "eisen",
+                  "nordstern",
+                  "everlong",
+                  "bitget"
+                ]
+              }
+            }
+          },
+          {
+            "name": "amountIn",
+            "required": true,
+            "in": "query",
+            "description": "Amount of tokenIn to swap in wei",
+            "schema": {
+              "example": [
+                "1000000000000000000"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "cctp",
+                  "stargate",
+                  "ccip",
+                  "relay"
+                ]
+              }
+            }
+          },
+          {
+            "name": "routingStrategy",
+            "required": false,
+            "in": "query",
+            "description": "Routing strategy to use",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                "ensowallet-v2",
+                "router",
+                "delegate",
+                "router-legacy",
+                "delegate-legacy"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "ignoreAggregators",
+            "required": false,
+            "in": "query",
+            "description": "A list of swap aggregators to be ignored from consideration",
+            "schema": {
+              "nullable": true,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "0x",
+                  "1inch",
+                  "openocean",
+                  "kyberswap",
+                  "native",
+                  "paraswap",
+                  "bebop",
+                  "barter",
+                  "sushiswap-router",
+                  "ooga-booga",
+                  "renegade",
+                  "uniswap",
+                  "rooster",
+                  "wowmax",
+                  "grapher",
+                  "hyperbloom",
+                  "hyperswap",
+                  "hyperflow",
+                  "fly",
+                  "eisen",
+                  "nordstern",
+                  "everlong",
+                  "bitget"
+                ]
+              }
+            }
+          },
+          {
+            "name": "ignoreStandards",
+            "required": false,
+            "in": "query",
+            "description": "A list of standards to be ignored from consideration",
+            "schema": {
+              "nullable": true,
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteEndpointResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DeFi Shortcuts"
+        ]
+      }
+    },
+    "/api/v1/shortcuts/route": {
+      "post": {
+        "operationId": "RouterController_postRouteShortcutTransaction",
+        "description": "Calculates optimal transaction with the best route between two tokens, which may involve several actions that interact with various DeFi protocols. This single call already quotes internally and returns executable calldata along with `amountOut` and `gas`, so there is no separate quote step to call beforehand. <Tip>To enter a non-tokenized position, use the GET&nbsp;`/shortcuts/route/nontokenized`.</Tip>",
+        "summary": "Optimal route between two tokens",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RouteShortcutVariableInputs"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RouteShortcutTransaction"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DeFi Shortcuts"
+        ]
+      },
+      "get": {
+        "operationId": "RouterController_routeShortcutTransaction",
+        "description": "Calculates optimal transaction with the best route between two tokens, which may involve several actions that interact with various DeFi protocols. This single call already quotes internally and returns executable calldata along with `amountOut` and `gas`, so there is no separate quote step to call beforehand. <Tip>To enter a non-tokenized position, use GET&nbsp;`shortcuts/route/nontokenized`.</Tip>",
+        "summary": "Optimal route between two tokens",
+        "parameters": [
+          {
+            "name": "chainId",
+            "required": false,
+            "in": "query",
+            "description": "Chain ID of the network to execute the transaction on",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "fromAddress",
+            "required": true,
+            "in": "query",
+            "description": "Ethereum address of the wallet to send the transaction from",
+            "schema": {
+              "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+              "type": "string"
+            }
+          },
+          {
+            "name": "amountIn",
+            "required": true,
+            "in": "query",
+            "description": "Amount of tokenIn to swap in wei",
+            "schema": {
+              "example": [
+                "1000000000000000000"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "tokenIn",
+            "required": true,
+            "in": "query",
+            "description": "Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "schema": {
+              "example": [
+                "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "tokenOut",
+            "required": true,
+            "in": "query",
+            "description": "Ethereum address of the token to swap to. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "schema": {
+              "example": [
+                "0x6b175474e89094c44da98b954eedeac495271d0f"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "routingStrategy",
+            "required": false,
+            "in": "query",
+            "description": "Routing strategy to use. in majority of cases you can use `router`. Use `delegate` with EOA when you want to specify a `spender`",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                "ensowallet",
+                "router",
+                "delegate",
+                "router-legacy",
+                "delegate-legacy"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "toEoa",
+            "required": false,
+            "in": "query",
+            "description": "Flag that indicates if gained tokenOut should be sent to EOA",
+            "deprecated": true,
+            "schema": {
+              "nullable": true,
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "receiver",
+            "required": false,
+            "in": "query",
+            "description": "Ethereum address of the receiver of the tokenOut",
+            "schema": {
+              "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+              "type": "string"
+            }
+          },
+          {
+            "name": "spender",
+            "required": false,
+            "in": "query",
+            "description": "Ethereum address of the spender of the tokenIn",
+            "schema": {
+              "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+              "type": "string"
+            }
+          },
+          {
+            "name": "minAmountOut",
+            "required": false,
+            "in": "query",
+            "description": "Minimum amount out in wei. If specified, slippage should not be specified",
+            "schema": {
+              "default": null,
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "slippage",
+            "required": false,
+            "in": "query",
+            "description": "Slippage in basis points (1/10000), e.g. 50 = 0.50%. Takes precedence over minAmountOut.",
+            "schema": {
+              "default": "500",
+              "example": "300",
+              "type": "string"
+            }
+          },
+          {
+            "name": "ignoreAggregators",
+            "required": false,
+            "in": "query",
+            "description": "A list of swap aggregators to be ignored from consideration",
+            "schema": {
+              "nullable": true,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "0x",
+                  "1inch",
+                  "openocean",
+                  "kyberswap",
+                  "native",
+                  "paraswap",
+                  "bebop",
+                  "barter",
+                  "sushiswap-router",
+                  "ooga-booga",
+                  "renegade",
+                  "uniswap",
+                  "rooster",
+                  "wowmax",
+                  "grapher",
+                  "hyperbloom",
+                  "hyperswap",
+                  "hyperflow",
+                  "fly",
+                  "eisen",
+                  "nordstern",
+                  "everlong",
+                  "bitget"
+                ]
+              }
+            }
+          },
+          {
+            "name": "ignoreStandards",
+            "required": false,
+            "in": "query",
+            "description": "A list of standards to be ignored from consideration",
+            "schema": {
+              "nullable": true,
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "ignoreBridges",
+            "required": false,
+            "in": "query",
+            "description": "A list of bridges to be ignored from consideration for crosschain routes. Supported values: `relay`, `stargate`, `ccip`, `cctp`",
+            "schema": {
+              "nullable": true,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "cctp",
+                  "stargate",
+                  "ccip",
+                  "relay"
+                ]
+              }
+            }
+          },
+          {
+            "name": "referralCode",
+            "required": false,
+            "in": "query",
+            "description": "Referral code that will be included in an on-chain event.",
+            "schema": {
+              "maxLength": 16,
+              "example": "0123456789ABCDEF",
+              "type": "string"
+            }
+          },
+          {
+            "name": "destinationChainId",
+            "required": false,
+            "in": "query",
+            "description": "Chain ID of the network to bridge to and receive tokenOut",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "crosschainRouteMode",
+            "required": false,
+            "in": "query",
+            "description": "Controls cross-chain route complexity. direct uses only a bridge, source allows routing before the bridge, destination allows routing after the bridge, sourceOrDestination allows routing on either chain but not both, and full allows routing on both chains",
+            "schema": {
+              "default": "full",
+              "enum": [
+                "direct",
+                "source",
+                "destination",
+                "sourceOrDestination",
+                "full"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "refundReceiver",
+            "required": false,
+            "in": "query",
+            "description": "Ethereum address of the receiver of any dust tokens that might be produced during the execution of actions",
+            "schema": {
+              "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RouteShortcutTransaction"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DeFi Shortcuts"
+        ]
+      }
+    },
+    "/api/v1/shortcuts/route/nontokenized": {
+      "get": {
+        "operationId": "NontokenizedController_routeNontokenizedShorcutTransaction",
+        "description": "Calculates optimal transaction with the best route entering a non-tokenized position, which may involve several actions that interact with various DeFi protocols. ",
+        "summary": "Routing to a non-tokenized position",
+        "parameters": [
+          {
+            "name": "chainId",
+            "required": false,
+            "in": "query",
+            "description": "Chain ID of the network to execute the transaction on",
+            "schema": {
+              "default": 1,
+              "example": 80094,
+              "type": "number"
+            }
+          },
+          {
+            "name": "fromAddress",
+            "required": true,
+            "in": "query",
+            "description": "Ethereum address of the wallet to send the transaction from",
+            "schema": {
+              "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+              "type": "string"
+            }
+          },
+          {
+            "name": "routingStrategy",
+            "required": false,
+            "in": "query",
+            "description": "Routing strategy to use. For this API, always use `delegate` in conjunction with a Smart Wallet.",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                "delegate",
+                "delegate-legacy"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "tokenIn",
+            "required": true,
+            "in": "query",
+            "description": "Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "schema": {
+              "example": [
+                "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "positionOut",
+            "required": true,
+            "in": "query",
+            "description": "Ethereum address of the position to receive",
+            "schema": {
+              "example": "0xf99be47baf0c22b7eb5eac42c8d91b9942dc7e84",
+              "type": "string"
+            }
+          },
+          {
+            "name": "slippage",
+            "required": false,
+            "in": "query",
+            "description": "Slippage in basis points (1/10000), e.g. 50 = 0.50%. Takes precedence over minAmountOut.",
+            "schema": {
+              "default": "50",
+              "example": "300",
+              "type": "string"
+            }
+          },
+          {
+            "name": "amountIn",
+            "required": true,
+            "in": "query",
+            "description": "Amount of tokenIn to swap in wei",
+            "schema": {
+              "example": [
+                "1000000000000000000"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "receiver",
+            "required": true,
+            "in": "query",
+            "description": "Ethereum address of the receiver of the positionOut",
+            "schema": {
+              "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+              "type": "string"
+            }
+          },
+          {
+            "name": "spender",
+            "required": false,
+            "in": "query",
+            "description": "Ethereum address of the spender of the tokenIn",
+            "schema": {
+              "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+              "type": "string"
+            }
+          },
+          {
+            "name": "referralCode",
+            "required": false,
+            "in": "query",
+            "description": "Referral code that will be included in an on-chain event.",
+            "schema": {
+              "maxLength": 16,
+              "example": "0123456789ABCDEF",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RouteShortcutTransaction"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DeFi Shortcuts"
+        ]
+      }
+    },
+    "/api/v1/shortcuts/bundle": {
+      "post": {
+        "operationId": "BundleController_bundleShortcutTransaction",
+        "description": "Returns a single transaction bundling the submitted actions. For available actions, see `/actions` endpoint.",
+        "summary": "Bundle a list of actions",
+        "parameters": [
+          {
+            "name": "chainId",
+            "required": false,
+            "in": "query",
+            "description": "Chain ID of the network to execute the transaction on",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "fromAddress",
+            "required": true,
+            "in": "query",
+            "description": "Ethereum address of the wallet to send the transaction from",
+            "schema": {
+              "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+              "type": "string"
+            }
+          },
+          {
+            "name": "routingStrategy",
+            "required": false,
+            "in": "query",
+            "description": "Routing strategy to use. Use `delegate` when:\n- You want to specify `spender` \n- You want to use the `harvest` or `deposit` action with `/bundle` endpoint",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                "ensowallet",
+                "router",
+                "delegate",
+                "router-legacy",
+                "delegate-legacy"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "receiver",
+            "required": false,
+            "in": "query",
+            "description": "Ethereum address of the receiver of the tokenOut",
+            "schema": {
+              "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+              "type": "string"
+            }
+          },
+          {
+            "name": "spender",
+            "required": false,
+            "in": "query",
+            "description": "Ethereum address of the spender of the tokenIn",
+            "schema": {
+              "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+              "type": "string"
+            }
+          },
+          {
+            "name": "ignoreAggregators",
+            "required": false,
+            "in": "query",
+            "description": "A list of swap aggregators to be ignored from consideration. See `/aggregators` endpoint for available aggregators",
+            "schema": {
+              "nullable": true,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "0x",
+                  "1inch",
+                  "openocean",
+                  "kyberswap",
+                  "native",
+                  "paraswap",
+                  "bebop",
+                  "barter",
+                  "sushiswap-router",
+                  "ooga-booga",
+                  "renegade",
+                  "uniswap",
+                  "rooster",
+                  "wowmax",
+                  "grapher",
+                  "hyperbloom",
+                  "hyperswap",
+                  "hyperflow",
+                  "fly",
+                  "eisen",
+                  "nordstern",
+                  "everlong",
+                  "bitget"
+                ]
+              }
+            }
+          },
+          {
+            "name": "referralCode",
+            "required": false,
+            "in": "query",
+            "description": "Referral code that will be included in an on-chain event after encoding to hex. At most 16 characters.",
+            "schema": {
+              "maxLength": 16,
+              "example": "0123456789ABCDEF",
+              "type": "string"
+            }
+          },
+          {
+            "name": "refundReceiver",
+            "required": false,
+            "in": "query",
+            "description": "Ethereum address of the receiver of any dust tokens that might be produced during the execution of actions",
+            "schema": {
+              "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+              "type": "string"
+            }
+          },
+          {
+            "name": "skipQuote",
+            "required": false,
+            "in": "query",
+            "description": "Flag to skip quoting (if true, amountOut and gas will not be returned)",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ActionToBundle"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BundleShortcutTransaction"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "DeFi Shortcuts"
+        ]
+      }
+    },
+    "/api/v1/shortcuts/static/ipor": {
+      "post": {
+        "operationId": "IporController_iporShortcutTransaction",
+        "summary": "Get transaction for IPOR shortcut",
+        "parameters": [
+          {
+            "name": "chainId",
+            "required": false,
+            "in": "query",
+            "description": "Chain ID of the network to execute the transaction on",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "fromAddress",
+            "required": true,
+            "in": "query",
+            "description": "Ethereum address of the wallet to send the transaction from",
+            "schema": {
+              "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IporShortcutInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IporShortcutTransaction"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "DeFi Shortcuts"
+        ]
+      }
+    },
+    "/api/v1/standards": {
+      "get": {
+        "operationId": "StandardsController_standards",
+        "description": "Returns standards available for bundling. Each element represents a protocol, with list of supported actions and chains the standard's supported on.",
+        "summary": "Standards",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Standard"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Integration"
+        ]
+      }
+    },
+    "/api/v1/standards/{slug}": {
+      "get": {
+        "operationId": "StandardsController_getProtocolBySlug",
+        "description": "Returns a standard matching the given `slug`, containing supported actions, exact `inputs`, and a list of chains the standard's supported on.",
+        "summary": "Standard per protocol",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "description": "The protocol slug",
+            "schema": {
+              "example": "aave-v2",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Standard"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Integration"
+        ]
+      }
+    },
+    "/api/v1/actions": {
+      "get": {
+        "operationId": "ActionsController_findAll",
+        "description": "Returns actions that can be bundled with `/shortcuts/bundle` endpoint. For specific protocol actions and exact action inputs, see [`/actions/{slug}`](/api-reference/integration/actions-for-a-given-protocol) endpoint.",
+        "summary": "Supported actions",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Action"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Integration"
+        ]
+      }
+    },
+    "/api/v1/actions/{slug}": {
+      "get": {
+        "operationId": "ActionsController_getActionsBySlug",
+        "summary": "Actions for protocol",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Action"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Integration"
+        ]
+      }
+    },
+    "/api/v1/nontokenized": {
+      "get": {
+        "operationId": "NonTokenizedController_tokens",
+        "description": "Returns a list of all nontokenized positions with details.",
+        "summary": "Nontokenized positions",
+        "parameters": [
+          {
+            "name": "project",
+            "required": false,
+            "in": "query",
+            "description": "The overarching project or platform associated with the DeFi token, for example `aave`",
+            "schema": {
+              "example": "beradrome",
+              "type": "string"
+            }
+          },
+          {
+            "name": "protocolSlug",
+            "required": false,
+            "in": "query",
+            "description": "The specific standard integration or version of the DeFi project, for example `aave-v2`",
+            "schema": {
+              "example": "beradrome-farms",
+              "type": "string"
+            }
+          },
+          {
+            "name": "chainId",
+            "required": false,
+            "in": "query",
+            "description": "Chain ID of the network of the nontokenized position",
+            "schema": {
+              "example": 80094,
+              "type": "number"
+            }
+          },
+          {
+            "name": "address",
+            "required": false,
+            "in": "query",
+            "description": "Ethereum addresses of the nontokenized positions",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "primaryAddress",
+            "required": false,
+            "in": "query",
+            "description": "Ethereum addresses for contract interaction of nontokenized position",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Pagination page number. Pages are of length 1000",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "Cursor for pagination. Pages are of length 1000",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/PaginatedResult"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "description": "Returned data for current page",
+                          "items": {
+                            "$ref": "#/components/schemas/NonTokenizedModel"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens"
+        ]
+      }
+    },
+    "/api/v1/projects": {
+      "get": {
+        "operationId": "ProjectsController_standards",
+        "description": "Returns supported projects (e.g. `aave`) or platforms associated with available projects",
+        "summary": "Projects",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Project",
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "bex"
+                      },
+                      "chains": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "example": 80094
+                        }
+                      },
+                      "protocols": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "example": "bex"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Integration"
+        ]
+      }
+    },
+    "/api/v1/projects/{project}/protocols": {
+      "get": {
+        "operationId": "ProjectsController_getStandardsByProject",
+        "description": "Returns all protocols available within the given project. For supported projects, see the `/projects` endpoint.",
+        "summary": "Protocols in a project",
+        "parameters": [
+          {
+            "name": "project",
+            "required": true,
+            "in": "path",
+            "description": "The overarching project or platform associated with the DeFi token, for example `aave`",
+            "schema": {
+              "example": "aave",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProtocolModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Integration"
+        ]
+      }
+    },
+    "/api/v1/protocols": {
+      "get": {
+        "operationId": "ProtocolsController_findAll",
+        "summary": "All Protocols",
+        "description": "Returns all available protocols with supported chains",
+        "parameters": [
+          {
+            "name": "chainId",
+            "required": false,
+            "in": "query",
+            "description": "Chain ID of the network to search for",
+            "schema": {
+              "example": "1"
+            }
+          },
+          {
+            "name": "slug",
+            "required": false,
+            "in": "query",
+            "description": "slug of the project to search for",
+            "schema": {
+              "example": "uniswap-v2"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProtocolModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Integration"
+        ]
+      }
+    },
+    "/api/v1/networks": {
+      "get": {
+        "operationId": "NetworksController_networks",
+        "description": "Returns networks supported by Enso",
+        "summary": "Networks",
+        "parameters": [
+          {
+            "name": "name",
+            "required": false,
+            "in": "query",
+            "description": "Title of the network to search for",
+            "schema": {
+              "example": "mainnet"
+            }
+          },
+          {
+            "name": "chainId",
+            "required": false,
+            "in": "query",
+            "description": "Chain ID of the network to search for",
+            "schema": {
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ConnectedNetwork"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Integration"
+        ]
+      }
+    },
+    "/api/v1/prices/{chainId}/{address}": {
+      "get": {
+        "operationId": "PricesController_getPrice",
+        "description": "Returns token price for the given address and chainId. ",
+        "summary": "Token Price",
+        "parameters": [
+          {
+            "name": "address",
+            "required": true,
+            "in": "path",
+            "description": "Address of the token to search for",
+            "schema": {
+              "example": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+            }
+          },
+          {
+            "name": "chainId",
+            "required": true,
+            "in": "path",
+            "description": "Chain ID of the network to search for",
+            "schema": {
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Price"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens",
+          "DeFi"
+        ]
+      }
+    },
+    "/api/v1/aggregators": {
+      "get": {
+        "operationId": "AggregatorsController_aggregators",
+        "description": "Fetches aggregators supported by Enso",
+        "summary": "Aggregators",
+        "parameters": [
+          {
+            "name": "chainId",
+            "required": false,
+            "in": "query",
+            "description": "Chain ID of the network to search on",
+            "schema": {
+              "default": 1,
+              "example": "1",
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a list of aggregators",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Integration"
+        ]
+      }
+    },
+    "/api/v1/volume/{chainId}": {
+      "get": {
+        "operationId": "VolumeController_getVolume",
+        "description": "Returns total USD and transactions volume for the given chainId.",
+        "summary": "Chain and transactions volume",
+        "parameters": [
+          {
+            "name": "chainId",
+            "required": true,
+            "in": "path",
+            "description": "Chain ID of the network to search for",
+            "schema": {
+              "default": 1,
+              "example": "1",
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DeFi"
+        ]
+      }
+    },
+    "/api/v1/wallet": {
+      "get": {
+        "operationId": "WalletController_wallet",
+        "summary": "Returns EnsoWallet-v2 address details",
+        "description": "Deterministic (CREATE2) EnsoWallet-v2 address for `fromAddress` on `chainId`, and whether it is deployed. The wallet is deployed by the factory inside the first transaction routed through it, so the address can be used as an approval target beforehand.",
+        "parameters": [
+          {
+            "name": "chainId",
+            "required": false,
+            "in": "query",
+            "description": "Chain ID of the network to execute the transaction on",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "fromAddress",
+            "required": true,
+            "in": "query",
+            "description": "Ethereum address of the wallet to send the transaction from",
+            "schema": {
+              "default": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+              "type": "string"
+            }
+          },
+          {
+            "name": "routingStrategy",
+            "required": false,
+            "in": "query",
+            "description": "Routing strategy to use",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                "ensowallet-v2",
+                "router",
+                "delegate",
+                "router-legacy",
+                "delegate-legacy"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Wallet"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "DeFi Shortcuts"
+        ]
+      }
+    },
+    "/api/v1/wallet/approve": {
+      "get": {
+        "operationId": "WalletController_createApproveTransaction",
+        "description": "Returns a transaction that approves your Enso contracts to spend the given amount of specified tokens. Approve before sending the route transaction on-chain.",
+        "summary": "Approve Enso contract",
+        "parameters": [
+          {
+            "name": "chainId",
+            "required": false,
+            "in": "query",
+            "description": "Chain ID of the network to execute the transaction on",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "fromAddress",
+            "required": true,
+            "in": "query",
+            "description": "Ethereum address of the wallet to send the transaction from",
+            "schema": {
+              "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+              "type": "string"
+            }
+          },
+          {
+            "name": "routingStrategy",
+            "required": false,
+            "in": "query",
+            "description": "Routing strategy to use. Use the same routing strategy you used to create the transaction.",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                "ensowallet",
+                "router",
+                "delegate",
+                "router-legacy",
+                "delegate-legacy"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "tokenAddress",
+            "required": true,
+            "in": "query",
+            "description": "ERC20 token address of the token to approve",
+            "schema": {
+              "default": "0x6b175474e89094c44da98b954eedeac495271d0f",
+              "type": "string"
+            }
+          },
+          {
+            "name": "amount",
+            "required": true,
+            "in": "query",
+            "description": "Amount of tokens to approve in wei",
+            "schema": {
+              "default": "1000000000000000000000000000",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WalletApproveTransaction"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "DeFi Shortcuts"
+        ]
+      }
+    },
+    "/api/v1/wallet/balances": {
+      "get": {
+        "operationId": "WalletController_walletBalances",
+        "description": "Returns tokens balances for Enso Wallet associated with the given address across all supported chains. <br/>With `useEoa` set to true, it returns balances for the given EOA address instead.",
+        "summary": "Wallet balances",
+        "parameters": [
+          {
+            "name": "chainId",
+            "required": false,
+            "in": "query",
+            "description": "Chain ID of the network to execute the transaction on",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "eoaAddress",
+            "required": true,
+            "in": "query",
+            "description": "Address of the eoa with which to associate the ensoWallet for balances",
+            "schema": {
+              "default": "0x93621DCA56fE26Cdee86e4F6B18E116e9758Ff11",
+              "type": "string"
+            }
+          },
+          {
+            "name": "useEoa",
+            "required": true,
+            "in": "query",
+            "description": "If true returns balances for the provided eoaAddress, instead of the associated ensoWallet",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WalletBalance"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "DeFi"
+        ]
+      }
+    },
+    "/api/v1/tokens": {
+      "get": {
+        "operationId": "TokensController_tokens",
+        "description": "Returns tokens and their details. <Tip>This APi includes cursor-based pagination with default 1000 items per page.</Tip>",
+        "summary": "Tokens",
+        "parameters": [
+          {
+            "name": "includeMetadata",
+            "required": false,
+            "in": "query",
+            "description": "Whether to include token metadata (symbol, name and logos)",
+            "schema": {
+              "default": false,
+              "example": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "chainId",
+            "required": false,
+            "in": "query",
+            "description": "Chain ID of the network of the token",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "project",
+            "required": false,
+            "in": "query",
+            "description": "The overarching project or platform associated with the DeFi token, for example `aave`",
+            "schema": {
+              "example": "aave",
+              "type": "string"
+            }
+          },
+          {
+            "name": "protocolSlug",
+            "required": false,
+            "in": "query",
+            "description": "The specific standard integration or version of the DeFi project, for example `aave-v2`",
+            "schema": {
+              "example": "aave-v2",
+              "type": "string"
+            }
+          },
+          {
+            "name": "address",
+            "required": false,
+            "in": "query",
+            "description": "Ethereum addresses of the tokens",
+            "schema": {
+              "example": [
+                "0x030bA81f1c18d280636F32af80b9AAd02Cf0854e"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "underlyingTokens",
+            "required": false,
+            "in": "query",
+            "description": "Underlying tokens of defi token",
+            "schema": {
+              "example": [
+                "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "underlyingTokensExact",
+            "required": false,
+            "in": "query",
+            "description": "Exact composition of underlying tokens of defi token",
+            "schema": {
+              "example": [
+                "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "primaryAddress",
+            "required": false,
+            "in": "query",
+            "description": "Ethereum addresses for contract interaction of defi tokens",
+            "schema": {
+              "example": [
+                "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "apyFrom",
+            "required": false,
+            "in": "query",
+            "description": "Only include tokens with APY over this value",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "apyTo",
+            "required": false,
+            "in": "query",
+            "description": "Only include tokens with APY below this value",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "tvlFrom",
+            "required": false,
+            "in": "query",
+            "description": "Only include tokens with TVL over this value",
+            "schema": {
+              "example": 0,
+              "type": "number"
+            }
+          },
+          {
+            "name": "tvlTo",
+            "required": false,
+            "in": "query",
+            "description": "Only include tokens with TVL below this value",
+            "schema": {
+              "example": 10000000,
+              "type": "number"
+            }
+          },
+          {
+            "name": "type",
+            "required": false,
+            "in": "query",
+            "description": "Type of token.\n If not provided, both types will be taken into account",
+            "schema": {
+              "example": "defi",
+              "enum": [
+                "defi",
+                "base"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Pagination page number. Pages are of length 1000",
+            "schema": {
+              "example": "1",
+              "type": "number"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "Cursor for pagination. Pages are of length 1000",
+            "schema": {
+              "example": "1233456",
+              "type": "number"
+            }
+          },
+          {
+            "name": "name",
+            "required": false,
+            "in": "query",
+            "description": "Names of the tokens",
+            "schema": {
+              "example": [
+                "Bridged USDT"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "symbol",
+            "required": false,
+            "in": "query",
+            "description": "Symbols of the tokens",
+            "schema": {
+              "example": [
+                "USDC"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "Number of items per page (max 1000)",
+            "schema": {
+              "default": 1000,
+              "example": 100,
+              "type": "number"
+            }
+          },
+          {
+            "name": "includeUnderlying",
+            "required": false,
+            "in": "query",
+            "description": "Whether to include underlying tokes",
+            "schema": {
+              "default": true,
+              "example": false,
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/PaginatedResult"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "description": "Returned data for current page",
+                          "items": {
+                            "$ref": "#/components/schemas/PositionModel"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens"
+        ]
+      }
+    },
+    "/api/v1/prices/{chainId}": {
+      "get": {
+        "operationId": "PricesController_getPrices",
+        "summary": "Tokens Prices Batched",
+        "parameters": [
+          {
+            "name": "chainId",
+            "required": true,
+            "in": "path",
+            "description": "Chain ID of the network to search for",
+            "schema": {
+              "example": "1",
+              "type": "number"
+            }
+          },
+          {
+            "name": "addresses",
+            "required": true,
+            "in": "query",
+            "description": "Ethereum address of the token to check price for.",
+            "schema": {
+              "example": [
+                "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Price"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens"
+        ],
+        "description": "Returns prices for a batch of tokens on a given chain."
+      }
+    },
+    "/api/v1/account/accountId": {
+      "get": {
+        "operationId": "AccountController_accountId",
+        "summary": "Account ID",
+        "description": "Gives the Account ID associated with the current user",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Your accountId",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Account"
+        ]
+      }
+    },
+    "/api/v1/layerzero/pool": {
+      "get": {
+        "operationId": "LayerZeroController_getPoolAddress",
+        "summary": "LayerZero pool",
+        "description": "Returns the LayerZero Stargate pool address for a given token address and chain ID. Returns null if no pool exists for the token on that chain.",
+        "parameters": [
+          {
+            "name": "chainId",
+            "required": true,
+            "in": "query",
+            "description": "Chain ID",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "token",
+            "required": true,
+            "in": "query",
+            "description": "Token address",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "destinationChainId",
+            "required": false,
+            "in": "query",
+            "description": "Chain ID of destination chain",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "destinationToken",
+            "required": false,
+            "in": "query",
+            "description": "Token address on destination chain",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pool address lookup result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LZPoolLookupResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Integration",
+          "Crosschain"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Enso API",
+    "description": "#### Enso API\n- Find detailed documentation on [docs.enso.finance](https://docs.enso.finance).\n- To use the API, **you must include your API Key in the Authorization header** (Bearer format).\n- For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).\n- Get your own API Key at [enso.finance/developers](https://enso.finance/developers).",
+    "version": "1.0.1",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "shortcuts",
+      "description": ""
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://api.enso.build"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "apiKey",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "ConnectedNetwork": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Ethereum"
+          },
+          "isConnected": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "isConnected"
+        ]
+      },
+      "Price": {
+        "type": "object",
+        "properties": {
+          "decimals": {
+            "type": "number",
+            "example": 8
+          },
+          "price": {
+            "type": "number",
+            "example": 27052
+          },
+          "address": {
+            "type": "string",
+            "example": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
+          },
+          "symbol": {
+            "type": "string",
+            "example": "WBTC"
+          },
+          "timestamp": {
+            "type": "number",
+            "example": 1695197412
+          },
+          "chainId": {
+            "type": "number",
+            "example": 1
+          },
+          "confidence": {
+            "type": "number",
+            "example": 0.99
+          }
+        },
+        "required": [
+          "decimals",
+          "price",
+          "address",
+          "chainId"
+        ]
+      },
+      "Transaction": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "data",
+          "to",
+          "from",
+          "value"
+        ]
+      },
+      "PreTransaction": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "tokenApproval",
+              "requiredApproval"
+            ]
+          },
+          "tx": {
+            "description": "Transaction to execute before the main shortcut transaction",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Transaction"
+              }
+            ]
+          },
+          "token": {
+            "type": "string",
+            "description": "Token whose allowance is being set"
+          },
+          "spender": {
+            "type": "string",
+            "description": "Account receiving the token allowance"
+          },
+          "amount": {
+            "type": "string",
+            "description": "Total allowance required by the shortcut"
+          },
+          "description": {
+            "type": "string",
+            "description": "Human-readable explanation for a required approval"
+          }
+        },
+        "required": [
+          "type",
+          "tx"
+        ]
+      },
+      "BridgeFee": {
+        "type": "object",
+        "properties": {
+          "protocol": {
+            "type": "string",
+            "description": "Bridge protocol associated with the fee"
+          },
+          "component": {
+            "type": "string",
+            "enum": [
+              "bridge",
+              "intentExecution"
+            ]
+          },
+          "chainId": {
+            "type": "number",
+            "description": "Chain on which the fee is paid"
+          },
+          "destinationChainId": {
+            "type": "number",
+            "description": "Destination chain of the bridge action"
+          },
+          "token": {
+            "type": "string",
+            "description": "Token used to pay the bridge fee"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "maximum",
+              "quoted"
+            ],
+            "description": "Whether amount is a maximum reserved for execution or a quote-time fee breakdown"
+          },
+          "deductedFromAmountOut": {
+            "type": "boolean",
+            "description": "Whether the fee has already reduced the candidate amountOut"
+          },
+          "amount": {
+            "type": "string",
+            "description": "Bridge fee in the token base unit"
+          },
+          "amountUsd": {
+            "type": "string",
+            "description": "Bridge fee in USD when includeTransactionCost=true and pricing is available",
+            "nullable": true
+          }
+        },
+        "required": [
+          "protocol",
+          "chainId",
+          "destinationChainId",
+          "token",
+          "type",
+          "deductedFromAmountOut",
+          "amount"
+        ]
+      },
+      "Hop": {
+        "type": "object",
+        "properties": {
+          "tokenIn": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tokenOut": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "protocol": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "approve",
+              "borrow",
+              "borrowwithpositionid",
+              "bridge",
+              "deposit",
+              "singledeposit",
+              "singledepositwithpositionid",
+              "multideposit",
+              "tokenizedsingledeposit",
+              "tokenizedmultideposit",
+              "multioutsingledeposit",
+              "depositclmm",
+              "harvest",
+              "permittransferfrom",
+              "redeem",
+              "singleredeem",
+              "singleredeemwithpositionid",
+              "multiredeem",
+              "tokenizedsingleredeem",
+              "tokenizedmultiredeem",
+              "redeemclmm",
+              "repay",
+              "repaywithpositionid",
+              "swap",
+              "transfer",
+              "transferfrom",
+              "route",
+              "call",
+              "split",
+              "merge",
+              "balance",
+              "minamountout",
+              "slippage",
+              "fee",
+              "ensofee",
+              "paymasterfee"
+            ]
+          },
+          "primary": {
+            "type": "string"
+          },
+          "internalRoutes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "args": {
+            "type": "object"
+          },
+          "chainId": {
+            "type": "number"
+          },
+          "sourceChainId": {
+            "type": "number"
+          },
+          "destinationChainId": {
+            "type": "number"
+          },
+          "estimatedAmountOut": {
+            "description": "Only available for split actions returned by the pathfinder routing engine. Display estimates use the planned split input, are ordered to match tokenOut, and are not execution guarantees",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "tokenOut",
+          "protocol",
+          "internalRoutes",
+          "action",
+          "args",
+          "tokenIn",
+          "primary"
+        ]
+      },
+      "RouteShortcutTransaction": {
+        "type": "object",
+        "properties": {
+          "gas": {
+            "type": "string"
+          },
+          "amountOut": {
+            "type": "string"
+          },
+          "priceImpact": {
+            "type": "number",
+            "nullable": true,
+            "description": "Price impact in basis points, null if USD price not found"
+          },
+          "feeAmount": {
+            "description": "An array of the fee amount collected for each tokenIn",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "minAmountOut": {
+            "type": "string",
+            "description": "The minimum allowable amount out after slippage"
+          },
+          "createdAt": {
+            "type": "number",
+            "description": "Block number the transaction was created on"
+          },
+          "tx": {
+            "description": "The tx object to use in `ethers`",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Transaction"
+              }
+            ]
+          },
+          "route": {
+            "description": "The route the shortcut will use",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Hop"
+            }
+          },
+          "ensoFeeAmount": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/ShortcutResponseMetadata"
+          },
+          "transactionCost": {
+            "type": "string",
+            "nullable": true,
+            "description": "Point-in-time lower-bound estimate of mandatory source-chain transaction fees in the native token smallest unit. Excludes priority fees, transaction value, bridge fees, and destination execution."
+          },
+          "transactionCostUsd": {
+            "type": "string",
+            "nullable": true,
+            "description": "Decimal string USD value of transactionCost. Null when the native-token price or source-chain fee estimate is unavailable."
+          },
+          "preTransactions": {
+            "description": "Transactions that may need to be executed before the main shortcut transaction. Token approvals should be skipped when the current allowance is already sufficient.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PreTransaction"
+            }
+          }
+        },
+        "required": [
+          "gas",
+          "amountOut",
+          "priceImpact",
+          "feeAmount",
+          "minAmountOut",
+          "createdAt",
+          "tx",
+          "route",
+          "ensoFeeAmount",
+          "metadata"
+        ]
+      },
+      "BridgeRefundAsset": {
+        "type": "object",
+        "properties": {
+          "protocol": {
+            "type": "string",
+            "enum": [
+              "cctp",
+              "stargate",
+              "ccip",
+              "relay"
+            ]
+          },
+          "chainId": {
+            "type": "number"
+          },
+          "token": {
+            "type": "string",
+            "description": "Address of the bridge principal token that may be refunded",
+            "example": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+          },
+          "recipient": {
+            "type": "string",
+            "description": "Address that would receive the bridge principal refund",
+            "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Token symbol when metadata is available",
+            "example": "USDC"
+          }
+        },
+        "required": [
+          "protocol",
+          "chainId",
+          "token",
+          "recipient"
+        ]
+      },
+      "ShortcutResponseMetadata": {
+        "type": "object",
+        "properties": {
+          "bridgeRefundAssets": {
+            "type": "array",
+            "description": "Protocol-specific refund destinations for bridge principal in the returned transaction. An entry does not guarantee that every bridge failure is refundable.",
+            "items": {
+              "$ref": "#/components/schemas/BridgeRefundAsset"
+            }
+          },
+          "bridgeFees": {
+            "description": "Bridge protocol and intent execution fees",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BridgeFee"
+            }
+          },
+          "bridgeFeeUsd": {
+            "type": "string",
+            "description": "USD sum of the reported bridge protocol and intent execution fee amounts when includeTransactionCost=true. May include maximum fee reserves. Null when any non-zero fee cannot be priced.",
+            "nullable": true
+          }
+        },
+        "required": [
+          "bridgeRefundAssets"
+        ]
+      },
+      "RouteShortcutVariableInputs": {
+        "type": "object",
+        "properties": {
+          "chainId": {
+            "type": "number",
+            "description": "Chain ID of the network to execute the transaction on",
+            "default": 1
+          },
+          "fromAddress": {
+            "type": "string",
+            "description": "Ethereum address of the wallet to send the transaction from",
+            "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+          },
+          "amountIn": {
+            "description": "Amount of tokenIn to swap in wei",
+            "example": [
+              "1000000000000000000"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tokenIn": {
+            "description": "Ethereum address of the token to swap from. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "example": [
+              "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tokenOut": {
+            "description": "Ethereum address of the token to swap to. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "example": [
+              "0x6b175474e89094c44da98b954eedeac495271d0f"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "routingStrategy": {
+            "type": "string",
+            "description": "Routing strategy to use. In majority of cases you can use `router`. Use `delegate` with EOA when you want to specify a `spender`",
+            "nullable": true,
+            "enum": [
+              "router",
+              "delegate",
+              "router-legacy",
+              "delegate-legacy",
+              "ensowallet"
+            ]
+          },
+          "toEoa": {
+            "type": "boolean",
+            "description": "Flag that indicates if gained tokenOut should be sent to EOA",
+            "nullable": true,
+            "deprecated": true
+          },
+          "includeTransactionCost": {
+            "type": "boolean",
+            "description": "Include point-in-time source-chain transaction cost estimates in native units and USD, plus USD values for reported bridge fees",
+            "default": false
+          },
+          "receiver": {
+            "type": "string",
+            "description": "Ethereum address of the receiver of the tokenOut",
+            "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+          },
+          "spender": {
+            "type": "string",
+            "description": "Ethereum address of the spender of the tokenOut. **Note**: you must use the `delegate` strategy when specifying a spender, otherwise it will be ignored.",
+            "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+          },
+          "minAmountOut": {
+            "description": "Minimum amount out in wei. If specified, `slippage` should not be specified",
+            "default": null,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "slippage": {
+            "type": "string",
+            "description": "Slippage in basis points (1/10000), e.g. 50 = 0.50%. Takes precedence over minAmountOut argument.",
+            "example": "300",
+            "default": "50"
+          },
+          "ignoreAggregators": {
+            "description": "A list of swap aggregators to be ignored from consideration",
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ignoreStandards": {
+            "description": "A list of standards to be ignored from consideration",
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ignoreBridges": {
+            "description": "A list of bridges to be ignored from consideration for crosschain routes. Supported values: `relay`, `stargate`, `ccip`, `cctp`",
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "variableEstimates": {
+            "type": "object",
+            "default": null
+          },
+          "referralCode": {
+            "type": "string",
+            "description": "Referral code that will be included in an on-chain event.",
+            "maxLength": 16,
+            "pattern": "^.{0,16}$"
+          },
+          "destinationChainId": {
+            "type": "number",
+            "description": "Chain ID of the network to bridge to and receive tokenOut"
+          },
+          "crosschainRouteMode": {
+            "type": "string",
+            "description": "Controls cross-chain route complexity. direct uses only a bridge, source allows routing before the bridge, destination allows routing after the bridge, sourceOrDestination allows routing on either chain but not both, and full allows routing on both chains",
+            "default": "full",
+            "enum": [
+              "direct",
+              "source",
+              "destination",
+              "sourceOrDestination",
+              "full"
+            ]
+          },
+          "refundReceiver": {
+            "type": "string",
+            "description": "Ethereum address of the receiver of any dust tokens that might be produced during the execution of actions",
+            "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+          }
+        },
+        "required": [
+          "fromAddress",
+          "amountIn",
+          "tokenIn",
+          "tokenOut",
+          "variableEstimates"
+        ]
+      },
+      "WalletApproveTransaction": {
+        "type": "object",
+        "properties": {
+          "tx": {
+            "type": "object",
+            "description": "The tx object to use in `ethers`"
+          },
+          "gas": {
+            "type": "string",
+            "description": "The gas estimate for the transaction"
+          },
+          "token": {
+            "type": "string",
+            "description": "The token address to approve"
+          },
+          "amount": {
+            "type": "string",
+            "description": "The amount of tokens to approve"
+          },
+          "spender": {
+            "type": "string",
+            "description": "The spender address to approve"
+          }
+        },
+        "required": [
+          "tx",
+          "gas",
+          "token",
+          "amount",
+          "spender"
+        ]
+      },
+      "WalletBalance": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "The address of the token"
+          },
+          "amount": {
+            "type": "string",
+            "description": "The unformatted balance of the token",
+            "example": "0x0000000"
+          },
+          "chainId": {
+            "type": "number",
+            "description": "Chain ID of the network"
+          },
+          "decimals": {
+            "type": "number",
+            "description": "The unformatted balance of the token",
+            "example": 18
+          },
+          "price": {
+            "type": "string",
+            "description": "Price of the token in usd",
+            "example": "0.0"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the token"
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Symbol of the token"
+          },
+          "logoUri": {
+            "type": "string",
+            "description": "Logo of the token"
+          }
+        },
+        "required": [
+          "token",
+          "amount",
+          "chainId",
+          "decimals",
+          "price",
+          "name",
+          "symbol",
+          "logoUri"
+        ]
+      },
+      "PaginationMeta": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number",
+            "description": "Total amount of pages"
+          },
+          "lastPage": {
+            "type": "number",
+            "description": "Last page number"
+          },
+          "currentPage": {
+            "type": "number",
+            "description": "Current page number"
+          },
+          "perPage": {
+            "type": "number",
+            "description": "Amount of elements per page"
+          },
+          "prev": {
+            "type": "number",
+            "description": "Previous page"
+          },
+          "next": {
+            "type": "number",
+            "description": "Next page"
+          },
+          "cursor": {
+            "type": "number",
+            "description": "Cursor for pagination"
+          }
+        },
+        "required": [
+          "total",
+          "lastPage",
+          "currentPage",
+          "perPage",
+          "prev",
+          "next",
+          "cursor"
+        ]
+      },
+      "PaginatedResult": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "description": "Metadata for pagination",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PaginationMeta"
+              }
+            ]
+          }
+        },
+        "required": [
+          "meta"
+        ]
+      },
+      "TokenModel": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "Ethereum address of the token"
+          },
+          "chainId": {
+            "type": "number",
+            "description": "Chain ID of the network of the token"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of token"
+          },
+          "decimals": {
+            "type": "number",
+            "description": "Token decimals"
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Token name",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Token symbol",
+            "nullable": true
+          },
+          "logosUri": {
+            "description": "A list of logos for the token",
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "address",
+          "chainId",
+          "type",
+          "decimals",
+          "symbol",
+          "name",
+          "logosUri"
+        ]
+      },
+      "PositionModel": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "Ethereum address of the token"
+          },
+          "chainId": {
+            "type": "number",
+            "description": "Chain ID of the network of the token"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of token"
+          },
+          "decimals": {
+            "type": "number",
+            "description": "Token decimals"
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Token name",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Token symbol",
+            "nullable": true
+          },
+          "logosUri": {
+            "description": "A list of logos for the token",
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "underlyingTokens": {
+            "description": "Underlying tokens of defi token",
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TokenModel"
+            }
+          },
+          "project": {
+            "type": "string",
+            "description": "The overarching project or platform associated with the DeFi token, for example `aave`",
+            "example": "aave",
+            "nullable": true
+          },
+          "protocolSlug": {
+            "type": "string",
+            "description": "The specific standard integration or version of the DeFi project, for example `aave-v2`",
+            "nullable": true
+          },
+          "apy": {
+            "type": "number",
+            "description": "The defi position APY",
+            "nullable": true,
+            "example": 3.8
+          },
+          "apyBase": {
+            "type": "number",
+            "description": "The defi position base APY",
+            "nullable": true,
+            "example": 2.6
+          },
+          "apyReward": {
+            "type": "number",
+            "description": "The defi position reward APY",
+            "nullable": true,
+            "example": 1.2
+          },
+          "borrowApyBase": {
+            "type": "number",
+            "description": "The defi position base borrow APY",
+            "nullable": true,
+            "example": 2.6
+          },
+          "borrowApyReward": {
+            "type": "number",
+            "description": "The defi position reward borrow APY",
+            "nullable": true,
+            "example": 1.2
+          },
+          "tvl": {
+            "type": "number",
+            "description": "The defi position TVL",
+            "nullable": true,
+            "example": 3001020.8
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Ethereum address for contract interaction of defi token",
+            "nullable": true
+          }
+        },
+        "required": [
+          "address",
+          "chainId",
+          "type",
+          "decimals",
+          "symbol",
+          "name",
+          "logosUri",
+          "underlyingTokens",
+          "project",
+          "protocolSlug",
+          "apy",
+          "apyBase",
+          "apyReward",
+          "borrowApyBase",
+          "borrowApyReward",
+          "tvl",
+          "primaryAddress"
+        ]
+      },
+      "Action": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "approve",
+              "borrow",
+              "borrowwithpositionid",
+              "bridge",
+              "deposit",
+              "singledeposit",
+              "singledepositwithpositionid",
+              "multideposit",
+              "tokenizedsingledeposit",
+              "tokenizedmultideposit",
+              "multioutsingledeposit",
+              "depositclmm",
+              "harvest",
+              "permittransferfrom",
+              "redeem",
+              "singleredeem",
+              "singleredeemwithpositionid",
+              "multiredeem",
+              "tokenizedsingleredeem",
+              "tokenizedmultiredeem",
+              "redeemclmm",
+              "repay",
+              "repaywithpositionid",
+              "swap",
+              "transfer",
+              "transferfrom",
+              "route",
+              "call",
+              "split",
+              "merge",
+              "balance",
+              "minamountout",
+              "slippage",
+              "fee",
+              "ensofee",
+              "paymasterfee"
+            ]
+          },
+          "inputs": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "action",
+          "inputs"
+        ]
+      },
+      "Protocol": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "slug",
+          "url"
+        ]
+      },
+      "Network": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "StandardAction": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "approve",
+              "borrow",
+              "borrowwithpositionid",
+              "bridge",
+              "deposit",
+              "singledeposit",
+              "singledepositwithpositionid",
+              "multideposit",
+              "tokenizedsingledeposit",
+              "tokenizedmultideposit",
+              "multioutsingledeposit",
+              "depositclmm",
+              "harvest",
+              "permittransferfrom",
+              "redeem",
+              "singleredeem",
+              "singleredeemwithpositionid",
+              "multiredeem",
+              "tokenizedsingleredeem",
+              "tokenizedmultiredeem",
+              "redeemclmm",
+              "repay",
+              "repaywithpositionid",
+              "swap",
+              "transfer",
+              "transferfrom",
+              "route",
+              "call",
+              "split",
+              "merge",
+              "balance",
+              "minamountout",
+              "slippage",
+              "fee",
+              "ensofee",
+              "paymasterfee"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "functionNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "supportedChains": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Network"
+            }
+          },
+          "inputs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "action",
+          "name",
+          "functionNames",
+          "supportedChains",
+          "inputs"
+        ]
+      },
+      "Standard": {
+        "type": "object",
+        "properties": {
+          "protocol": {
+            "$ref": "#/components/schemas/Protocol"
+          },
+          "forks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Protocol"
+            }
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StandardAction"
+            }
+          }
+        },
+        "required": [
+          "protocol",
+          "forks",
+          "actions"
+        ]
+      },
+      "ProtocolModel": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "type": "string",
+            "example": "uniswap"
+          },
+          "slug": {
+            "type": "string",
+            "example": "uniswap-v2"
+          },
+          "name": {
+            "type": "string",
+            "example": "Uniswap V2",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "example": "https://app.uniswap.org/swap",
+            "nullable": true
+          },
+          "logosUri": {
+            "example": "https://icons.llama.fi/uniswap-v2.png",
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "chains": {
+            "nullable": true,
+            "example": [
+              {
+                "id": 1,
+                "name": "mainnet"
+              }
+            ],
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Network"
+            }
+          }
+        },
+        "required": [
+          "project",
+          "slug",
+          "name",
+          "description",
+          "url",
+          "logosUri",
+          "chains"
+        ]
+      },
+      "ActionToBundle": {
+        "type": "object",
+        "properties": {
+          "protocol": {
+            "description": "Protocol to interact with",
+            "example": "enso",
+            "type": "string"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "approve",
+              "borrow",
+              "borrowwithpositionid",
+              "bridge",
+              "deposit",
+              "singledeposit",
+              "singledepositwithpositionid",
+              "multideposit",
+              "tokenizedsingledeposit",
+              "tokenizedmultideposit",
+              "multioutsingledeposit",
+              "depositclmm",
+              "harvest",
+              "permittransferfrom",
+              "redeem",
+              "singleredeem",
+              "singleredeemwithpositionid",
+              "multiredeem",
+              "tokenizedsingleredeem",
+              "tokenizedmultiredeem",
+              "redeemclmm",
+              "repay",
+              "repaywithpositionid",
+              "swap",
+              "transfer",
+              "transferfrom",
+              "route",
+              "call",
+              "split",
+              "merge",
+              "balance",
+              "minamountout",
+              "slippage",
+              "fee",
+              "ensofee",
+              "paymasterfee"
+            ],
+            "example": "route"
+          },
+          "args": {
+            "type": "object",
+            "description": "Arguments specific to the action type. See the [action types](https://docs.enso.finance/reference/actions) for more details.",
+            "discriminator": {
+              "propertyName": "action"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ApproveArgs"
+              },
+              {
+                "$ref": "#/components/schemas/BorrowArgs"
+              },
+              {
+                "$ref": "#/components/schemas/BridgeArgs"
+              },
+              {
+                "$ref": "#/components/schemas/DepositArgs"
+              },
+              {
+                "$ref": "#/components/schemas/SingleDepositArgs"
+              },
+              {
+                "$ref": "#/components/schemas/MultiDepositArgs"
+              },
+              {
+                "$ref": "#/components/schemas/TokenizedSingleDepositArgs"
+              },
+              {
+                "$ref": "#/components/schemas/TokenizedMultiDepositArgs"
+              },
+              {
+                "$ref": "#/components/schemas/MultiOutSingleDepositArgs"
+              },
+              {
+                "$ref": "#/components/schemas/DepositCLMMArgs"
+              },
+              {
+                "$ref": "#/components/schemas/HarvestArgs"
+              },
+              {
+                "$ref": "#/components/schemas/PermitTransferFromArgs"
+              },
+              {
+                "$ref": "#/components/schemas/RedeemArgs"
+              },
+              {
+                "$ref": "#/components/schemas/SingleRedeemArgs"
+              },
+              {
+                "$ref": "#/components/schemas/MultiRedeemArgs"
+              },
+              {
+                "$ref": "#/components/schemas/TokenizedSingleRedeemArgs"
+              },
+              {
+                "$ref": "#/components/schemas/TokenizedMultiRedeemArgs"
+              },
+              {
+                "$ref": "#/components/schemas/RedeemCLMMArgs"
+              },
+              {
+                "$ref": "#/components/schemas/RepayArgs"
+              },
+              {
+                "$ref": "#/components/schemas/SwapArgs"
+              },
+              {
+                "$ref": "#/components/schemas/TransferArgs"
+              },
+              {
+                "$ref": "#/components/schemas/TransferFromArgs"
+              },
+              {
+                "$ref": "#/components/schemas/RouteArgs"
+              },
+              {
+                "$ref": "#/components/schemas/SlippageArgs"
+              },
+              {
+                "$ref": "#/components/schemas/BorrowWithPositionIdArgs"
+              },
+              {
+                "$ref": "#/components/schemas/SingleDepositWithPositionIdArgs"
+              },
+              {
+                "$ref": "#/components/schemas/SingleRedeemWithPositionIdArgs"
+              },
+              {
+                "$ref": "#/components/schemas/RepayWithPositionIdArgs"
+              },
+              {
+                "$ref": "#/components/schemas/CallArgs"
+              },
+              {
+                "$ref": "#/components/schemas/SplitArgs"
+              },
+              {
+                "$ref": "#/components/schemas/MergeArgs"
+              },
+              {
+                "$ref": "#/components/schemas/BalanceArgs"
+              },
+              {
+                "$ref": "#/components/schemas/MinAmountOutArgs"
+              },
+              {
+                "$ref": "#/components/schemas/FeeArgs"
+              }
+            ]
+          }
+        },
+        "required": [
+          "protocol",
+          "action",
+          "args"
+        ]
+      },
+      "BundleShortcutTransaction": {
+        "type": "object",
+        "properties": {
+          "bundle": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ActionToBundle"
+            }
+          },
+          "gas": {
+            "type": "string",
+            "description": "Gas estimate for the transaction"
+          },
+          "amountsOut": {
+            "type": "object",
+            "description": "Expected output amounts by token address"
+          },
+          "route": {
+            "description": "The route the shortcut will use",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Hop"
+            }
+          },
+          "createdAt": {
+            "type": "number",
+            "description": "Block number the transaction was created on"
+          },
+          "tx": {
+            "description": "The tx object to use in `ethers`",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Transaction"
+              }
+            ]
+          },
+          "priceImpact": {
+            "type": "number",
+            "nullable": true,
+            "description": "Price impact in basis points, null if USD price not found"
+          },
+          "feeAmount": {
+            "type": "object"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/ShortcutResponseMetadata"
+          },
+          "preTransactions": {
+            "description": "Transactions that may need to be executed before the main shortcut transaction. Token approvals should be skipped when the current allowance is already sufficient.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PreTransaction"
+            }
+          }
+        },
+        "required": [
+          "bundle",
+          "route",
+          "createdAt",
+          "tx",
+          "priceImpact",
+          "feeAmount",
+          "metadata"
+        ]
+      },
+      "Step": {
+        "type": "object",
+        "properties": {
+          "tokenIn": {
+            "type": "string"
+          },
+          "tokenOut": {
+            "type": "string"
+          },
+          "protocol": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "primary": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "tokenIn",
+          "tokenOut",
+          "protocol",
+          "action",
+          "primary"
+        ]
+      },
+      "SimplePath": {
+        "type": "object",
+        "properties": {
+          "amountIn": {
+            "type": "string",
+            "description": "Amount of tokenIn to swap in wei",
+            "example": "1000000000000000000"
+          },
+          "path": {
+            "description": "Ordered array of steps to build",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Step"
+            }
+          }
+        },
+        "required": [
+          "amountIn",
+          "path"
+        ]
+      },
+      "IporShortcutInput": {
+        "type": "object",
+        "properties": {
+          "isRouter": {
+            "type": "boolean",
+            "description": "Flag that indicates whether to use the shared router",
+            "nullable": true
+          },
+          "amountIn": {
+            "type": "string",
+            "description": "Amount of tokenIn in wei",
+            "example": "1000000000000000"
+          },
+          "tokenIn": {
+            "type": "string",
+            "description": "Address of the tokenIn. For ETH, use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "example": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          },
+          "tokenBToBuy": {
+            "type": "string",
+            "description": "Address of the tokenBToBuy",
+            "example": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+          },
+          "percentageForTokenB": {
+            "type": "string",
+            "description": "Percentage of tokenB to buy in basis points (1/10000), e.g. 50 = 0.50%.",
+            "example": "5000"
+          },
+          "slippage": {
+            "type": "string",
+            "description": "Slippage in basis points (1/10000) e.g. 50 = 0.50%, Default is 300",
+            "example": "300",
+            "default": "300"
+          },
+          "simulate": {
+            "type": "boolean",
+            "description": "Flag that indicates whether to simulate the transaction, verify some assertions, return simulationURL and events",
+            "nullable": true,
+            "default": false
+          }
+        },
+        "required": [
+          "amountIn",
+          "tokenIn",
+          "tokenBToBuy",
+          "percentageForTokenB"
+        ]
+      },
+      "IporShortcutTransaction": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "number",
+            "description": "Block number the transaction was created on"
+          },
+          "tx": {
+            "description": "The tx object to use in `ethers`",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Transaction"
+              }
+            ]
+          },
+          "logs": {
+            "description": "Logs from the simulated transaction",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "simulationURL": {
+            "type": "string",
+            "description": "Tenderly simulation URL"
+          }
+        },
+        "required": [
+          "createdAt",
+          "tx",
+          "logs",
+          "simulationURL"
+        ]
+      },
+      "NonTokenizedModel": {
+        "type": "object",
+        "properties": {
+          "chainId": {
+            "type": "number",
+            "description": "Chain ID of the network of the nontokenized position"
+          },
+          "protocol": {
+            "type": "string",
+            "description": "The specific standard integration or version of the nontokenized position"
+          },
+          "address": {
+            "type": "string",
+            "description": "Ethereum address of the nontokenized position"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Ethereum address of the nontokenized position"
+          },
+          "underlyingTokens": {
+            "description": "Underlying tokens of nontokenized position",
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TokenModel"
+            }
+          }
+        },
+        "required": [
+          "chainId",
+          "protocol",
+          "address",
+          "primaryAddress",
+          "underlyingTokens"
+        ]
+      },
+      "Project": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "chains": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "protocols": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "chains",
+          "id"
+        ]
+      },
+      "ApproveArgs": {
+        "type": "object",
+        "description": "Arguments for the approve action",
+        "title": "Approve",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "The token address"
+          },
+          "spender": {
+            "type": "string",
+            "description": "The spender address"
+          },
+          "amount": {
+            "type": "string",
+            "description": "The amount to approve"
+          }
+        },
+        "required": [
+          "token",
+          "spender",
+          "amount"
+        ]
+      },
+      "BorrowArgs": {
+        "type": "object",
+        "description": "Arguments for the borrow action",
+        "title": "Borrow",
+        "properties": {
+          "collateral": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ],
+            "description": "Address of token used for collateral"
+          },
+          "tokenOut": {
+            "type": "string",
+            "description": "Address of token to borrow"
+          },
+          "amountOut": {
+            "type": "string",
+            "description": "The amount to receive"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          }
+        },
+        "required": [
+          "collateral",
+          "tokenOut",
+          "amountOut",
+          "primaryAddress"
+        ]
+      },
+      "OutputReference": {
+        "type": "object",
+        "properties": {
+          "useOutputOfCallAt": {
+            "type": "integer",
+            "description": "Index of the previous action whose output should be used"
+          },
+          "index": {
+            "type": "integer",
+            "description": "For actions that return multiple values, specifies which index to use"
+          }
+        },
+        "required": [
+          "useOutputOfCallAt"
+        ]
+      },
+      "SlippageArgs": {
+        "type": "object",
+        "description": "Arguments for setting slippage tolerance for an output amount",
+        "title": "Slippage",
+        "properties": {
+          "amountOut": {
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "Expected output amount with full decimals",
+                "example": "980000000000000000"
+              },
+              {
+                "$ref": "#/components/schemas/OutputReference"
+              }
+            ]
+          },
+          "bps": {
+            "type": "string",
+            "description": "Maximum acceptable slippage in basis points (1 bps = 0.01%)",
+            "example": "100"
+          }
+        },
+        "required": [
+          "amountOut",
+          "bps"
+        ]
+      },
+      "EnsoFeeArgs": {
+        "type": "object",
+        "description": "Arguments for applying a fee to a token amount",
+        "title": "EnsoFee",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Token address to apply the fee to",
+            "example": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+          },
+          "amount": {
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "Amount to apply the fee to with full decimals",
+                "example": "1000000000"
+              },
+              {
+                "$ref": "#/components/schemas/OutputReference"
+              }
+            ]
+          },
+          "bps": {
+            "type": "string",
+            "description": "Fee percentage in basis points (1 bps = 0.01%)",
+            "example": "25"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "Address to receive the fee",
+            "nullable": true,
+            "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+          }
+        },
+        "required": [
+          "token",
+          "amount",
+          "bps"
+        ]
+      },
+      "BridgeArgs": {
+        "type": "object",
+        "description": "Arguments for the bridge action",
+        "title": "Bridge",
+        "properties": {
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of the source bridge pool",
+            "example": "0x38EA452219524Bb87e18dE1C24D3bB59510BD783"
+          },
+          "destinationChainId": {
+            "type": "number",
+            "description": "Chain ID of the destination network",
+            "example": 42161
+          },
+          "tokenIn": {
+            "type": "string",
+            "description": "Address of token to bridge from source chain",
+            "example": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+          },
+          "amountIn": {
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "Amount to bridge with full decimals",
+                "example": "1000000000"
+              },
+              {
+                "$ref": "#/components/schemas/OutputReference"
+              }
+            ]
+          },
+          "receiver": {
+            "type": "string",
+            "description": "Address to receive bridged tokens on destination chain",
+            "example": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+          },
+          "callback": {
+            "type": "array",
+            "description": "Array of actions to execute on the destination chain after bridging. CCTP currently supports only the [enso:balance, hypercore-spot:deposit] callback shape for USDC to HyperCore; other CCTP callbacks are rejected.",
+            "items": {
+              "type": "object",
+              "description": "Any valid action that can be executed on the destination chain"
+            }
+          },
+          "protocolArgs": {
+            "type": "object",
+            "description": "Protocol-specific bridge args. For CCTP, use transferType, forwardFee, and isHyperCoreTransfer.",
+            "properties": {
+              "transferType": {
+                "type": "string",
+                "enum": [
+                  "fast",
+                  "standard"
+                ],
+                "description": "CCTP only. Preferred finality threshold. Fast falls back to standard when unavailable.",
+                "example": "fast"
+              },
+              "forwardFee": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "med",
+                  "high"
+                ],
+                "description": "CCTP only. Forwarding Service fee bracket (destination-chain gas buffer). Applies to all CCTP transfers. Forwarding is always used to guarantee destination execution. Defaults to `med`. Pass `high` for more headroom against fee drift between quote and forward execution, or `low` to trade delivery headroom for a better quote. An under-budgeted maxFee can strand the transfer until Circle re-attempts.",
+                "default": "med",
+                "example": "med"
+              },
+              "isHyperCoreTransfer": {
+                "type": "boolean",
+                "description": "CCTP HyperCore only. Prefer the [enso:balance, hypercore-spot:deposit] callback shape unless building protocol-level integrations.",
+                "example": true
+              }
+            }
+          }
+        },
+        "required": [
+          "primaryAddress",
+          "destinationChainId",
+          "tokenIn",
+          "amountIn",
+          "receiver"
+        ]
+      },
+      "DepositArgs": {
+        "type": "object",
+        "description": "Arguments for the deposit action",
+        "title": "Deposit",
+        "properties": {
+          "tokenIn": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ],
+            "description": "Address of token to deposit"
+          },
+          "tokenOut": {
+            "type": "string",
+            "description": "Address of token to receive",
+            "nullable": true
+          },
+          "amountIn": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ],
+            "description": "The amount to send"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The receiver account",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tokenIn",
+          "amountIn",
+          "primaryAddress"
+        ]
+      },
+      "SingleDepositArgs": {
+        "type": "object",
+        "description": "Arguments for the single deposit action",
+        "title": "SingleDeposit",
+        "properties": {
+          "tokenIn": {
+            "type": "string",
+            "description": "Address of token to deposit"
+          },
+          "tokenOut": {
+            "type": "string",
+            "description": "Address of token to receive",
+            "nullable": true
+          },
+          "amountIn": {
+            "type": "string",
+            "description": "The amount to send"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The receiver account",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tokenIn",
+          "amountIn",
+          "primaryAddress"
+        ]
+      },
+      "MultiDepositArgs": {
+        "type": "object",
+        "description": "Arguments for the multi deposit action",
+        "title": "MultiDeposit",
+        "properties": {
+          "tokenIn": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Addresses of tokens to deposit"
+          },
+          "tokenOut": {
+            "type": "string",
+            "description": "Address of token to receive",
+            "nullable": true
+          },
+          "amountIn": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The amounts to send"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The receiver account",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tokenIn",
+          "amountIn",
+          "primaryAddress"
+        ]
+      },
+      "TokenizedSingleDepositArgs": {
+        "type": "object",
+        "description": "Arguments for the tokenized single deposit action",
+        "title": "TokenizedSingleDeposit",
+        "properties": {
+          "tokenIn": {
+            "type": "string",
+            "description": "Address of token to deposit"
+          },
+          "tokenOut": {
+            "type": "string",
+            "description": "Address of token to receive"
+          },
+          "amountIn": {
+            "type": "string",
+            "description": "The amount to send"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The receiver account",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tokenIn",
+          "tokenOut",
+          "amountIn",
+          "primaryAddress"
+        ]
+      },
+      "TokenizedMultiDepositArgs": {
+        "type": "object",
+        "description": "Arguments for the tokenized multi deposit action",
+        "title": "TokenizedMultiDeposit",
+        "properties": {
+          "tokenIn": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Addresses of tokens to deposit"
+          },
+          "tokenOut": {
+            "type": "string",
+            "description": "Address of token to receive"
+          },
+          "amountIn": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The amounts to send"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The receiver account",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tokenIn",
+          "tokenOut",
+          "amountIn",
+          "primaryAddress"
+        ]
+      },
+      "MultiOutSingleDepositArgs": {
+        "type": "object",
+        "description": "Arguments for the multi out single deposit action",
+        "title": "MultiOutSingleDeposit",
+        "properties": {
+          "tokenIn": {
+            "type": "string",
+            "description": "Address of token to send"
+          },
+          "tokenOut": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Addresses of tokens to receive"
+          },
+          "amountIn": {
+            "type": "string",
+            "description": "The amount to deposit"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The receiver account",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tokenIn",
+          "tokenOut",
+          "amountIn",
+          "primaryAddress"
+        ]
+      },
+      "DepositCLMMArgs": {
+        "type": "object",
+        "description": "Arguments for the deposit CLMM action",
+        "title": "DepositCLMM",
+        "properties": {
+          "tokenIn": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Addresses of tokens to deposit"
+          },
+          "tokenOut": {
+            "type": "string",
+            "description": "Address of token to receive"
+          },
+          "amountIn": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The amounts to send"
+          },
+          "ticks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Ticks for the deposit"
+          },
+          "poolFee": {
+            "type": "string",
+            "description": "The fee for the pool to deposit into"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The receiver account",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tokenIn",
+          "tokenOut",
+          "amountIn",
+          "ticks",
+          "poolFee"
+        ]
+      },
+      "HarvestArgs": {
+        "type": "object",
+        "description": "Arguments for the harvest action",
+        "title": "Harvest",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Address of token"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          }
+        },
+        "required": [
+          "token",
+          "primaryAddress"
+        ]
+      },
+      "PermitTransferFromArgs": {
+        "type": "object",
+        "description": "Arguments for the permit transfer from action",
+        "title": "PermitTransferFrom",
+        "properties": {
+          "token": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ],
+            "description": "Address of token to approve"
+          },
+          "amount": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ],
+            "description": "The amount to approve"
+          },
+          "sender": {
+            "type": "string",
+            "description": "The sender account"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The receiver account"
+          },
+          "nonce": {
+            "type": "string",
+            "description": "The nonce to prevent signature replays"
+          },
+          "deadline": {
+            "type": "string",
+            "description": "The deadline on the permit signature"
+          },
+          "signature": {
+            "type": "string",
+            "description": "The permit signature"
+          }
+        },
+        "required": [
+          "token",
+          "amount",
+          "sender",
+          "receiver",
+          "nonce",
+          "deadline",
+          "signature"
+        ]
+      },
+      "RedeemArgs": {
+        "type": "object",
+        "description": "Arguments for the redeem action",
+        "title": "Redeem",
+        "properties": {
+          "tokenIn": {
+            "type": "string",
+            "description": "Address of token to send",
+            "nullable": true
+          },
+          "tokenOut": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ],
+            "description": "Address of token to receive"
+          },
+          "amountIn": {
+            "type": "string",
+            "description": "The amount to deposit"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The receiver account",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tokenOut",
+          "amountIn",
+          "primaryAddress"
+        ]
+      },
+      "SingleRedeemArgs": {
+        "type": "object",
+        "description": "Arguments for the single redeem action",
+        "title": "SingleRedeem",
+        "properties": {
+          "tokenIn": {
+            "type": "string",
+            "description": "Address of token to send",
+            "nullable": true
+          },
+          "tokenOut": {
+            "type": "string",
+            "description": "Address of token to receive"
+          },
+          "amountIn": {
+            "type": "string",
+            "description": "The amount to deposit"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The receiver account",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tokenOut",
+          "amountIn",
+          "primaryAddress"
+        ]
+      },
+      "MultiRedeemArgs": {
+        "type": "object",
+        "description": "Arguments for the multi redeem action",
+        "title": "MultiRedeem",
+        "properties": {
+          "tokenIn": {
+            "type": "string",
+            "description": "Address of token to send",
+            "nullable": true
+          },
+          "tokenOut": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Address of token to receive"
+          },
+          "amountIn": {
+            "type": "string",
+            "description": "The amount to deposit"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The receiver account",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tokenOut",
+          "amountIn",
+          "primaryAddress"
+        ]
+      },
+      "TokenizedSingleRedeemArgs": {
+        "type": "object",
+        "description": "Arguments for the tokenized single redeem action",
+        "title": "TokenizedSingleRedeem",
+        "properties": {
+          "tokenIn": {
+            "type": "string",
+            "description": "Address of token to send"
+          },
+          "tokenOut": {
+            "type": "string",
+            "description": "Address of token to receive"
+          },
+          "amountIn": {
+            "type": "string",
+            "description": "The amount to deposit"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The receiver account",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tokenIn",
+          "tokenOut",
+          "amountIn",
+          "primaryAddress"
+        ]
+      },
+      "TokenizedMultiRedeemArgs": {
+        "type": "object",
+        "description": "Arguments for the tokenized multi redeem action",
+        "title": "TokenizedMultiRedeem",
+        "properties": {
+          "tokenIn": {
+            "type": "string",
+            "description": "Address of token to send"
+          },
+          "tokenOut": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Address of token to receive"
+          },
+          "amountIn": {
+            "type": "string",
+            "description": "The amount to deposit"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The receiver account",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tokenIn",
+          "tokenOut",
+          "amountIn",
+          "primaryAddress"
+        ]
+      },
+      "RedeemCLMMArgs": {
+        "type": "object",
+        "description": "Arguments for the redeem CLMM action",
+        "title": "RedeemCLMM",
+        "properties": {
+          "tokenIn": {
+            "type": "string",
+            "description": "Address of token to send"
+          },
+          "tokenOut": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Address of token to receive"
+          },
+          "liquidity": {
+            "type": "string",
+            "description": "The amount of liquidity to redeem"
+          },
+          "tokenId": {
+            "type": "string",
+            "description": "The token ID"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The receiver account",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tokenIn",
+          "tokenOut",
+          "liquidity",
+          "tokenId"
+        ]
+      },
+      "RepayArgs": {
+        "type": "object",
+        "description": "Arguments for the repay action",
+        "title": "Repay",
+        "properties": {
+          "tokenIn": {
+            "type": "string",
+            "description": "Address of token to repay"
+          },
+          "amountIn": {
+            "type": "string",
+            "description": "The amount to send"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          }
+        },
+        "required": [
+          "tokenIn",
+          "amountIn",
+          "primaryAddress"
+        ]
+      },
+      "SwapArgs": {
+        "type": "object",
+        "description": "Arguments for the swap action",
+        "title": "Swap",
+        "properties": {
+          "tokenIn": {
+            "type": "string",
+            "description": "Address of token to send"
+          },
+          "tokenOut": {
+            "type": "string",
+            "description": "Address of token to receive"
+          },
+          "amountIn": {
+            "type": "string",
+            "description": "The amount to deposit"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "The receiver account",
+            "nullable": true
+          },
+          "receiver": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          },
+          "slippage": {
+            "type": "string",
+            "description": "Amount of slippage in BPS",
+            "nullable": true
+          },
+          "poolFee": {
+            "type": "string",
+            "description": "The fee that the liquidity pool uses",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tokenIn",
+          "tokenOut",
+          "amountIn",
+          "receiver"
+        ]
+      },
+      "TransferArgs": {
+        "type": "object",
+        "description": "Arguments for the transfer action",
+        "title": "Transfer",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Address of token"
+          },
+          "amount": {
+            "type": "string",
+            "description": "The amount to transfer"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The receiver account"
+          },
+          "id": {
+            "type": "string",
+            "description": "The ERC721 or ERC1155 id",
+            "nullable": true
+          }
+        },
+        "required": [
+          "token",
+          "amount",
+          "receiver"
+        ]
+      },
+      "TransferFromArgs": {
+        "type": "object",
+        "description": "Arguments for the transfer from action",
+        "title": "TransferFrom",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Address of token"
+          },
+          "amount": {
+            "type": "string",
+            "description": "The amount to transfer"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The receiver account"
+          },
+          "sender": {
+            "type": "string",
+            "description": "The sender account"
+          },
+          "id": {
+            "type": "string",
+            "description": "The ERC721 or ERC1155 id",
+            "nullable": true
+          }
+        },
+        "required": [
+          "token",
+          "amount",
+          "receiver",
+          "sender"
+        ]
+      },
+      "RouteArgs": {
+        "type": "object",
+        "description": "Arguments for the route action",
+        "title": "Route",
+        "properties": {
+          "tokenIn": {
+            "type": "string",
+            "description": "Address of token to send"
+          },
+          "tokenOut": {
+            "type": "string",
+            "description": "Address of token to receive"
+          },
+          "amountIn": {
+            "type": "string",
+            "description": "The amount to deposit"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "The receiver account",
+            "nullable": true
+          },
+          "receiver": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          },
+          "slippage": {
+            "type": "string",
+            "description": "Amount of slippage in BPS. Must be from 1 to 9999.",
+            "nullable": true
+          },
+          "poolFee": {
+            "type": "string",
+            "description": "The fee that the liquidity pool uses",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tokenIn",
+          "tokenOut",
+          "amountIn",
+          "receiver"
+        ]
+      },
+      "BorrowWithPositionIdArgs": {
+        "type": "object",
+        "description": "Arguments for the borrow with position ID action",
+        "title": "BorrowWithPositionId",
+        "properties": {
+          "collateral": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ],
+            "description": "Address of token used for collateral"
+          },
+          "tokenOut": {
+            "type": "string",
+            "description": "Address of token to borrow"
+          },
+          "amountOut": {
+            "type": "string",
+            "description": "The amount to receive"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          },
+          "positionId": {
+            "type": "string",
+            "description": "The position ID to borrow against"
+          }
+        },
+        "required": [
+          "collateral",
+          "tokenOut",
+          "amountOut",
+          "primaryAddress",
+          "positionId"
+        ]
+      },
+      "SingleDepositWithPositionIdArgs": {
+        "type": "object",
+        "description": "Arguments for the single deposit with position ID action",
+        "title": "SingleDepositWithPositionId",
+        "properties": {
+          "tokenIn": {
+            "type": "string",
+            "description": "Address of token to deposit"
+          },
+          "tokenOut": {
+            "type": "string",
+            "description": "Address of token to receive",
+            "nullable": true
+          },
+          "amountIn": {
+            "type": "string",
+            "description": "The amount to send"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The receiver account",
+            "nullable": true
+          },
+          "positionId": {
+            "type": "string",
+            "description": "The position ID to deposit into"
+          }
+        },
+        "required": [
+          "tokenIn",
+          "amountIn",
+          "primaryAddress",
+          "positionId"
+        ]
+      },
+      "SingleRedeemWithPositionIdArgs": {
+        "type": "object",
+        "description": "Arguments for the single redeem with position ID action",
+        "title": "SingleRedeemWithPositionId",
+        "properties": {
+          "tokenIn": {
+            "type": "string",
+            "description": "Address of token to send",
+            "nullable": true
+          },
+          "tokenOut": {
+            "type": "string",
+            "description": "Address of token to receive"
+          },
+          "amountIn": {
+            "type": "string",
+            "description": "The amount to deposit"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The receiver account",
+            "nullable": true
+          },
+          "positionId": {
+            "type": "string",
+            "description": "The position ID to redeem from"
+          }
+        },
+        "required": [
+          "tokenOut",
+          "amountIn",
+          "primaryAddress",
+          "positionId"
+        ]
+      },
+      "RepayWithPositionIdArgs": {
+        "type": "object",
+        "description": "Arguments for the repay with position ID action",
+        "title": "RepayWithPositionId",
+        "properties": {
+          "tokenIn": {
+            "type": "string",
+            "description": "Address of token to repay"
+          },
+          "amountIn": {
+            "type": "string",
+            "description": "The amount to send"
+          },
+          "primaryAddress": {
+            "type": "string",
+            "description": "Address of smart contract to interact with"
+          },
+          "positionId": {
+            "type": "string",
+            "description": "The position ID to repay"
+          }
+        },
+        "required": [
+          "tokenIn",
+          "amountIn",
+          "primaryAddress",
+          "positionId"
+        ]
+      },
+      "CallArgs": {
+        "type": "object",
+        "description": "Arguments for the generic call action",
+        "title": "Call",
+        "properties": {
+          "target": {
+            "type": "string",
+            "description": "The contract address to call"
+          },
+          "data": {
+            "type": "string",
+            "description": "The encoded function call data"
+          },
+          "value": {
+            "type": "string",
+            "description": "The amount of ETH to send with the call",
+            "default": "0"
+          }
+        },
+        "required": [
+          "target",
+          "data"
+        ]
+      },
+      "SplitArgs": {
+        "type": "object",
+        "description": "Arguments for splitting a token amount into multiple portions",
+        "title": "Split",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Token address to split"
+          },
+          "amount": {
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "Total amount to split with full decimals"
+              },
+              {
+                "$ref": "#/components/schemas/OutputReference"
+              }
+            ]
+          },
+          "portions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "percentage": {
+                  "type": "string",
+                  "description": "Percentage in basis points (1 bps = 0.01%)"
+                },
+                "receiver": {
+                  "type": "string",
+                  "description": "Address to receive this portion"
+                }
+              },
+              "required": [
+                "percentage",
+                "receiver"
+              ]
+            },
+            "description": "Array of split portions with percentages and receivers"
+          }
+        },
+        "required": [
+          "token",
+          "amount",
+          "portions"
+        ]
+      },
+      "MergeArgs": {
+        "type": "object",
+        "description": "Arguments for merging multiple token amounts",
+        "title": "Merge",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Token address to merge"
+          },
+          "amounts": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/components/schemas/OutputReference"
+                }
+              ]
+            },
+            "description": "Array of amounts to merge"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "Address to receive the merged amount"
+          }
+        },
+        "required": [
+          "token",
+          "amounts",
+          "receiver"
+        ]
+      },
+      "BalanceArgs": {
+        "type": "object",
+        "description": "Arguments for checking token balance",
+        "title": "Balance",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Token address to check balance for"
+          },
+          "account": {
+            "type": "string",
+            "description": "Account address to check balance of"
+          }
+        },
+        "required": [
+          "token",
+          "account"
+        ]
+      },
+      "MinAmountOutArgs": {
+        "type": "object",
+        "description": "Arguments for setting minimum output amount",
+        "title": "MinAmountOut",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Token address for minimum amount check"
+          },
+          "minAmount": {
+            "type": "string",
+            "description": "Minimum acceptable amount with full decimals"
+          }
+        },
+        "required": [
+          "token",
+          "minAmount"
+        ]
+      },
+      "FeeArgs": {
+        "type": "object",
+        "description": "Arguments for applying a custom fee to a token amount",
+        "title": "Fee",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Token address to apply the fee to"
+          },
+          "amount": {
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "Amount to apply the fee to with full decimals"
+              },
+              {
+                "$ref": "#/components/schemas/OutputReference"
+              }
+            ]
+          },
+          "bps": {
+            "type": "string",
+            "description": "Fee percentage in basis points (1 bps = 0.01%)"
+          },
+          "receiver": {
+            "type": "string",
+            "description": "Address to receive the fee"
+          }
+        },
+        "required": [
+          "token",
+          "amount",
+          "bps",
+          "receiver"
+        ]
+      },
+      "LZPoolLookupResponse": {
+        "type": "object",
+        "properties": {
+          "pool": {
+            "type": "string",
+            "description": "LayerZero pool address for the source token",
+            "example": "0x6c96de32cea08842dcc4058c14d3aaad7fa41dee"
+          },
+          "chainId": {
+            "type": "number",
+            "description": "Source chain ID",
+            "example": 1
+          },
+          "destinationChainId": {
+            "type": "number",
+            "description": "Destination chain ID",
+            "example": 10
+          },
+          "token": {
+            "type": "string",
+            "description": "Source token address",
+            "example": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+          },
+          "decimals": {
+            "type": "number",
+            "description": "Decimals of the source token",
+            "example": 6
+          },
+          "destinationData": {
+            "description": "Details about the destination pool and token",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LZDestinationTokenData"
+              }
+            ]
+          }
+        },
+        "required": [
+          "pool",
+          "chainId",
+          "destinationChainId",
+          "token",
+          "decimals",
+          "destinationData"
+        ]
+      },
+      "LZDestinationTokenData": {
+        "type": "object",
+        "properties": {
+          "pool": {
+            "type": "string",
+            "description": "LayerZero pool address on the destination chain",
+            "example": "0xf03b4d9ac1d5d1e7c4cef54c2a313b9fe051a0ad"
+          },
+          "token": {
+            "type": "string",
+            "description": "Token address on the destination chain",
+            "example": "0x01bff41798a0bcf287b996046ca68b395dbc1071"
+          },
+          "decimals": {
+            "type": "number",
+            "description": "Decimals of the token on the destination chain",
+            "example": 6
+          }
+        },
+        "required": [
+          "pool",
+          "token",
+          "decimals"
+        ]
+      },
+      "QuoteEndpointResponse": {
+        "type": "object",
+        "properties": {
+          "amountOut": {
+            "type": "string"
+          },
+          "priceImpact": {
+            "type": "number",
+            "nullable": true,
+            "description": "Price impact in basis points, null if USD price not found"
+          },
+          "route": {
+            "description": "The route selected for the quote",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Hop"
+            }
+          },
+          "feeAmount": {
+            "description": "An array of the fee amount collected for each tokenIn",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ensoFeeAmount": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "amountOut",
+          "route"
+        ]
+      },
+      "Wallet": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "isDeployed": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "address",
+          "isDeployed"
+        ]
+      }
+    }
+  },
+  "security": [
+    {}
+  ]
+}

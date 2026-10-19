@@ -1,0 +1,42 @@
+openapi: 3.2.0
+info:
+  title: Enso Account API
+  description: '#### Enso API
+
+    - Find detailed documentation on docs.enso.finance.
+
+    - To use the API, **you must include your API Key in the Authorization header** (Bearer format).
+
+    - For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).
+
+    - Get your own API Key at enso.finance/developers.'
+  version: 1.0.1
+  contact: {}
+servers:
+- url: https://api.enso.build
+security:
+- {}
+tags:
+- name: Account
+paths:
+  /api/v1/account/accountId:
+    get:
+      operationId: AccountController_accountId
+      summary: Account ID
+      description: Gives the Account ID associated with the current user
+      parameters: []
+      responses:
+        '200':
+          description: Your accountId
+          content:
+            application/json:
+              schema:
+                type: string
+      tags:
+      - Account
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: apiKey
+      type: http

@@ -1,0 +1,182 @@
+openapi: 3.2.0
+info:
+  title: Enso De Fi API
+  description: '#### Enso API
+
+    - Find detailed documentation on docs.enso.finance.
+
+    - To use the API, **you must include your API Key in the Authorization header** (Bearer format).
+
+    - For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).
+
+    - Get your own API Key at enso.finance/developers.'
+  version: 1.0.1
+  contact: {}
+servers:
+- url: https://api.enso.build
+security:
+- {}
+tags:
+- name: DeFi
+paths:
+  /api/v1/prices/{chainId}/{address}:
+    get:
+      operationId: PricesController_getPrice
+      description: Returns token price for the given address and chainId.
+      summary: Token Price
+      parameters:
+      - name: address
+        required: true
+        in: path
+        description: Address of the token to search for
+        schema:
+          example: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+      - name: chainId
+        required: true
+        in: path
+        description: Chain ID of the network to search for
+        schema:
+          example: '1'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Price'
+      tags:
+      - DeFi
+  /api/v1/volume/{chainId}:
+    get:
+      operationId: VolumeController_getVolume
+      description: Returns total USD and transactions volume for the given chainId.
+      summary: Chain and transactions volume
+      parameters:
+      - name: chainId
+        required: true
+        in: path
+        description: Chain ID of the network to search for
+        schema:
+          default: 1
+          example: '1'
+          type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+      - DeFi
+  /api/v1/wallet/balances:
+    get:
+      operationId: WalletController_walletBalances
+      description: 'Returns tokens balances for Enso Wallet associated with the given address across all supported chains.
+
+        With `useEoa` set to true, it returns balances for the given EOA address instead.'
+      summary: Wallet balances
+      parameters:
+      - name: chainId
+        required: false
+        in: query
+        description: Chain ID of the network to execute the transaction on
+        schema:
+          example: 1
+          type: number
+      - name: eoaAddress
+        required: true
+        in: query
+        description: Address of the eoa with which to associate the ensoWallet for balances
+        schema:
+          default: '0x93621DCA56fE26Cdee86e4F6B18E116e9758Ff11'
+          type: string
+      - name: useEoa
+        required: true
+        in: query
+        description: If true returns balances for the provided eoaAddress, instead of the associated ensoWallet
+        schema:
+          default: false
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WalletBalance'
+      tags:
+      - DeFi
+components:
+  schemas:
+    WalletBalance:
+      type: object
+      properties:
+        token:
+          type: string
+          description: The address of the token
+        amount:
+          type: string
+          description: The unformatted balance of the token
+          example: '0x0000000'
+        chainId:
+          type: number
+          description: Chain ID of the network
+        decimals:
+          type: number
+          description: The unformatted balance of the token
+          example: 18
+        price:
+          type: string
+          description: Price of the token in usd
+          example: '0.0'
+        name:
+          type: string
+          description: Name of the token
+        symbol:
+          type: string
+          description: Symbol of the token
+        logoUri:
+          type: string
+          description: Logo of the token
+      required:
+      - token
+      - amount
+      - chainId
+      - decimals
+      - price
+      - name
+      - symbol
+      - logoUri
+    Price:
+      type: object
+      properties:
+        decimals:
+          type: number
+          example: 8
+        price:
+          type: number
+          example: 27052
+        address:
+          type: string
+          example: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+        symbol:
+          type: string
+          example: WBTC
+        timestamp:
+          type: number
+          example: 1695197412
+        chainId:
+          type: number
+          example: 1
+        confidence:
+          type: number
+          example: 0.99
+      required:
+      - decimals
+      - price
+      - address
+      - chainId
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: apiKey
+      type: http

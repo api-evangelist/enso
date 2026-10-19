@@ -75,142 +75,86 @@ tags_raw:
 - Web3
 - Cryptocurrency
 apis:
-- aid: enso:enso-ccip-api
-  name: Enso Ccip API
-  description: The ccip API from Enso — 2 operation(s) for ccip.
+- aid: enso:enso-account-api
+  name: Enso Account API
+  description: The Account API from Enso — 1 operation(s) for account.
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
   tags:
-  - ccip
+  - Account
   properties:
   - type: OpenAPI
-    url: openapi/enso-ccip-api-openapi.yml
+    url: openapi/enso-account-api-openapi.yml
   - type: ErrorCatalog
     url: errors/enso-problem-types.yml
   - type: DataModel
     url: data-model/enso-data-model.yml
-- aid: enso:enso-cctp-api
-  name: Enso Cctp API
-  description: The cctp API from Enso — 3 operation(s) for cctp.
+- aid: enso:enso-crosschain-api
+  name: Enso Crosschain API
+  description: The Crosschain API from Enso — 1 operation(s) for crosschain.
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
   tags:
-  - cctp
+  - Crosschain
   properties:
   - type: OpenAPI
-    url: openapi/enso-cctp-api-openapi.yml
+    url: openapi/enso-crosschain-api-openapi.yml
   - type: ErrorCatalog
     url: errors/enso-problem-types.yml
   - type: DataModel
     url: data-model/enso-data-model.yml
-- aid: enso:enso-layerzero-api
-  name: Enso Layerzero API
-  description: The layerzero API from Enso — 4 operation(s) for layerzero.
+- aid: enso:enso-defi-api
+  name: Enso De Fi API
+  description: The DeFi API from Enso — 3 operation(s) for defi.
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
   tags:
-  - LayerZero
-  tags_raw:
-  - layerzero
+  - DeFi
   properties:
   - type: OpenAPI
-    url: openapi/enso-layerzero-api-openapi.yml
+    url: openapi/enso-defi-api-openapi.yml
   - type: ErrorCatalog
     url: errors/enso-problem-types.yml
   - type: DataModel
     url: data-model/enso-data-model.yml
-- aid: enso:enso-metadata-api
-  name: Enso Metadata API
-  description: The metadata API from Enso — 8 operation(s) for metadata.
+- aid: enso:enso-defi-shortcuts-api
+  name: Enso DeFi Shortcuts API
+  description: The DeFi Shortcuts API from Enso — 7 operation(s) for defi shortcuts.
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
   tags:
-  - Metadata
-  tags_raw:
-  - metadata
+  - DeFi Shortcuts
   properties:
   - type: OpenAPI
-    url: openapi/enso-metadata-api-openapi.yml
+    url: openapi/enso-defi-shortcuts-api-openapi.yml
   - type: ErrorCatalog
     url: errors/enso-problem-types.yml
   - type: DataModel
     url: data-model/enso-data-model.yml
-- aid: enso:enso-projects-api
-  name: Enso Projects API
-  description: The projects API from Enso — 2 operation(s) for projects.
+- aid: enso:enso-integration-api
+  name: Enso Integration API
+  description: The Integration API from Enso — 10 operation(s) for integration.
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
   tags:
-  - Project
-  tags_raw:
-  - projects
+  - Integration
   properties:
   - type: OpenAPI
-    url: openapi/enso-projects-api-openapi.yml
+    url: openapi/enso-integration-api-openapi.yml
   - type: ErrorCatalog
     url: errors/enso-problem-types.yml
   - type: DataModel
     url: data-model/enso-data-model.yml
-- aid: enso:enso-relay-api
-  name: Enso Relay API
-  description: The relay API from Enso — 1 operation(s) for relay.
+- aid: enso:enso-tokens-api
+  name: Enso Tokens API
+  description: The Tokens API from Enso — 4 operation(s) for tokens.
   humanURL: https://docs.enso.build/
   baseURL: https://api.enso.finance
   tags:
-  - Relay
-  tags_raw:
-  - relay
+  - Tokens
   properties:
   - type: OpenAPI
-    url: openapi/enso-relay-api-openapi.yml
-  - type: ErrorCatalog
-    url: errors/enso-problem-types.yml
-  - type: DataModel
-    url: data-model/enso-data-model.yml
-- aid: enso:enso-shortcuts-api
-  name: Enso Shortcuts API
-  description: The shortcuts API from Enso — 5 operation(s) for shortcuts.
-  humanURL: https://docs.enso.build/
-  baseURL: https://api.enso.finance
-  tags:
-  - Shortcuts
-  tags_raw:
-  - shortcuts
-  properties:
-  - type: OpenAPI
-    url: openapi/enso-shortcuts-api-openapi.yml
-  - type: ErrorCatalog
-    url: errors/enso-problem-types.yml
-  - type: DataModel
-    url: data-model/enso-data-model.yml
-- aid: enso:enso-standards-api
-  name: Enso Standards API
-  description: The standards API from Enso — 4 operation(s) for standards.
-  humanURL: https://docs.enso.build/
-  baseURL: https://api.enso.finance
-  tags:
-  - Standards
-  tags_raw:
-  - standards
-  properties:
-  - type: OpenAPI
-    url: openapi/enso-standards-api-openapi.yml
-  - type: ErrorCatalog
-    url: errors/enso-problem-types.yml
-  - type: DataModel
-    url: data-model/enso-data-model.yml
-- aid: enso:enso-wallet-api
-  name: Enso Wallet API
-  description: The wallet API from Enso — 2 operation(s) for wallet.
-  humanURL: https://docs.enso.build/
-  baseURL: https://api.enso.finance
-  tags:
-  - Wallets
-  tags_raw:
-  - wallet
-  properties:
-  - type: OpenAPI
-    url: openapi/enso-wallet-api-openapi.yml
+    url: openapi/enso-tokens-api-openapi.yml
   - type: ErrorCatalog
     url: errors/enso-problem-types.yml
   - type: DataModel

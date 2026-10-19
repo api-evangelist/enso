@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.enso.build/public/openapi.json",
+ "final": "https://docs.enso.build/public/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 148348,
+ "sha256": "d3e84bc1123d430fe221da47721252b218d471e36444a5ec44ee325df5ad0c4b",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "re-archived: the provider's current document replaced a stale archive (roadmap#793); the old files are in openapi/_superseded/2026-10-19-stale"
+}

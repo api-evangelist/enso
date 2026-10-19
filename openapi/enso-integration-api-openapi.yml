@@ -1,0 +1,565 @@
+openapi: 3.2.0
+info:
+  title: Enso Integration API
+  description: '#### Enso API
+
+    - Find detailed documentation on docs.enso.finance.
+
+    - To use the API, **you must include your API Key in the Authorization header** (Bearer format).
+
+    - For testing, Swagger pre-authorizes you using the key: `1e02632d-6feb-4a75-a157-documentation` (1rps).
+
+    - Get your own API Key at enso.finance/developers.'
+  version: 1.0.1
+  contact: {}
+servers:
+- url: https://api.enso.build
+security:
+- {}
+tags:
+- name: Integration
+paths:
+  /api/v1/standards:
+    get:
+      operationId: StandardsController_standards
+      description: Returns standards available for bundling. Each element represents a protocol, with list of supported actions and chains the standard's supported on.
+      summary: Standards
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Standard'
+      tags:
+      - Integration
+  /api/v1/standards/{slug}:
+    get:
+      operationId: StandardsController_getProtocolBySlug
+      description: Returns a standard matching the given `slug`, containing supported actions, exact `inputs`, and a list of chains the standard's supported on.
+      summary: Standard per protocol
+      parameters:
+      - name: slug
+        required: true
+        in: path
+        description: The protocol slug
+        schema:
+          example: aave-v2
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Standard'
+      tags:
+      - Integration
+  /api/v1/actions:
+    get:
+      operationId: ActionsController_findAll
+      description: Returns actions that can be bundled with `/shortcuts/bundle` endpoint. For specific protocol actions and exact action inputs, see `/actions/{slug}` endpoint.
+      summary: Supported actions
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Action'
+      tags:
+      - Integration
+  /api/v1/actions/{slug}:
+    get:
+      operationId: ActionsController_getActionsBySlug
+      summary: Actions for protocol
+      parameters:
+      - name: slug
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Action'
+      tags:
+      - Integration
+  /api/v1/projects:
+    get:
+      operationId: ProjectsController_standards
+      description: Returns supported projects (e.g. `aave`) or platforms associated with available projects
+      summary: Projects
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: bex
+                    chains:
+                      type: array
+                      items:
+                        type: integer
+                        example: 80094
+                    protocols:
+                      type: array
+                      items:
+                        type: string
+                        example: bex
+      tags:
+      - Integration
+  /api/v1/projects/{project}/protocols:
+    get:
+      operationId: ProjectsController_getStandardsByProject
+      description: Returns all protocols available within the given project. For supported projects, see the `/projects` endpoint.
+      summary: Protocols in a project
+      parameters:
+      - name: project
+        required: true
+        in: path
+        description: The overarching project or platform associated with the DeFi token, for example `aave`
+        schema:
+          example: aave
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProtocolModel'
+      tags:
+      - Integration
+  /api/v1/protocols:
+    get:
+      operationId: ProtocolsController_findAll
+      summary: All Protocols
+      description: Returns all available protocols with supported chains
+      parameters:
+      - name: chainId
+        required: false
+        in: query
+        description: Chain ID of the network to search for
+        schema:
+          example: '1'
+      - name: slug
+        required: false
+        in: query
+        description: slug of the project to search for
+        schema:
+          example: uniswap-v2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProtocolModel'
+      tags:
+      - Integration
+  /api/v1/networks:
+    get:
+      operationId: NetworksController_networks
+      description: Returns networks supported by Enso
+      summary: Networks
+      parameters:
+      - name: name
+        required: false
+        in: query
+        description: Title of the network to search for
+        schema:
+          example: mainnet
+      - name: chainId
+        required: false
+        in: query
+        description: Chain ID of the network to search for
+        schema:
+          example: '1'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConnectedNetwork'
+      tags:
+      - Integration
+  /api/v1/aggregators:
+    get:
+      operationId: AggregatorsController_aggregators
+      description: Fetches aggregators supported by Enso
+      summary: Aggregators
+      parameters:
+      - name: chainId
+        required: false
+        in: query
+        description: Chain ID of the network to search on
+        schema:
+          default: 1
+          example: '1'
+          type: number
+      responses:
+        '200':
+          description: Returns a list of aggregators
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      tags:
+      - Integration
+  /api/v1/layerzero/pool:
+    get:
+      operationId: LayerZeroController_getPoolAddress
+      summary: LayerZero pool
+      description: Returns the LayerZero Stargate pool address for a given token address and chain ID. Returns null if no pool exists for the token on that chain.
+      parameters:
+      - name: chainId
+        required: true
+        in: query
+        description: Chain ID
+        schema:
+          type: number
+      - name: token
+        required: true
+        in: query
+        description: Token address
+        schema:
+          type: string
+      - name: destinationChainId
+        required: false
+        in: query
+        description: Chain ID of destination chain
+        schema:
+          type: number
+      - name: destinationToken
+        required: false
+        in: query
+        description: Token address on destination chain
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Pool address lookup result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LZPoolLookupResponse'
+      tags:
+      - Integration
+components:
+  schemas:
+    Network:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+      required:
+      - id
+      - name
+    Action:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - approve
+          - borrow
+          - borrowwithpositionid
+          - bridge
+          - deposit
+          - singledeposit
+          - singledepositwithpositionid
+          - multideposit
+          - tokenizedsingledeposit
+          - tokenizedmultideposit
+          - multioutsingledeposit
+          - depositclmm
+          - harvest
+          - permittransferfrom
+          - redeem
+          - singleredeem
+          - singleredeemwithpositionid
+          - multiredeem
+          - tokenizedsingleredeem
+          - tokenizedmultiredeem
+          - redeemclmm
+          - repay
+          - repaywithpositionid
+          - swap
+          - transfer
+          - transferfrom
+          - route
+          - call
+          - split
+          - merge
+          - balance
+          - minamountout
+          - slippage
+          - fee
+          - ensofee
+          - paymasterfee
+        inputs:
+          type: object
+          additionalProperties:
+            type: string
+      required:
+      - action
+      - inputs
+    LZPoolLookupResponse:
+      type: object
+      properties:
+        pool:
+          type: string
+          description: LayerZero pool address for the source token
+          example: '0x6c96de32cea08842dcc4058c14d3aaad7fa41dee'
+        chainId:
+          type: number
+          description: Source chain ID
+          example: 1
+        destinationChainId:
+          type: number
+          description: Destination chain ID
+          example: 10
+        token:
+          type: string
+          description: Source token address
+          example: '0xdac17f958d2ee523a2206206994597c13d831ec7'
+        decimals:
+          type: number
+          description: Decimals of the source token
+          example: 6
+        destinationData:
+          description: Details about the destination pool and token
+          allOf:
+          - $ref: '#/components/schemas/LZDestinationTokenData'
+      required:
+      - pool
+      - chainId
+      - destinationChainId
+      - token
+      - decimals
+      - destinationData
+    LZDestinationTokenData:
+      type: object
+      properties:
+        pool:
+          type: string
+          description: LayerZero pool address on the destination chain
+          example: '0xf03b4d9ac1d5d1e7c4cef54c2a313b9fe051a0ad'
+        token:
+          type: string
+          description: Token address on the destination chain
+          example: '0x01bff41798a0bcf287b996046ca68b395dbc1071'
+        decimals:
+          type: number
+          description: Decimals of the token on the destination chain
+          example: 6
+      required:
+      - pool
+      - token
+      - decimals
+    ProtocolModel:
+      type: object
+      properties:
+        project:
+          type: string
+          example: uniswap
+        slug:
+          type: string
+          example: uniswap-v2
+        name:
+          type:
+          - string
+          - 'null'
+          example: Uniswap V2
+        description:
+          type:
+          - string
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+          example: https://app.uniswap.org/swap
+        logosUri:
+          example: https://icons.llama.fi/uniswap-v2.png
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        chains:
+          example:
+          - id: 1
+            name: mainnet
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Network'
+      required:
+      - project
+      - slug
+      - name
+      - description
+      - url
+      - logosUri
+      - chains
+    Standard:
+      type: object
+      properties:
+        protocol:
+          $ref: '#/components/schemas/Protocol'
+        forks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Protocol'
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StandardAction'
+      required:
+      - protocol
+      - forks
+      - actions
+    ConnectedNetwork:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: Ethereum
+        isConnected:
+          type: boolean
+          example: true
+      required:
+      - id
+      - name
+      - isConnected
+    StandardAction:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - approve
+          - borrow
+          - borrowwithpositionid
+          - bridge
+          - deposit
+          - singledeposit
+          - singledepositwithpositionid
+          - multideposit
+          - tokenizedsingledeposit
+          - tokenizedmultideposit
+          - multioutsingledeposit
+          - depositclmm
+          - harvest
+          - permittransferfrom
+          - redeem
+          - singleredeem
+          - singleredeemwithpositionid
+          - multiredeem
+          - tokenizedsingleredeem
+          - tokenizedmultiredeem
+          - redeemclmm
+          - repay
+          - repaywithpositionid
+          - swap
+          - transfer
+          - transferfrom
+          - route
+          - call
+          - split
+          - merge
+          - balance
+          - minamountout
+          - slippage
+          - fee
+          - ensofee
+          - paymasterfee
+        name:
+          type: string
+        functionNames:
+          type: array
+          items:
+            type: string
+        supportedChains:
+          type: array
+          items:
+            $ref: '#/components/schemas/Network'
+        inputs:
+          type: array
+          items:
+            type: string
+      required:
+      - action
+      - name
+      - functionNames
+      - supportedChains
+      - inputs
+    Project:
+      type: object
+      properties:
+        id:
+          type: string
+        chains:
+          type: array
+          items:
+            type: string
+        protocols:
+          type: array
+          items:
+            type: string
+      required:
+      - chains
+      - id
+    Protocol:
+      type: object
+      properties:
+        slug:
+          type: string
+        url:
+          type: string
+      required:
+      - slug
+      - url
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: apiKey
+      type: http
