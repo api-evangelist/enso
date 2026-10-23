@@ -2417,3 +2417,9 @@ components:
       scheme: bearer
       bearerFormat: apiKey
       type: http
+x-provenance:
+  method: harvested
+  publisher: Enso
+  source: https://docs.enso.build/public/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
