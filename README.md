@@ -64,6 +64,135 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Enso is a company surfaced as a portfolio company of multicoin-capital, techstars and added to the API Evangelist network as a stub for enrichment. Sector: crypto-web3. This profile is a lead awaiting the enrichment pipeline.
+Enso is onchain infrastructure that turns DeFi product intent into signer-ready transaction data. Its Route API finds the optimal path between any two tokens or positions across 250+ protocols and multiple chains, while the Bundle API composes ordered onchain Actions (deposit, swap, borrow, bridge, flashloan, transfer and more) into a single executable transaction. Enso also exposes protocol, token, price and balance data, a Quoter for a simulate-then-validate transaction-safety model, cross-chain routing over Stargate/LayerZero, Chainlink CCIP, Relay and Circle CCTP, and prebuilt React widgets (Checkout, cross-chain route). Developers authenticate with a Bearer API key and integrate via the @ensofinance/sdk TypeScript SDK. Backed by Multicoin Capital and Techstars; 100+ apps and 1,900+ developers build on Enso.
 
-Backed by: multicoin-capital, techstars — https://enso.finance
+**Areas:** Company · Web3 · DeFi · Blockchain · Cross-Chain · Smart Contracts · Transaction Routing · Web3 Infrastructure · Onchain · Cryptocurrency
+
+## Enso on APIs.io
+
+Everything profiled for Enso is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/enso/](https://apis.io/providers/enso/)** — or go straight to one of the APIs or properties below.
+
+### APIs (9)
+
+- [Enso Ccip API](https://apis.io/apis/enso/enso-ccip-api/) — The ccip API from Enso — 2 operation(s) for ccip.
+- [Enso Cctp API](https://apis.io/apis/enso/enso-cctp-api/) — The cctp API from Enso — 3 operation(s) for cctp.
+- [Enso Layerzero API](https://apis.io/apis/enso/enso-layerzero-api/) — The layerzero API from Enso — 4 operation(s) for layerzero.
+- [Enso Metadata API](https://apis.io/apis/enso/enso-metadata-api/) — The metadata API from Enso — 8 operation(s) for metadata.
+- [Enso Projects API](https://apis.io/apis/enso/enso-projects-api/) — The projects API from Enso — 2 operation(s) for projects.
+- [Enso Relay API](https://apis.io/apis/enso/enso-relay-api/) — The relay API from Enso — 1 operation(s) for relay.
+- [Enso Shortcuts API](https://apis.io/apis/enso/enso-shortcuts-api/) — The shortcuts API from Enso — 5 operation(s) for shortcuts.
+- [Enso Standards API](https://apis.io/apis/enso/enso-standards-api/) — The standards API from Enso — 4 operation(s) for standards.
+- [Enso Wallet API](https://apis.io/apis/enso/enso-wallet-api/) — The wallet API from Enso — 2 operation(s) for wallet.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [enso](https://apis.io/servers/enso/enso/)
+
+#### Collections (9)
+
+Postman and Open Collection request collections.
+
+- [Enso ccip API](https://apis.io/collections/enso/open-enso-ccip-api/)
+- [Enso ccip cctp API](https://apis.io/collections/enso/open-enso-cctp-api/)
+- [Enso ccip layerzero API](https://apis.io/collections/enso/open-enso-layerzero-api/)
+- [Enso ccip metadata API](https://apis.io/collections/enso/open-enso-metadata-api/)
+- [Enso ccip projects API](https://apis.io/collections/enso/open-enso-projects-api/)
+- [Enso ccip relay API](https://apis.io/collections/enso/open-enso-relay-api/)
+- [Enso ccip shortcuts API](https://apis.io/collections/enso/open-enso-shortcuts-api/)
+- [Enso ccip standards API](https://apis.io/collections/enso/open-enso-standards-api/)
+- [Enso ccip wallet API](https://apis.io/collections/enso/open-enso-wallet-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Enso Openapi Overlay](https://apis.io/overlays/enso/enso-openapi-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Enso Authentication](https://apis.io/security/enso/enso-authentication/)
+- [Enso Domain Security](https://apis.io/security/enso/enso-domain-security/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Enso Rate Limits](https://apis.io/rate-limits/enso/enso-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://enso.build)
+- [Documentation](https://docs.enso.build/)
+- [Getting started](https://docs.enso.build/pages/build/get-started/overview)
+- [API reference](https://docs.enso.build/pages/api-reference/overview)
+- [Sign up](https://developers.enso.build/)
+- [Support](https://discord.com/invite/enso-build)
+- [Blog](https://blog.enso.build/)
+- [Terms of service](https://docs.enso.build/pages/build/reference/legal)
+- [GitHub](https://github.com/EnsoBuild)
+- [Status](https://status.enso.finance)
+
+## API Evangelist rating
+
+**Kin Score 38.3** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 30.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 73.2 |
+| Access clarity | 23.7 |
+
+**Agent readiness 19.6** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 20.6** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/enso/](https://apis.io/providers/enso/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Enso: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/enso/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
